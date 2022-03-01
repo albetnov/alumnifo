@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Teams;
+use App\Http\Livewire\Home;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,7 +26,4 @@ Route::get('/send_cs', function () {
     return "again an example";
 })->name('send_cs');
 
-Route::get('/', function () {
-    $teams = Teams::get();
-    return view('index', compact('teams'));
-});
+Route::get('/', Home::class);

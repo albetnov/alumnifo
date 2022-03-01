@@ -194,4 +194,6 @@ return [
         // ...
     ])->toArray(),
 
+    'debounce_delay' => env('APP_DEBOUNCE_DELAY', '700ms'),
+
 ];
