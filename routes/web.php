@@ -14,16 +14,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/login', function () {
-    return "example";
-})->name('login');
+Route::view('/login', 'authexample.login')->name('login');
 
-Route::get('/register', function () {
-    return "another example";
-})->name('register');
+Route::view('/register', 'authexample.register')->name('register');
 
 Route::get('/send_cs', function () {
     return "again an example";
 })->name('send_cs');
 
-Route::get('/', Home::class);
+Route::get('/', Home::class)->name('home');
