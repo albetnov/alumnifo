@@ -14,15 +14,15 @@ class Login extends Component
         'password' => 'required|min:3',
     ];
 
-    public function updated($property) 
+    public function updated($property)
     {
         $this->validateOnly($property);
     }
 
-    public function login() 
+    public function login()
     {
         $validateData = $this->validate();
-        if(Auth::attempt($validateData)) {
+        if (Auth::attempt($validateData)) {
             dd('Welcome');
         } else {
             dd('Email or Password Incorrect!');
@@ -31,6 +31,6 @@ class Login extends Component
 
     public function render()
     {
-        return view('livewire.login')->layout('authexample.layouts.main');
+        return view('livewire.auth.login')->layout('livewire.auth.layouts.main');
     }
 }

@@ -1,4 +1,4 @@
-@section('title','Login | Alumnifo')
+@section('title', 'Login | Alumnifo')
 <div>
     <main class="main-content  mt-0">
         <section>
@@ -15,16 +15,20 @@
                                     <form role="form" wire:submit.prevent="login">
                                         <label>Email</label>
                                         <div class="mb-3">
-                                            <input type="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : 'is-valid' }}" placeholder="Email"
-                                                aria-label="Email" aria-describedby="email-addon" wire:model="email">
+                                            <input type="email"
+                                                class="form-control @error('email') is-invalid @elseif($email != '') is-valid @enderror"
+                                                placeholder="Email" aria-label="Email" aria-describedby="email-addon"
+                                                {!! wireModel('email') !!}>
                                             @error('email')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
                                         </div>
                                         <label>Password</label>
                                         <div class="mb-3">
-                                            <input type="password" class="form-control {{ $errors->has('password') ? 'is-invalid' : 'is-valid' }}" placeholder="Password"
-                                                aria-label="Password" aria-describedby="password-addon" wire:model="password">
+                                            <input type="password"
+                                                class="form-control @error('password') is-invalid @elseif($password != '') is-valid @enderror"
+                                                placeholder="Password" aria-label="Password"
+                                                aria-describedby="password-addon" {!! wireModel('password') !!}>
                                             @error('password')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror

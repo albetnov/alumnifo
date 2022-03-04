@@ -8,13 +8,13 @@ use App\Models\Teams;
 
 class Home extends Component
 {
-    public $name, $email, $subject, $message;
+    public $name, $email, $subject, $contactMessage;
 
     protected $rules = [
         'name' => 'required|min:3|max:64',
         'email' => 'required|email|max:64',
         'subject' => 'required|max:64',
-        'message' => 'required'
+        'contactMessage' => 'required'
     ];
 
     public function updated($field)
@@ -27,7 +27,7 @@ class Home extends Component
         $this->name = "";
         $this->email = "";
         $this->subject = "";
-        $this->message = "";
+        $this->contactMessage = "";
     }
 
     public function sendContact()

@@ -91,5 +91,4 @@
     </div>
     @yield('content')
     {{ $slot }}
-    @include('authexample.layouts.footer')
-
+    @include('livewire.auth.layouts.footer')
