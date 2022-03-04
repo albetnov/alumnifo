@@ -18,7 +18,9 @@ class TeamsSeeder extends Seeder
         Teams::create([
             'name' => 'Albet Novendo',
             'desc' => 'Lead Developer',
-            'link_ig' => 'https://instagram.com/al_nv23',
+            'link_twitter' => 'https://twitter.com/AlbetNv',
+            'link_ig' => 'https://instagram.com/al_nv4',
+            'link_fb' => 'https://www.facebook.com/profile.php?id=100077882502140',
             'photo' => 'sample1.jpg'
         ]);
         Teams::create([
@@ -33,7 +35,11 @@ class TeamsSeeder extends Seeder
         Teams::create([
             'name' => 'Irwanda Andika',
             'desc' => 'Developer',
-            'photo' => 'sample3.jpg'
+            'photo' => 'sample3.jpg',
+            'link_twitter' => 'https://twitter.com/udah_pagi',
+            'link_fb' => 'https://www.facebook.com/irwanda.andika.1',
+            'link_in' => 'https://www.linkedin.com/in/irwanda-andika-putra-4911871ba/',
+            'link_ig' => 'https://www.instagram.com/wandabiasaaja/'
         ]);
     }
 }
