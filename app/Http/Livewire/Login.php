@@ -23,9 +23,14 @@ class Login extends Component
     {
         $validateData = $this->validate();
         if (Auth::attempt($validateData)) {
-            dd('Welcome');
+            request()->session()->regenerate();
+            if(Auth::guard()->user()->hasRole('admin')) {
+                return redirect()->route('dashboard');
+            } else {
+                return redirect()->route('home');
+            }
         } else {
-            dd('Email or Password Incorrect!');
+            session()->flash('message','Your Email or Password are Incorrect');
         }
     }
 

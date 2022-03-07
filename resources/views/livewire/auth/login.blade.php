@@ -10,6 +10,11 @@
                                 <div class="card-header pb-0 text-left bg-transparent">
                                     <h3 class="font-weight-bolder text-info text-gradient">Welcome back</h3>
                                     <p class="mb-0">Enter your email and password to sign in</p>
+                                    @if (session('message'))
+                                        <div class="alert alert-danger text-white text-center mt-3">
+                                            {{ session('message') }}
+                                        </div>
+                                    @endif
                                 </div>
                                 <div class="card-body">
                                     <form role="form" wire:submit.prevent="login">
