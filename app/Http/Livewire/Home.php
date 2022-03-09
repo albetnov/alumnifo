@@ -3,18 +3,21 @@
 namespace App\Http\Livewire;
 
 use App\Models\PublicContact;
-use Livewire\Component;
 use App\Models\Teams;
+use Livewire\Component;
 
 class Home extends Component
 {
-    public $name, $email, $subject, $contactMessage;
+    public $name;
+    public $email;
+    public $subject;
+    public $contactMessage;
 
     protected $rules = [
-        'name' => 'required|min:3|max:64',
-        'email' => 'required|email|max:64',
-        'subject' => 'required|max:64',
-        'contactMessage' => 'required'
+        'name'           => 'required|min:3|max:64',
+        'email'          => 'required|email|max:64',
+        'subject'        => 'required|max:64',
+        'contactMessage' => 'required',
     ];
 
     public function updated($field)

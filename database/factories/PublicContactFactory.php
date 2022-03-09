@@ -17,10 +17,10 @@ class PublicContactFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->name(),
-            'email' => $this->faker->email(),
+            'name'    => $this->faker->name(),
+            'email'   => $this->faker->email(),
             'subject' => $this->faker->text(50),
-            'message' => $this->faker->paragraph(3)
+            'message' => $this->faker->paragraph(3),
         ];
     }
 }
