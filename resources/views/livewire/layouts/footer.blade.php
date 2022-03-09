@@ -6,9 +6,8 @@
                     <script>
                         document.write(new Date().getFullYear())
                     </script>,
-                    made with <i class="fa fa-heart"></i> by
-                    <a href="https://www.creative-tim.com" class="font-weight-bold" target="_blank">Creative Tim</a>
-                    for a better web.
+                    Alumnifo made by
+                    Albet Novendo, Sendy Wahyudi, Irwanda Andika
                 </div>
             </div>
             <div class="col-lg-6">
@@ -304,7 +303,15 @@
 <script async defer src="https://buttons.github.io/buttons.js"></script>
 <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
 <script src="{{ asset('assets/admin') }}/js/soft-ui-dashboard.min.js?v=1.0.3"></script>
+<script src="{{ asset('assets/toastr/jquery/dist/jquery.min.js') }}"></script>
+<script src="{{ asset('assets/toastr/toastr.min.js') }}"></script>
+@livewireScripts
 @stack("scripts")
+<script>
+    Livewire.on('showAlert', (type, message) => {
+        toastr[type](message);
+    });
+</script>
 </body>
 
 </html>

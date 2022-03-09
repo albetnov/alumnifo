@@ -5,6 +5,7 @@ use App\Http\Controllers\TestController;
 use App\Http\Livewire\Dashboard;
 use App\Http\Livewire\Home;
 use App\Http\Livewire\Login;
+use App\Http\Livewire\ProfileManager;
 use App\Http\Livewire\Register;
 use Illuminate\Support\Facades\Route;
 
@@ -27,13 +28,17 @@ Route::get('/send_cs', function () {
 })->name('send_cs');
 
 Route::get('/', Home::class)->name('home');
-Route::group(['middleware' => ['auth']], function() {
+Route::group(['middleware' => ['auth']], function () {
     Route::post('logout', [DashboardController::class, 'logout'])->name('logout');
-    Route::group(['middleware' => ['role:admin']], function() {
-        Route::get('/dashboard', Dashboard::class)->name('dashboard');
+
+    Route::group(['middleware' => ['role:SuperAdmin'], 'as' => 'admin.', 'prefix' => 'admin'], function () {
+        Route::get('dashboard', Dashboard::class)->name('dashboard');
+    });
+
+    Route::group(['middleware' => ['can: edit profile']], function () {
+        Route::get('/profile', ProfileManager::class)->name('profile');
     });
     // Route::group(['middleware' => ['role:user']], function() {
-        // Route::get('/home', HomeUser::class)->name('home.user');
+    // Route::get('/home', HomeUser::class)->name('home.user');
     // });
 });
-

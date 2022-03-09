@@ -1,6 +1,6 @@
 <!-- Navbar -->
 <main class="main-content position-relative max-height-vh-100 h-100 mt-1 border-radius-lg ">
- 
+
     <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur"
         navbar-scroll="true">
         <div class="container-fluid py-1 px-3">
@@ -22,15 +22,18 @@
                 </div>
                 <ul class="navbar-nav  justify-content-end">
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                          {{ Auth::user()->name }}
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            {{ Auth::user()->name }}
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <li><a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i> Profile</a></li>
                             <li>
                                 <form action="{{ route('logout') }}" method="POST">
                                     @csrf
-                                    <button type="submit" class="dropdown-item"><i class="fas fa-user me-2"></i> Logout</button>
+                                    <button type="submit" class="dropdown-item"><i
+                                            class="fas fa-sign-out-alt me-2"></i>
+                                        Logout</button>
                                 </form>
                             </li>
                         </ul>

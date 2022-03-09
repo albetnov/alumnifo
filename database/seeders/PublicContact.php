@@ -15,6 +15,6 @@ class PublicContact extends Seeder
      */
     public function run()
     {
-        ModelsPublicContact::factory(100)->create();
+        ModelsPublicContact::factory(20)->create();
     }
 }
