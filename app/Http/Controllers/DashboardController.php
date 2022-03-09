@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
@@ -11,6 +10,7 @@ class DashboardController extends Controller
     {
         Auth::logout();
         request()->session()->regenerate();
-        return redirect()->route('home');    
+
+        return redirect()->route('home');
     }
 }

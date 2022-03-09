@@ -8,11 +8,13 @@ use Livewire\Component;
 
 class Register extends Component
 {
-    public $name, $email, $password;
+    public $name;
+    public $email;
+    public $password;
 
     protected $rules = [
-        'name' => 'required|min:3',
-        'email' => 'required|email',
+        'name'     => 'required|min:3',
+        'email'    => 'required|email',
         'password' => 'required|min:3',
     ];
 
@@ -25,12 +27,12 @@ class Register extends Component
     {
         $validateData = $this->validate();
         User::create([
-            'name' => $validateData['name'],
-            'email' => $validateData['email'],
+            'name'     => $validateData['name'],
+            'email'    => $validateData['email'],
             'password' => Hash::make($validateData['password']),
         ]);
 
-        return redirect()->route('dashboard')->with('message','Welcome To Dashboard');
+        return redirect()->route('dashboard')->with('message', 'Welcome To Dashboard');
     }
 
     public function render()
