@@ -1,6 +1,5 @@
-@extends('authexample.layouts.main')
 @section('title', 'Login | Alumnifo')
-@section('content')
+<div>
     <main class="main-content  mt-0">
         <section>
             <div class="page-header min-vh-75">
@@ -11,25 +10,40 @@
                                 <div class="card-header pb-0 text-left bg-transparent">
                                     <h3 class="font-weight-bolder text-info text-gradient">Welcome back</h3>
                                     <p class="mb-0">Enter your email and password to sign in</p>
+                                    @if (session('message'))
+                                        <div class="alert alert-danger text-white text-center mt-3">
+                                            {{ session('message') }}
+                                        </div>
+                                    @endif
                                 </div>
                                 <div class="card-body">
-                                    <form role="form" method="POST">
+                                    <form role="form" wire:submit.prevent="login">
                                         <label>Email</label>
                                         <div class="mb-3">
-                                            <input type="email" class="form-control" placeholder="Email"
-                                                aria-label="Email" aria-describedby="email-addon" name="email">
+                                            <input type="email"
+                                                class="form-control @error('email') is-invalid @elseif($email != '') is-valid @enderror"
+                                                placeholder="Email" aria-label="Email" aria-describedby="email-addon"
+                                                {!! wireModel('email') !!}>
+                                            @error('email')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
                                         </div>
                                         <label>Password</label>
                                         <div class="mb-3">
-                                            <input type="password" class="form-control" placeholder="Password"
-                                                aria-label="Password" aria-describedby="password-addon" name="password">
+                                            <input type="password"
+                                                class="form-control @error('password') is-invalid @elseif($password != '') is-valid @enderror"
+                                                placeholder="Password" aria-label="Password"
+                                                aria-describedby="password-addon" {!! wireModel('password') !!}>
+                                            @error('password')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
                                         </div>
                                         <div class="form-check form-switch">
                                             <input class="form-check-input" type="checkbox" id="rememberMe" checked="">
                                             <label class="form-check-label" for="rememberMe">Remember me</label>
                                         </div>
                                         <div class="text-center">
-                                            <button type="button" class="btn bg-gradient-info w-100 mt-4 mb-0">Sign
+                                            <button type="submit" class="btn bg-gradient-info w-100 mt-4 mb-0">Sign
                                                 in</button>
                                         </div>
                                     </form>
@@ -56,4 +70,4 @@
             </div>
         </section>
     </main>
-@endsection
+</div>

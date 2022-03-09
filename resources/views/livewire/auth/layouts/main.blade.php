@@ -24,6 +24,7 @@
     <title>
         @yield('title')
     </title>
+    @livewireStyles
     <!--     Fonts and icons     -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
     <!-- Nucleo Icons -->
@@ -89,4 +90,5 @@
         </div>
     </div>
     @yield('content')
-    @include('authexample.layouts.footer')
+    {{ $slot }}
+    @include('livewire.auth.layouts.footer')

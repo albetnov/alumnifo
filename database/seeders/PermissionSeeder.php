@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\PublicContact as ModelsPublicContact;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Permission;
 
-class PublicContact extends Seeder
+class PermissionSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,6 +15,6 @@ class PublicContact extends Seeder
      */
     public function run()
     {
-        ModelsPublicContact::factory(20)->create();
+        Permission::create(['name' => 'edit profile']);
     }
 }

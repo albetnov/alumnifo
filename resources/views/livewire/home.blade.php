@@ -159,7 +159,8 @@
                         @csrf
                         <div class="row">
                             <div class="form-group col-md-6">
-                                <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
+                                <input type="text" name="name"
+                                    class="form-control @error('name') is-invalid @elseif($name != '') is-valid @enderror"
                                     id="name" placeholder="Your Name" required {!! wireModel('name') !!}
                                     value="{{ old('name') }}">
                                 @error('name')
@@ -167,7 +168,8 @@
                                 @enderror
                             </div>
                             <div class="form-group col-md-6 mt-3 mt-md-0">
-                                <input type="email" class="form-control @error('email') is-invalid @enderror"
+                                <input type="email"
+                                    class="form-control @error('email') is-invalid @elseif($email != '') is-valid @enderror"
                                     name="email" id="email" placeholder="Your Email" required {!! wireModel('email') !!}
                                     value="{{ old('email') }}">
                                 @error('email')
@@ -176,7 +178,8 @@
                             </div>
                         </div>
                         <div class="form-group mt-3">
-                            <input type="text" class="form-control @error('subject') is-invalid @enderror"
+                            <input type="text"
+                                class="form-control @error('subject') is-invalid @elseif($subject != '') is-valid @enderror"
                                 name="subject" id="subject" placeholder="Subject" required {!! wireModel('subject') !!}
                                 value="{{ old('subject') }}">
                             @error('subject')
@@ -184,11 +187,12 @@
                             @enderror
                         </div>
                         <div class="form-group mt-3">
-                            <textarea class="form-control @error('message') is-invalid @enderror" name="message"
-                                rows="5" placeholder="Message" required
-                                {!! wireModel('message') !!}> {{ old('message') }}</textarea>
-                            @error('message')
-                                <div class="invalid-feedback">{{ $message }}</div>
+                            <textarea
+                                class="form-control @error('contactMessage') is-invalid @elseif($contactMessage != '') is-valid @enderror"
+                                name="contactMessage" rows="5" placeholder="Your message" required
+                                {!! wireModel('contactMessage') !!}> {{ old('contactMessage') }}</textarea>
+                            @error('contactMessage')
+                                <div class="invalid-feedback">{{ $messafe }}</div>
                             @enderror
                         </div>
 

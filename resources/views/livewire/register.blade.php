@@ -1,6 +1,4 @@
-@extends('authexample.layouts.main')
-@section('title', 'Register | Alumnifo')
-@section('content')
+<div>
     <section class="min-vh-100 mb-8">
         <div class="page-header align-items-start min-vh-50 pt-5 pb-11 m-3 border-radius-lg"
             style="background-image: url('{{ asset('assets/admin') }}/img/curved-images/curved14.jpg');">
@@ -9,7 +7,6 @@
                 <div class="row justify-content-center">
                     <div class="col-lg-5 text-center mx-auto">
                         <h1 class="text-white mb-2 mt-5">Sign Up!</h1>
-
                     </div>
                 </div>
             </div>
@@ -88,16 +85,25 @@
                         <div class="card-body">
                             <form role="form text-left">
                                 <div class="mb-3">
-                                    <input type="text" class="form-control" placeholder="Name" aria-label="Name"
-                                        aria-describedby="email-addon" name="name">
+                                    <input type="text" class="form-control {{ $errors->has('name') ? 'is-invalid' : 'is-valid' }}" placeholder="Name" aria-label="Name"
+                                        aria-describedby="email-addon" wire:model="name">
+                                        @error('name')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                 </div>
                                 <div class="mb-3">
-                                    <input type="email" class="form-control" placeholder="Email" aria-label="Email"
-                                        aria-describedby="email-addon" name="email">
+                                    <input type="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : 'is-valid' }}" placeholder="Email" aria-label="Email"
+                                        aria-describedby="email-addon" wire:model="email">
+                                        @error('email')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                 </div>
                                 <div class="mb-3">
-                                    <input type="password" class="form-control" placeholder="Password"
-                                        aria-label="Password" aria-describedby="password-addon" name="password">
+                                    <input type="password" class="form-control {{ $errors->has('password') ? 'is-invalid' : 'is-valid' }}" placeholder="Password"
+                                        aria-label="Password" aria-describedby="password-addon" wire:model="password">
+                                        @error('password')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                 </div>
                                 <div class="form-check form-check-info text-left">
                                     <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked>
@@ -118,4 +124,4 @@
             </div>
         </div>
     </section>
-@endsection
+</div>

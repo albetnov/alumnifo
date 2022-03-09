@@ -37,6 +37,7 @@
  </footer>
  <!-- -------- END FOOTER 3 w/ COMPANY DESCRIPTION WITH LINKS & SOCIAL ICONS & COPYRIGHT ------- -->
  <!--   Core JS Files   -->
+ @livewireScripts
  <script src="{{ asset('assets/admin') }}/js/core/popper.min.js"></script>
  <script src="{{ asset('assets/admin') }}/js/core/bootstrap.min.js"></script>
  <script src="{{ asset('assets/admin') }}/js/plugins/perfect-scrollbar.min.js"></script>
