@@ -20,7 +20,7 @@ class ProfileManager extends Component
             'name'     => 'required',
             'password' => 'nullable|min:8',
             'conpass'  => 'same:password',
-            'email'    => 'required|email|unique:users,id,'.Auth::user()->id,
+            'email'    => 'required|email|unique:users,id,' . Auth::user()->id,
         ];
     }
 
@@ -69,6 +69,6 @@ class ProfileManager extends Component
 
     public function render()
     {
-        return view('livewire.profile-manager')->layout('livewire.layouts.main');
+        return view('livewire.profile-manager')->layout('livewire.layouts.main', ['href' => 'Main', 'name' => 'Profile']);
     }
 }

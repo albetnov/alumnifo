@@ -1,6 +1,6 @@
 @section('title', 'Manage Profile')
 <div>
-    <div class="card">
+    <div class="card shadow">
         <div class="card-header">
             Manage Profile
         </div>

@@ -6,6 +6,8 @@ use App\Http\Livewire\Home;
 use App\Http\Livewire\Login;
 use App\Http\Livewire\ProfileManager;
 use App\Http\Livewire\Register;
+use App\Http\Livewire\Tables\Kerja\AddKerja;
+use App\Http\Livewire\Tables\Kerja\IndexKerja;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -34,8 +36,12 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('dashboard', Dashboard::class)->name('dashboard');
     });
 
-    Route::group(['middleware' => ['can: edit profile']], function () {
+    Route::group(['middleware' => ['role_or_permission:SuperAdmin|edit profile']], function () {
         Route::get('/profile', ProfileManager::class)->name('profile');
+        Route::group(['as' => 'table.', 'prefix' => 'table'], function () {
+            Route::get('kerja', IndexKerja::class)->middleware('role_or_permission:SuperAdmin|viewKerja')->name('kerja.index');
+            Route::get('kerja/add', AddKerja::class)->middleware('role_or_permission:SuperAdmin|addKerja')->name('kerja.add');
+        });
     });
     // Route::group(['middleware' => ['role:user']], function() {
     // Route::get('/home', HomeUser::class)->name('home.user');
