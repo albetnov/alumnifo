@@ -5,13 +5,13 @@
             Add Data Kerja
         </div>
         <div class="card-body">
-            <form wire:submit.prevent='store'>
+            <form wire:submit.prevent='store' enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="nama">Nama: </label>
                     <input type="text"
-                        class="form-control @error('nama') is-invalid @elseif($nama != '') is-valid @enderror"
-                        name="nama" {!! wireModel('nama') !!}>
-                    @error('nama')
+                        class="form-control @error('name') is-invalid @elseif($name != '') is-valid @enderror"
+                        name="name" {!! wireModel('name') !!}>
+                    @error('name')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
@@ -20,6 +20,7 @@
                     <select
                         class="form-control @error('jenis_kelamin') is-invalid @elseif($jenis_kelamin != '') is-valid @enderror"
                         name="jenis_kelamin" {!! wireModel('jenis_kelamin') !!}>
+                        <option value="">-</option>
                         <option value="l">Pria</option>
                         <option value="p">Wanita</option>
                     </select>
@@ -47,7 +48,7 @@
                 </div>
                 <div class="form-group">
                     <label for="tk">Tahun Kerja: </label>
-                    <input type="number" min="2007" value="2000"
+                    <input type="number" min="2000" value="2000"
                         class="form-control @error('tahun_kerja') is-invalid @elseif($tahun_kerja != '') is-valid @enderror"
                         name="tahun_kerja" {!! wireModel('tahun_kerja') !!}>
                     @error('tahun_kerja')
@@ -71,7 +72,8 @@
                     @endif
                 </div>
                 <button class="btn btn-sm btn-primary" type="submit">Create</button>
-                <button class="btn btn-sm btn-secondary" type="button">Back</button>
+                <button class="btn btn-sm btn-secondary" type="button"
+                    onclick="location.href='{{ route('table.kerja.index') }}'">Back</button>
             </form>
         </div>
     </div>
