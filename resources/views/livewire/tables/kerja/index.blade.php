@@ -37,9 +37,14 @@
                                 <td>{{ $kerja->tahun_kerja }}</td>
                                 <td>{{ $kerja->dibuat }}</td>
                                 <td>{{ $kerja->created_at }}</td>
-                                <td><button class="btn btn-sm btn-info" wire:click='openImg({{ $kerja->id }})'
-                                        wire:key='open-img-modal-{{ $kerja->id }}'><i class="fa-solid fa-image"
-                                            data-toggle="modal" data-target="#imgPreview"></i></button></td>
+                                @if ($kerja->gambar)
+                                    <td><button class="btn btn-sm btn-info" wire:click='openImg({{ $kerja->id }})'
+                                            wire:key='open-img-modal-{{ $kerja->id }}'><i class="fa-solid fa-image"
+                                                data-toggle="modal" data-target="#imgPreview"></i></button></td>
+                                @else
+                                    <td> <i class="fa-solid fa-times"></i>
+                                    </td>
+                                @endif
                             </tr>
                         @endforeach
                     </tbody>
