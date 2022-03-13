@@ -29,7 +29,7 @@
                     <tbody>
                         @foreach ($kerjas as $kerja)
                             <tr>
-                                <td>{{ !isset($no) ? ($no = 1) : ++$no }}</td>
+                                <td>{{ ($kerjas->currentpage() - 1) * $kerjas->perpage() + $loop->index + 1 }}</td>
                                 <td>{{ $kerja->name }}</td>
                                 <td>{{ $kerja->jenis_kelamin == 'l' ? 'Pria' : 'Perempuan' }}</td>
                                 <td>{{ $kerja->nama_perusahaan }}</td>

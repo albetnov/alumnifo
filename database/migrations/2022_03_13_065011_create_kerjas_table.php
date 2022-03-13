@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('nama_perusahaan');
             $table->string('jabatan');
             $table->year('tahun_kerja');
+            $table->string('dibuat');
             $table->string('gambar')->nullable();
             $table->timestamps();
         });

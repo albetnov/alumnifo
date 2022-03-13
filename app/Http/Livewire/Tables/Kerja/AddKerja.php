@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Tables\Kerja;
 
 use App\Models\Kerja;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Ramsey\Uuid\Rfc4122\UuidV4;
@@ -48,6 +49,7 @@ class AddKerja extends Component
                 $this->gambar->storeAs('public/kerja', $name);
                 $data['gambar'] = $name;
             }
+            $data['dibuat'] = Auth::user()->name;
             Kerja::create($data);
         } catch (\Exception $e) {
             $this->emit('showAlert', 'error', "Data gagal di simpan: {$e}");
