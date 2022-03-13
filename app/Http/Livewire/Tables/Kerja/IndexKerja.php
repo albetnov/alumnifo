@@ -2,12 +2,17 @@
 
 namespace App\Http\Livewire\Tables\Kerja;
 
+use App\Http\Livewire\Modules\BaseTable;
 use App\Models\Kerja;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class IndexKerja extends Component
 {
+    use WithPagination, BaseTable;
+
+    protected $paginationTheme = 'bootstrap';
     public $imgPreview = false, $name;
 
     private function cleanup()
@@ -33,6 +38,7 @@ class IndexKerja extends Component
 
     public function render()
     {
-        return view('livewire.tables.kerja.index', ['kerjas' => Kerja::get()])->layout('livewire.layouts.main', ['href' => 'Tables', 'name' => 'Kerja']);
+        $kerjas = $this->baseRender(Kerja::class, 'name', 'nama_perusahaan', 'jabatan', 'tahun_kerja')->paginate(10);
+        return view('livewire.tables.kerja.index', compact('kerjas'))->layout('livewire.layouts.main', ['href' => 'Tables', 'name' => 'Kerja']);
     }
 }

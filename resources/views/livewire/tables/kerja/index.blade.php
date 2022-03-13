@@ -6,6 +6,8 @@
             <div>
                 <button class="btn btn-sm btn-primary"
                     onclick="location.href='{{ route('table.kerja.add') }}'">Create</button>
+                @include('livewire.tables.filter')
+                @include('livewire.tables.search')
             </div>
         </div>
         <div class="card-body">
@@ -19,6 +21,8 @@
                             <th>Nama Perusahaan</th>
                             <th>Jabatan</th>
                             <th>Tahun Kerja</th>
+                            <th>Dibuat oleh</th>
+                            <td>Terdaftar</td>
                             <th colspan="3">Action</th>
                         </tr>
                     </thead>
@@ -31,6 +35,8 @@
                                 <td>{{ $kerja->nama_perusahaan }}</td>
                                 <td>{{ $kerja->jabatan }}</td>
                                 <td>{{ $kerja->tahun_kerja }}</td>
+                                <td>{{ $kerja->dibuat }}</td>
+                                <td>{{ $kerja->created_at }}</td>
                                 <td><button class="btn btn-sm btn-info" wire:click='openImg({{ $kerja->id }})'
                                         wire:key='open-img-modal-{{ $kerja->id }}'><i class="fa-solid fa-image"
                                             data-toggle="modal" data-target="#imgPreview"></i></button></td>
@@ -38,6 +44,7 @@
                         @endforeach
                     </tbody>
                 </table>
+                {{ $kerjas->withQueryString()->links() }}
             </div>
 
             @if ($imgPreview)
