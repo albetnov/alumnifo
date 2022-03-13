@@ -16,14 +16,15 @@
         rel="stylesheet">
 
     <!-- Vendor CSS Files -->
-    <link href="{{ asset('assets/guest/vendor/aos/aos.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('mix_guest/guest.css') }}">
+    {{-- <link href="{{ asset('assets/guest/vendor/aos/aos.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/guest/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/guest/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/guest/vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/guest/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
 
     <!-- Template Main CSS File -->
-    <link href="{{ asset('assets/guest/css/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/guest/css/style.css') }}" rel="stylesheet"> --}}
     <link rel="stylesheet" href="{{ asset('assets/toastr/toastr.min.css') }}">
 
 
@@ -65,14 +66,15 @@
     @livewireScripts
 
     <!-- Vendor JS Files -->
+    <script src="{{ asset('mix_guest/guest.js') }}"></script>
+    {{-- <script src="{{ asset('assets/guest/vendor/glightbox/js/glightbox.min.js') }}"></script>
+    <script src="{{ asset('assets/guest/vendor/swiper/swiper-bundle.min.js') }}"></script>
     <script src="{{ asset('assets/guest/vendor/aos/aos.js') }}"></script>
     <script src="{{ asset('assets/guest/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('assets/guest/vendor/glightbox/js/glightbox.min.js') }}"></script>
-    <script src="{{ asset('assets/guest/vendor/swiper/swiper-bundle.min.js') }}"></script>
     <!-- Template Main JS File -->
     <script src="{{ asset('assets/guest/js/main.js') }}"></script>
     <script src="{{ asset('assets/toastr/jquery/dist/jquery.min.js') }}"></script>
-    <script src="{{ asset('assets/toastr/toastr.min.js') }}"></script>
+    <script src="{{ asset('assets/toastr/toastr.min.js') }}"></script> --}}
     <script>
         toastr.options = {
             "closeButton": true,
