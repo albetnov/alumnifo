@@ -10,15 +10,20 @@ use Livewire\WithFileUploads;
 class AddKerja extends Component
 {
     use WithFileUploads;
-    public $name, $jenis_kelamin, $nama_perusahaan, $jabatan, $tahun_kerja, $gambar;
+    public $name;
+    public $jenis_kelamin;
+    public $nama_perusahaan;
+    public $jabatan;
+    public $tahun_kerja;
+    public $gambar;
 
     protected $rules = [
-        'name' => 'required',
-        'jenis_kelamin' => 'required|in:l,p',
+        'name'            => 'required',
+        'jenis_kelamin'   => 'required|in:l,p',
         'nama_perusahaan' => 'required',
-        'jabatan' => 'required',
-        'tahun_kerja' => 'required|numeric|min:2000|digits:4',
-        'gambar' => 'nullable|image|mimes:jpg,jpeg,png|max:2048'
+        'jabatan'         => 'required',
+        'tahun_kerja'     => 'required|numeric|min:2000|digits:4',
+        'gambar'          => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
     ];
 
     public function updated($fields)
@@ -44,7 +49,7 @@ class AddKerja extends Component
             if (!$this->gambar) {
                 unset($data['gambar']);
             } else {
-                $name = time() . hash("sha256", $this->gambar->getClientOriginalName()) . $this->gambar->getClientOriginalName();
+                $name = time().hash("sha256", $this->gambar->getClientOriginalName()).$this->gambar->getClientOriginalName();
                 $this->gambar->storeAs('public/kerja', $name);
                 $data['gambar'] = $name;
             }
@@ -52,6 +57,7 @@ class AddKerja extends Component
             Kerja::create($data);
         } catch (\Exception $e) {
             $this->emit('showAlert', 'error', "Data gagal di simpan: {$e->getMessage()}");
+
             return;
         }
         $this->resetForm();

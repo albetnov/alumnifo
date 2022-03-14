@@ -20,7 +20,7 @@ class ProfileManager extends Component
             'name'     => 'required',
             'password' => 'nullable|min:8',
             'conpass'  => 'same:password',
-            'email'    => 'required|email|unique:users,id,' . Auth::user()->id,
+            'email'    => 'required|email|unique:users,id,'.Auth::user()->id,
         ];
     }
 
