@@ -6,11 +6,15 @@ use Carbon\Carbon;
 
 trait BaseTable
 {
-    public $filter, $from, $to, $search, $filter_date;
+    public $filter;
+    public $from;
+    public $to;
+    public $search;
+    public $filter_date;
 
     public function closeAll()
     {
-        return;
+
     }
 
     public function updated($fields)
@@ -18,8 +22,9 @@ trait BaseTable
         if ($fields == 'to' || $fields == 'from') {
             $this->validate([
                 'from' => 'required',
-                'to' => 'required_with:from|date|after:from'
+                'to'   => 'required_with:from|date|after:from',
             ]);
+
             return;
         }
         if ($fields == 'search') {
@@ -41,7 +46,7 @@ trait BaseTable
     {
         $this->validate([
             'from' => 'required',
-            'to' => 'required_with:from|date|after_or_equal:from'
+            'to'   => 'required_with:from|date|after_or_equal:from',
         ]);
         $this->filter_date = true;
         $this->filter = true;
@@ -57,6 +62,7 @@ trait BaseTable
         if ($this->filter_date) {
             $models->whereDate('created_at', '<=', $this->to)->whereDate('created_at', '>=', $this->from);
         }
+
         return $models;
     }
 }

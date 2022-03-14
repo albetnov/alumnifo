@@ -12,18 +12,20 @@ use Spatie\Sluggable\SlugOptions;
 
 class Kerja extends Model
 {
-    use HasFactory, Searchable, HasSlug;
+    use HasFactory;
+    use Searchable;
+    use HasSlug;
     protected $fillable = ['name', 'jenis_kelamin', 'nama_perusahaan', 'jabatan', 'tahun_kerja', 'gambar', 'dibuat'];
 
     #[SearchUsingFullText(['name', 'nama_perusahaan', 'jabatan'])]
     public function toSearchableArray()
     {
         return [
-            'name' => $this->name,
+            'name'            => $this->name,
             'nama_perusahaan' => $this->nama_perusahaan,
-            'jabatan' => $this->jabatan,
-            'tahun_kerja' => $this->tahun_kerja,
-            'dibuat' => $this->dibuat
+            'jabatan'         => $this->jabatan,
+            'tahun_kerja'     => $this->tahun_kerja,
+            'dibuat'          => $this->dibuat,
         ];
     }
 

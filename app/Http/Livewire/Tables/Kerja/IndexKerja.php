@@ -4,7 +4,6 @@ namespace App\Http\Livewire\Tables\Kerja;
 
 use App\Http\Livewire\Modules\BaseTable;
 use App\Models\Kerja;
-use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Storage;
@@ -13,10 +12,14 @@ use Livewire\WithPagination;
 
 class IndexKerja extends Component
 {
-    use WithPagination, BaseTable;
+    use WithPagination;
+    use BaseTable;
 
     protected $paginationTheme = 'bootstrap';
-    public $imgPreview = false, $name, $deleteOpened = false, $selectedId;
+    public $imgPreview = false;
+    public $name;
+    public $deleteOpened = false;
+    public $selectedId;
 
     private function cleanup()
     {
@@ -33,6 +36,7 @@ class IndexKerja extends Component
     public function openImg($id)
     {
         $this->cleanup();
+
         try {
             $data = Kerja::where('id', $id)->firstOrFail();
         } catch (ModelNotFoundException $e) {
@@ -43,10 +47,10 @@ class IndexKerja extends Component
         $this->emit('openModal', 'imgPreview');
     }
 
-
     public function openDelete($id)
     {
         $this->cleanup();
+
         try {
             $data = Kerja::where('id', $id)->firstOrFail();
         } catch (ModelNotFoundException $e) {
@@ -61,17 +65,18 @@ class IndexKerja extends Component
     public function deleteData()
     {
         try {
-
             $find = Kerja::find($this->selectedId)->firstOrFail();
             if ($find->gambar) {
-                Storage::disk('public')->delete('kerja/' . $find->gambar);
+                Storage::disk('public')->delete('kerja/'.$find->gambar);
             }
             $find->delete();
         } catch (QueryException $q) {
-            $this->emit('showAlert', 'error', 'Gagal menghapus data. ' . $q->getMessage());
+            $this->emit('showAlert', 'error', 'Gagal menghapus data. '.$q->getMessage());
+
             return;
         } catch (\Exception $e) {
-            $this->emit('showAlert', 'error', 'Gagal menghapus data: ' . $e->getMessage());
+            $this->emit('showAlert', 'error', 'Gagal menghapus data: '.$e->getMessage());
+
             return;
         }
         $this->emit('showAlert', 'success', 'Data berhasil dihapus');
@@ -80,6 +85,7 @@ class IndexKerja extends Component
     public function render()
     {
         $kerjas = $this->baseRender(Kerja::class, 'name', 'nama_perusahaan', 'jabatan', 'tahun_kerja')->paginate(10);
+
         return view('livewire.tables.kerja.index', compact('kerjas'))->layout('livewire.layouts.main', ['href' => 'Tables', 'name' => 'Kerja']);
     }
 }

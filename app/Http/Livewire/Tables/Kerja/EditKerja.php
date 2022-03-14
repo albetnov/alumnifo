@@ -10,10 +10,15 @@ use Livewire\WithFileUploads;
 
 class EditKerja extends Component
 {
-
     use WithFileUploads;
-    public $name, $jenis_kelamin, $nama_perusahaan, $jabatan, $tahun_kerja, $gambar;
-    public $selectedId, $gambarUpdated = false;
+    public $name;
+    public $jenis_kelamin;
+    public $nama_perusahaan;
+    public $jabatan;
+    public $tahun_kerja;
+    public $gambar;
+    public $selectedId;
+    public $gambarUpdated = false;
 
     public function mount(Kerja $kerja)
     {
@@ -27,12 +32,12 @@ class EditKerja extends Component
     }
 
     protected $rules = [
-        'name' => 'required',
-        'jenis_kelamin' => 'required|in:l,p',
+        'name'            => 'required',
+        'jenis_kelamin'   => 'required|in:l,p',
         'nama_perusahaan' => 'required',
-        'jabatan' => 'required',
-        'tahun_kerja' => 'required|numeric|min:2000|digits:4',
-        'gambar' => 'nullable|image|mimes:jpg,jpeg,png|max:2048'
+        'jabatan'         => 'required',
+        'tahun_kerja'     => 'required|numeric|min:2000|digits:4',
+        'gambar'          => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
     ];
 
     public function updated($fields)
@@ -66,9 +71,9 @@ class EditKerja extends Component
                 unset($data['gambar']);
             } else {
                 if ($currentData->gambar) {
-                    Storage::disk('public')->delete('kerja/' . $currentData->gambar);
+                    Storage::disk('public')->delete('kerja/'.$currentData->gambar);
                 }
-                $name = time() . hash("sha256", $this->gambar->getClientOriginalName()) . $this->gambar->getClientOriginalName();
+                $name = time().hash("sha256", $this->gambar->getClientOriginalName()).$this->gambar->getClientOriginalName();
                 $this->gambar->storeAs('public/kerja', $name);
                 $data['gambar'] = $name;
             }
@@ -76,6 +81,7 @@ class EditKerja extends Component
             $currentData->update($data);
         } catch (\Exception $e) {
             $this->emit('showAlert', 'error', "Data gagal di perbarui: {$e->getMessage()}");
+
             return;
         }
         $this->resetForm();
