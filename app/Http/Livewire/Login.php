@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\RateLimiter;
 use Livewire\Component;
 
 class Login extends Component
@@ -23,6 +24,14 @@ class Login extends Component
     public function login()
     {
         $validateData = $this->validate();
+        if (RateLimiter::remaining('login', 3)) {
+            RateLimiter::hit('login');
+        }
+        if (RateLimiter::tooManyAttempts('login', 3)) {
+            $seconds = RateLimiter::availableIn('login');
+
+            return session()->flash('message', 'Percobaan terlalu banyak. Akses ditolak selama: ' . $seconds);
+        }
         if (Auth::attempt($validateData)) {
             request()->session()->regenerate();
             if (Auth::guard()->user()->hasRole('SuperAdmin')) {
