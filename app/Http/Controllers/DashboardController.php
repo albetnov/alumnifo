@@ -11,6 +11,6 @@ class DashboardController extends Controller
         Auth::logout();
         request()->session()->regenerate();
 
-        return redirect()->route('home');
+        return to_route('home');
     }
 }

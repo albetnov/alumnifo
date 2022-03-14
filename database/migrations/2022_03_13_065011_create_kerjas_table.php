@@ -15,10 +15,11 @@ return new class extends Migration
     {
         Schema::create('kerjas', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->fulltext();
+            $table->string('slug');
             $table->enum('jenis_kelamin', ['l', 'p']);
-            $table->string('nama_perusahaan');
-            $table->string('jabatan');
+            $table->string('nama_perusahaan')->fulltext();
+            $table->string('jabatan')->fulltext();
             $table->year('tahun_kerja');
             $table->string('dibuat');
             $table->string('gambar')->nullable();

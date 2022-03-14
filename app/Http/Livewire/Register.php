@@ -32,7 +32,7 @@ class Register extends Component
             'password' => Hash::make($validateData['password']),
         ]);
 
-        return redirect()->route('dashboard')->with('message', 'Welcome To Dashboard');
+        return to_route('dashboard')->with('message', 'Welcome To Dashboard');
     }
 
     public function render()

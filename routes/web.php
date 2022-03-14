@@ -7,6 +7,7 @@ use App\Http\Livewire\Login;
 use App\Http\Livewire\ProfileManager;
 use App\Http\Livewire\Register;
 use App\Http\Livewire\Tables\Kerja\AddKerja;
+use App\Http\Livewire\Tables\Kerja\EditKerja;
 use App\Http\Livewire\Tables\Kerja\IndexKerja;
 use Illuminate\Support\Facades\Route;
 
@@ -21,8 +22,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/login', Login::class)->name('login');
-Route::get('/register', Register::class)->name('register');
+Route::get('/login', Login::class)->name('login')->middleware('guest');
+Route::get('/register', Register::class)->name('register')->middleware('guest');
 
 Route::get('/send_cs', function () {
     return "again an example";
@@ -38,10 +39,12 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::group(['middleware' => ['role_or_permission:SuperAdmin|edit profile']], function () {
         Route::get('/profile', ProfileManager::class)->name('profile');
-        Route::group(['as' => 'table.', 'prefix' => 'table'], function () {
-            Route::get('kerja', IndexKerja::class)->middleware('role_or_permission:SuperAdmin|viewKerja')->name('kerja.index');
-            Route::get('kerja/add', AddKerja::class)->middleware('role_or_permission:SuperAdmin|addKerja')->name('kerja.add');
-        });
+    });
+
+    Route::group(['as' => 'table.', 'prefix' => 'table'], function () {
+        Route::get('kerja', IndexKerja::class)->middleware('role_or_permission:SuperAdmin|viewKerja')->name('kerja.index');
+        Route::get('kerja/add', AddKerja::class)->middleware('role_or_permission:SuperAdmin|addKerja')->name('kerja.add');
+        Route::get('kerja/edit/{kerja}', EditKerja::class)->middleware('role_or_permission:SuperAdmin|editKerja')->name('kerja.edit');
     });
     // Route::group(['middleware' => ['role:user']], function() {
     // Route::get('/home', HomeUser::class)->name('home.user');

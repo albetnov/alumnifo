@@ -138,8 +138,13 @@
 @livewireScripts
 @stack("scripts")
 <script>
-    Livewire.on('showAlert', (type, message) => {
+    Livewire.on('showAlert', (type, message, redirect = null) => {
         toastr[type](message);
+        if (redirect != null) {
+            setTimeout(() => {
+                location.href = redirect;
+            }, 700);
+        }
     });
 
     Livewire.on('openModal', (modalId, emit = null) => {

@@ -38,13 +38,22 @@
                                 <td>{{ $kerja->dibuat }}</td>
                                 <td>{{ $kerja->created_at }}</td>
                                 @if ($kerja->gambar)
-                                    <td><button class="btn btn-sm btn-info" wire:click='openImg({{ $kerja->id }})'
-                                            wire:key='open-img-modal-{{ $kerja->id }}'><i class="fa-solid fa-image"
-                                                data-toggle="modal" data-target="#imgPreview"></i></button></td>
+                                    <td class="text-center"><button class="btn btn-sm btn-info"
+                                            wire:click='openImg({{ $kerja->id }})'
+                                            wire:key='open-img-modal-{{ $kerja->id }}'><i
+                                                class="fa-solid fa-image"></i></button></td>
                                 @else
-                                    <td> <i class="fa-solid fa-times"></i>
+                                    <td class="text-center"> <button class="btn btn-sm btn-secondary" disabled><i
+                                                class="fa-solid fa-image"></i></button>
                                     </td>
                                 @endif
+                                <td class="text-center"><button class="btn btn-sm btn-primary"
+                                        onclick="location.href='{{ route('table.kerja.edit', $kerja->slug) }}'"><i
+                                            class="fas fa-pen"></i></button></td>
+                                <td class="text-center"><button class="btn btn-sm btn-danger"
+                                        wire:click='openDelete({{ $kerja->id }})'
+                                        wire:key='open-delete-modal-{{ $kerja->id }}'><i
+                                            class="fa-solid fa-trash"></i></button></td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -67,6 +76,31 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endif
+
+            @if ($deleteOpened)
+                <div class="modal fade" wire:key='open-delete-modal' id="deletePreview" tabindex="-1"
+                    aria-labelledby="deletePreviewLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="deletePreviewLabel">Hapus Data?</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                Yakin hapus data, {{ $name }} ?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <form wire:submit.prevent='deleteData()'>
+                                    <button type="submit" class="btn btn-danger" data-bs-dismiss="modal"><i
+                                            class="fa-solid fa-trash"></i> Delete It!</button>
+                                </form>
                             </div>
                         </div>
                     </div>

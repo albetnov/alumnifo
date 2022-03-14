@@ -4,13 +4,27 @@ namespace App\Http\Livewire\Tables\Kerja;
 
 use App\Models\Kerja;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
-class AddKerja extends Component
+class EditKerja extends Component
 {
+
     use WithFileUploads;
     public $name, $jenis_kelamin, $nama_perusahaan, $jabatan, $tahun_kerja, $gambar;
+    public $selectedId, $gambarUpdated = false;
+
+    public function mount(Kerja $kerja)
+    {
+        $this->name = $kerja->name;
+        $this->jenis_kelamin = $kerja->jenis_kelamin;
+        $this->nama_perusahaan = $kerja->nama_perusahaan;
+        $this->jabatan = $kerja->jabatan;
+        $this->tahun_kerja = $kerja->tahun_kerja;
+        $this->gambar = $kerja->gambar;
+        $this->selectedId = $kerja->id;
+    }
 
     protected $rules = [
         'name' => 'required',
@@ -26,6 +40,11 @@ class AddKerja extends Component
         $this->validateOnly($fields);
     }
 
+    public function updatedGambar()
+    {
+        $this->gambarUpdated = true;
+    }
+
     private function resetForm()
     {
         $this->name = "";
@@ -34,33 +53,37 @@ class AddKerja extends Component
         $this->jabatan = "";
         $this->tahun_kerja = "2000";
         $this->gambar = null;
+        $this->gambarUpdated = false;
     }
 
-    public function store()
+    public function update()
     {
+        $currentData = Kerja::where('id', $this->selectedId)->firstOrFail();
         $data = $this->validate();
 
         try {
             if (!$this->gambar) {
                 unset($data['gambar']);
             } else {
+                if ($currentData->gambar) {
+                    Storage::disk('public')->delete('kerja/' . $currentData->gambar);
+                }
                 $name = time() . hash("sha256", $this->gambar->getClientOriginalName()) . $this->gambar->getClientOriginalName();
                 $this->gambar->storeAs('public/kerja', $name);
                 $data['gambar'] = $name;
             }
             $data['dibuat'] = Auth::user()->name;
-            Kerja::create($data);
+            $currentData->update($data);
         } catch (\Exception $e) {
-            $this->emit('showAlert', 'error', "Data gagal di simpan: {$e->getMessage()}");
+            $this->emit('showAlert', 'error', "Data gagal di perbarui: {$e->getMessage()}");
             return;
         }
         $this->resetForm();
-
-        $this->emit('showAlert', 'success', "Data berhasil di simpan.");
+        $this->emit('showAlert', 'success', "Data berhasil di perbarui.", '/table/kerja');
     }
 
     public function render()
     {
-        return view('livewire.tables.kerja.add')->layout('livewire.layouts.main', ['href' => 'Tables/Kerja', 'name' => 'Add']);
+        return view('livewire.tables.kerja.edit-kerja')->layout('livewire.layouts.main', ['href' => 'Tables/Kerja', 'name' => 'Edit']);
     }
 }

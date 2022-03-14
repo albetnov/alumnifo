@@ -50,19 +50,10 @@ trait BaseTable
         $this->closeAll();
     }
 
-    public function baseRender($model, $field = null, ...$custom)
+    public function baseRender($model)
     {
         header('referrer-policy:same-origin');
-        if (!is_null($field)) {
-            $models = $this->search ? $model::where($field, 'like', "%{$this->search}%") : $model::latest();
-        } else {
-            $models = $this->search ? $model::where('name', 'like', "%{$this->search}%") : $model::latest();
-        }
-        if ($custom) {
-            foreach ($custom as $custom) {
-                $models = $this->search ? $models->orWhere($custom, 'like', "%{$this->search}%") : $model::latest();
-            }
-        }
+        $models = $this->search ? $model::search($this->search) : $model::latest();
         if ($this->filter_date) {
             $models->whereDate('created_at', '<=', $this->to)->whereDate('created_at', '>=', $this->from);
         }
