@@ -30,7 +30,7 @@ class Login extends Component
         if (RateLimiter::tooManyAttempts('login', 3)) {
             $seconds = RateLimiter::availableIn('login');
 
-            return session()->flash('message', 'Percobaan terlalu banyak. Akses ditolak selama: ' . $seconds);
+            return session()->flash('message', 'Percobaan terlalu banyak. Akses ditolak selama: ' . $seconds . ' detik');
         }
         if (Auth::attempt($validateData)) {
             request()->session()->regenerate();

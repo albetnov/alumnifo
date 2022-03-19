@@ -1,28 +1,25 @@
 <?php
 
-namespace App\Http\Livewire\Tables\Kerja;
+namespace App\Http\Livewire\Tables\Kuliah;
 
-use App\Models\Kerja;
+use App\Models\Kuliah;
 use Illuminate\Support\Facades\Auth;
-use Livewire\Component;
-use Livewire\WithFileUploads;
+use Livewire\{Component, WithFileUploads};
 
-class AddKerja extends Component
+class AddKuliah extends Component
 {
     use WithFileUploads;
     public $name;
     public $jenis_kelamin;
-    public $nama_perusahaan;
-    public $jabatan;
-    public $tahun_kerja;
+    public $nama_universitas;
+    public $jurusan;
     public $gambar;
 
     protected $rules = [
         'name'            => 'required',
         'jenis_kelamin'   => 'required|in:l,p',
-        'nama_perusahaan' => 'required',
-        'jabatan'         => 'required',
-        'tahun_kerja'     => 'required|numeric|min:2000|digits:4',
+        'nama_universitas' => 'required',
+        'jurusan'         => 'required',
         'gambar'          => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
     ];
 
@@ -35,9 +32,8 @@ class AddKerja extends Component
     {
         $this->name = "";
         $this->jenis_kelamin = "";
-        $this->nama_perusahaan = "";
-        $this->jabatan = "";
-        $this->tahun_kerja = "2000";
+        $this->nama_universitas = "";
+        $this->jurusan = "";
         $this->gambar = null;
     }
 
@@ -50,11 +46,11 @@ class AddKerja extends Component
                 unset($data['gambar']);
             } else {
                 $name = time().hash("sha256", $this->gambar->getClientOriginalName()).$this->gambar->getClientOriginalName();
-                $this->gambar->storeAs('public/kerja', $name);
+                $this->gambar->storeAs('public/kuliah', $name);
                 $data['gambar'] = $name;
             }
             $data['dibuat'] = Auth::user()->name;
-            Kerja::create($data);
+            Kuliah::create($data);
         } catch (\Exception $e) {
             $this->emit('showAlert', 'error', "Data gagal di simpan: {$e->getMessage()}");
             return;
@@ -62,11 +58,11 @@ class AddKerja extends Component
         $this->resetForm();
 
         $this->emit('showAlert', 'success', "Data berhasil di simpan.");
-        return to_route('table.kerja.index');
+        return to_route('table.kuliah.index');
     }
 
     public function render()
     {
-        return view('livewire.tables.kerja.add')->layout('livewire.layouts.main', ['href' => 'Tables/Kerja', 'name' => 'Add']);
+        return view('livewire.tables.kuliah.add-kuliah')->layout('livewire.layouts.main', ['href' => 'Tables/Kuliah', 'name' => 'Add']);
     }
 }

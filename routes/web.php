@@ -1,14 +1,9 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
-use App\Http\Livewire\Dashboard;
-use App\Http\Livewire\Home;
-use App\Http\Livewire\Login;
-use App\Http\Livewire\ProfileManager;
-use App\Http\Livewire\Register;
-use App\Http\Livewire\Tables\Kerja\AddKerja;
-use App\Http\Livewire\Tables\Kerja\EditKerja;
-use App\Http\Livewire\Tables\Kerja\IndexKerja;
+use App\Http\Livewire\{Dashboard, Home, Login, ProfileManager, Register};
+use App\Http\Livewire\Tables\Kerja\{AddKerja, EditKerja, IndexKerja};
+use App\Http\Livewire\Tables\Kuliah\{AddKuliah, EditKuliah, IndexKuliah};
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -45,6 +40,10 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('kerja', IndexKerja::class)->middleware('role_or_permission:SuperAdmin|viewKerja')->name('kerja.index');
         Route::get('kerja/add', AddKerja::class)->middleware('role_or_permission:SuperAdmin|addKerja')->name('kerja.add');
         Route::get('kerja/edit/{kerja}', EditKerja::class)->middleware('role_or_permission:SuperAdmin|editKerja')->name('kerja.edit');
+
+        Route::get('kuliah', IndexKuliah::class)->middleware('role_or_permission:SuperAdmin|viewKuliah')->name('kuliah.index');
+        Route::get('kuliah/add', AddKuliah::class)->middleware('role_or_permission:SuperAdmin|addKuliah')->name('kuliah.add');
+        Route::get('kuliah/edit/{kuliah}', EditKuliah::class)->middleware('role_or_permission:SuperAdmin|editKuliah')->name('kuliah.edit');
     });
     // Route::group(['middleware' => ['role:user']], function() {
     // Route::get('/home', HomeUser::class)->name('home.user');

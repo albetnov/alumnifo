@@ -13,12 +13,20 @@
                     <li><a class="nav-link scrollto" href="#about">About</a></li>
                     <li><a class="nav-link scrollto" href="#speakers">Team</a></li>
                     <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
-                </ul>
+            </ul>
                 <i class="bi bi-list mobile-nav-toggle"></i>
             </nav>
             <!-- .navbar -->
-            <a class="buy-tickets scrollto" href="{{ route('register') }}">Sign Up</a>
-            <a class="buy-tickets scrollto" href="{{ route('login') }}">Login</a>
+            @auth
+            <form action="{{ route('logout') }}" method="post">
+                @csrf
+                <button type="submit" class="buy-tickets scrollto">Logout</button>
+            </form>
+            @else    
+                <a class="buy-tickets scrollto" href="{{ route('register') }}">Sign Up</a>
+                <a class="buy-tickets scrollto" href="{{ route('login') }}">Login</a>
+            @endauth
+            
 
         </div>
     </header>
