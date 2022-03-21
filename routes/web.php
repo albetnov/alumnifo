@@ -5,6 +5,9 @@ use App\Http\Livewire\{Dashboard, Home, Login, ProfileManager, Register};
 use App\Http\Livewire\Tables\Kerja\{AddKerja, EditKerja, IndexKerja};
 use App\Http\Livewire\Tables\Kuliah\{AddKuliah, EditKuliah, IndexKuliah};
 use App\Http\Livewire\Tables\KerjaKuliah\{AddKerjaKuliah, EditKerjaKuliah, IndexKerjaKuliah};
+use App\Http\Livewire\Tables\MencariKerja\AddMencariKerja;
+use App\Http\Livewire\Tables\MencariKerja\EditMencariKerja;
+use App\Http\Livewire\Tables\MencariKerja\IndexMencariKerja;
 use App\Http\Livewire\Tables\Usaha\{AddUsaha, EditUsaha, IndexUsaha};
 use Illuminate\Support\Facades\Route;
 
@@ -47,13 +50,17 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('kuliah/add', AddKuliah::class)->middleware('role_or_permission:SuperAdmin|addKuliah')->name('kuliah.add');
         Route::get('kuliah/edit/{kuliah}', EditKuliah::class)->middleware('role_or_permission:SuperAdmin|editKuliah')->name('kuliah.edit');
         
-        Route::get('kerja-kuliah', IndexKerjaKuliah::class)->middleware('role_or_permission:SuperAdmin|viewKuliah')->name('kerja-kuliah.index');
-        Route::get('kerja-kuliah/add', AddKerjaKuliah::class)->middleware('role_or_permission:SuperAdmin|addKuliah')->name('kerja-kuliah.add');
-        Route::get('kerja-kuliah/edit/{kerjaKuliah}', EditKerjaKuliah::class)->middleware('role_or_permission:SuperAdmin|editKuliah')->name('kerja-kuliah.edit');
+        Route::get('kerja-kuliah', IndexKerjaKuliah::class)->middleware('role_or_permission:SuperAdmin|viewKerjaKuliah')->name('kerja-kuliah.index');
+        Route::get('kerja-kuliah/add', AddKerjaKuliah::class)->middleware('role_or_permission:SuperAdmin|addKerjaKuliah')->name('kerja-kuliah.add');
+        Route::get('kerja-kuliah/edit/{kerjaKuliah}', EditKerjaKuliah::class)->middleware('role_or_permission:SuperAdmin|editKerjaKuliah')->name('kerja-kuliah.edit');
     
-        Route::get('usaha', IndexUsaha::class)->middleware('role_or_permission:SuperAdmin|viewKuliah')->name('usaha.index');
-        Route::get('usaha/add', AddUsaha::class)->middleware('role_or_permission:SuperAdmin|addKuliah')->name('usaha.add');
-        Route::get('usaha/edit/{usaha}', EditUsaha::class)->middleware('role_or_permission:SuperAdmin|editKuliah')->name('usaha.edit');
+        Route::get('usaha', IndexUsaha::class)->middleware('role_or_permission:SuperAdmin|viewUsaha')->name('usaha.index');
+        Route::get('usaha/add', AddUsaha::class)->middleware('role_or_permission:SuperAdmin|addUsaha')->name('usaha.add');
+        Route::get('usaha/edit/{usaha}', EditUsaha::class)->middleware('role_or_permission:SuperAdmin|editUsaha')->name('usaha.edit');
+    
+        Route::get('mencari-kerja', IndexMencariKerja::class)->middleware('role_or_permission:SuperAdmin|viewMencariKerja')->name('mencari-kerja.index');
+        Route::get('mencari-kerja/add', AddMencariKerja::class)->middleware('role_or_permission:SuperAdmin|addMencariKerja')->name('mencari-kerja.add');
+        Route::get('mencari-kerja/edit/{mencariKerja}', EditMencariKerja::class)->middleware('role_or_permission:SuperAdmin|editMencariKerja')->name('mencari-kerja.edit');
     });
     // Route::group(['middleware' => ['role:user']], function() {
     // Route::get('/home', HomeUser::class)->name('home.user');

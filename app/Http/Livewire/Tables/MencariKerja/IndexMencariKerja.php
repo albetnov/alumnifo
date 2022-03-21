@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Http\Livewire\Tables\Usaha;
+namespace App\Http\Livewire\Tables\MencariKerja;
 
 use App\Http\Livewire\Modules\BaseTable;
-use App\Models\Usaha;
+use App\Models\MencariKerja;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\{Auth, Hash, RateLimiter, Storage};
 use Livewire\{Component, WithPagination};
 
-class IndexUsaha extends Component
+class IndexMencariKerja extends Component
 {
     use WithPagination, BaseTable;
 
@@ -54,11 +54,11 @@ class IndexUsaha extends Component
         }
         $this->emit('showAlert', 'success', 'Akses Sudo terbuka');
         try {
-            foreach (Usaha::get() as $usaha) {
-                if ($usaha->gambar) {
-                    Storage::disk('public')->delete('usaha/' . $usaha->gambar);
+            foreach (MencariKerja::get() as $mencariKerja) {
+                if ($mencariKerja->gambar) {
+                    Storage::disk('public')->delete('mencari-kerja/' . $mencariKerja->gambar);
                 }
-                $usaha->delete();
+                $mencariKerja->delete();
             }
         } catch (\Exception $e) {
             return $this->emit('showAlert', 'error', "Gagal menghapus data: {$e->getMessage()}");
@@ -70,9 +70,9 @@ class IndexUsaha extends Component
     {
         foreach ($this->items as $item) {
             try {
-                $find = Usaha::where('id', $item)->first();
+                $find = MencariKerja::where('id', $item)->first();
                 if ($find->gambar) {
-                    Storage::disk('public')->delete('usaha/' . $find->gambar);
+                    Storage::disk('public')->delete('mencari-kerja/' . $find->gambar);
                 }
                 $find->delete();
             } catch (\Exception $e) {
@@ -103,7 +103,7 @@ class IndexUsaha extends Component
         $this->cleanup();
 
         try {
-            $data = Usaha::where('id', $id)->firstOrFail();
+            $data = MencariKerja::where('id', $id)->firstOrFail();
         } catch (ModelNotFoundException $e) {
             return;
         }
@@ -117,7 +117,7 @@ class IndexUsaha extends Component
         $this->cleanup();
 
         try {
-            $data = Usaha::where('id', $id)->firstOrFail();
+            $data = MencariKerja::where('id', $id)->firstOrFail();
         } catch (ModelNotFoundException $e) {
             return;
         }
@@ -130,9 +130,9 @@ class IndexUsaha extends Component
     public function deleteData()
     {
         try {
-            $find = Usaha::find($this->selectedId)->firstOrFail();
+            $find = MencariKerja::find($this->selectedId)->firstOrFail();
             if ($find->gambar) {
-                Storage::disk('public')->delete('usaha/' . $find->gambar);
+                Storage::disk('public')->delete('mencari-kerja/' . $find->gambar);
             }
             $find->delete();
         } catch (QueryException $q) {
@@ -149,7 +149,7 @@ class IndexUsaha extends Component
 
     public function render()
     {
-        $dataUsaha = $this->baseRender(Usaha::class, 'name', 'jenis_usaha', 'alamat_usaha')->paginate(10);
-        return view('livewire.tables.usaha.index-usaha', compact('dataUsaha'))->layout('livewire.layouts.main', ['href' => 'Tables', 'name' => 'Usaha']);
+        $dataMencariKerja = $this->baseRender(MencariKerja::class, 'name', 'jenis_kelamin', 'alamat','alasan_mencari_kerja','kontak')->paginate(10);
+        return view('livewire.tables.mencari-kerja.index-mencari-kerja', compact('dataMencariKerja'))->layout('livewire.layouts.main', ['href' => 'Tables', 'name' => 'MencariKerja']);
     }
 }

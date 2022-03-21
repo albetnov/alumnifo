@@ -1,11 +1,11 @@
-@section('title', 'Table Kuliah')
+@section('title', 'Table Mencari Kerja')
 <div>
     <div class="card shadow">
         <div class="card-header">
-            Table Kuliah
+            Table Mencari Kerja
             <div>
                 <button class="btn btn-sm btn-primary"
-                    onclick="location.href='{{ route('table.kuliah.add') }}'">Create</button>
+                    onclick="location.href='{{ route('table.mencari-kerja.add') }}'">Create</button>
                 @include('livewire.tables.filter')
                 @include('livewire.tables.search')
                 @if ($bulkAction)
@@ -23,7 +23,7 @@
                                         aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <div class="alert alert-danger shadow text-light">SEMUA DATA TABEL KULIAH AKAN
+                                    <div class="alert alert-danger shadow text-light">SEMUA DATA TABEL MENCARI KERJA AKAN
                                         DIHAPUS. DATA
                                         TIDAK AKAN BISA DIPULIHKAN KEMBALI BILA KAMU MENGHAPUSNYA.</div>
                                     <p>Konfirmasi Sudo:</p>
@@ -56,30 +56,33 @@
                             <th>No.</th>
                             <th>Nama</th>
                             <th>Jenis Kelamin</th>
-                            <th>Nama Universitas</th>
-                            <th>Jurusan</th>
+                            <th>Alamat</th>
+                            <th>Alasan Mencari Kerja</th>
+                            <th>Kontak</th>
                             <th>Dibuat oleh</th>
+                            <th>Terdaftar</th>
                             <th colspan="3">Action</th>
                         </tr>
                     </thead>
                     <tbody class="text-center">
-                        @foreach ($kuliahs as $kuliah)
+                        @foreach ($dataMencariKerja as $mencariKerja)
                             <tr>
                                 <form wire:submit.prevent>
                                     <td class="text-center"><input type="checkbox" name="items" wire:model='items'
-                                            value="{{ $kuliah->id }}" wire:key='select-{{ $kuliah->id }}'></td>
+                                            value="{{ $mencariKerja->id }}" wire:key='select-{{ $mencariKerja->id }}'></td>
                                 </form>
-                                <td>{{ ($kuliahs->currentpage() - 1) * $kuliahs->perpage() + $loop->index + 1 }}</td>
-                                <td>{{ $kuliah->name }}</td>
-                                <td>{{ $kuliah->jenis_kelamin == 'l' ? 'Pria' : 'Wanita' }}</td>
-                                <td>{{ $kuliah->nama_universitas }}</td>
-                                <td>{{ $kuliah->jurusan }}</td>
-                                <td>{{ $kuliah->dibuat }}</td>
-                                <td>{{ $kuliah->created_at }}</td>
-                                @if ($kuliah->gambar)
+                                <td>{{ ($dataMencariKerja->currentpage() - 1) * $dataMencariKerja->perpage() + $loop->index + 1 }}</td>
+                                <td>{{ $mencariKerja->name }}</td>
+                                <td>{{ $mencariKerja->jenis_kelamin == 'l' ? 'Pria' : 'Wanita' }}</td>
+                                <td>{{ $mencariKerja->alamat }}</td>
+                                <td>{{ $mencariKerja->alasan_mencari_kerja }}</td>
+                                <td>{{ $mencariKerja->kontak }}</td>
+                                <td>{{ $mencariKerja->dibuat }}</td>
+                                <td>{{ $mencariKerja->created_at->diffForHumans() }}</td>
+                                @if ($mencariKerja->gambar)
                                     <td class="text-center"><button class="btn btn-sm btn-info"
-                                            wire:click='openImg({{ $kuliah->id }})'
-                                            wire:key='open-img-modal-{{ $kuliah->id }}'><i
+                                            wire:click='openImg({{ $mencariKerja->id }})'
+                                            wire:key='open-img-modal-{{ $mencariKerja->id }}'><i
                                                 class="fa-solid fa-image"></i></button></td>
                                 @else
                                     <td class="text-center"> <button class="btn btn-sm btn-secondary" disabled><i
@@ -87,17 +90,17 @@
                                     </td>
                                 @endif
                                 <td class="text-center"><button class="btn btn-sm btn-primary"
-                                        onclick="location.href='{{ route('table.kuliah.edit', $kuliah->slug) }}'"><i
+                                        onclick="location.href='{{ route('table.mencari-kerja.edit', $mencariKerja->slug) }}'"><i
                                             class="fas fa-pen"></i></button></td>
                                 <td class="text-center"><button class="btn btn-sm btn-danger"
-                                        wire:click='openDelete({{ $kuliah->id }})'
-                                        wire:key='open-delete-modal-{{ $kuliah->id }}'><i
+                                        wire:click='openDelete({{ $mencariKerja->id }})'
+                                        wire:key='open-delete-modal-{{ $mencariKerja->id }}'><i
                                             class="fa-solid fa-trash"></i></button></td>
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
-                {{ $kuliahs->withQueryString()->links() }}
+                {{ $dataMencariKerja->withQueryString()->links() }}
             </div>
 
             @if ($imgPreview)
@@ -111,7 +114,7 @@
                                     aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <img src="{{ asset('storage/kuliah/' . $imgPreview) }}" class="img-fluid">
+                                <img src="{{ asset('storage/mencari-kerja/' . $imgPreview) }}" class="img-fluid">
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

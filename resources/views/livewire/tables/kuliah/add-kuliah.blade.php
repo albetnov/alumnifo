@@ -59,7 +59,7 @@
 
                     @if ($gambar)
                         <p>Preview:</p>
-                        <img src="{{ $gambar->temporaryUrl() }}" alt="preview">
+                        <img src="{{ $gambar->temporaryUrl() }}" alt="preview" width="300">
                     @endif
                 </div>
                 <button class="btn btn-sm btn-primary" type="submit">Create</button>
