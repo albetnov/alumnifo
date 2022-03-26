@@ -26,13 +26,13 @@ class Register extends Component
     public function register()
     {
         $validateData = $this->validate();
-        User::create([
+        $user = User::create([
             'name'     => $validateData['name'],
             'email'    => $validateData['email'],
             'password' => Hash::make($validateData['password']),
         ]);
-
-        return to_route('dashboard')->with('message', 'Welcome To Dashboard');
+        $user->assignRole('disabled');
+        return to_route('disabled.dashboard')->with('message', 'Welcome To Dashboard');
     }
 
     public function render()

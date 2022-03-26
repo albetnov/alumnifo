@@ -72,4 +72,8 @@ Route::group(['middleware' => ['auth']], function () {
     // Route::group(['middleware' => ['role:user']], function() {
     // Route::get('/home', HomeUser::class)->name('home.user');
     // });
+
+    Route::group(['middleware' => ['role:disabled']], function () {
+        Route::view('/disabled/dashboard', 'disabled')->name('disabled.dashboard');
+    });
 });

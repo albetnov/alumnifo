@@ -36,6 +36,8 @@ class Login extends Component
             request()->session()->regenerate();
             if (Auth::guard()->user()->hasRole('SuperAdmin')) {
                 return to_route('admin.dashboard');
+            } else if (Auth::guard()->user()->hasRole('disabled')) {
+                return to_route('disabled.dashboard');
             } else {
                 return to_route('home');
             }
