@@ -1,0 +1,70 @@
+<?php
+
+namespace App\Http\Livewire\Users;
+
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Livewire\Component;
+
+class EditUser extends Component
+{
+    public $name;
+    public $email;
+    public $password;
+    public $conpass;
+    public $selectedId;
+
+    public function mount(User $user)
+    {
+        $this->name = $user->name;
+        $this->email = $user->email;
+        $this->selectedId = $user->id;
+    }
+
+    protected function rules()
+    {
+        return [
+            'name' => 'required',
+            'email' => 'required|unique:users,id,' . Auth::user()->id,
+            'password' => 'nullable|min:8',
+            'conpass' => 'required_with:password|same:password',
+        ];
+    }
+
+    public function updated($fields)
+    {
+        $this->validateOnly($fields);
+    }
+
+    private function resetForm()
+    {
+        $this->name = "";
+        $this->email = "";
+        $this->password = "";
+        $this->conpass = "";
+    }
+
+    public function update()
+    {
+        $data = $this->validate();
+
+        try {
+            $data['password'] = bcrypt($this->password);
+            unset($data['conpass']);
+            $user = User::where('id', $this->selectedId)->firstOrFail();
+            $user->update($data);
+        } catch (\Exception $e) {
+            $this->emit('showAlert', 'error', "Data gagal di perbarui: {$e->getMessage()}");
+            return;
+        }
+        $this->resetForm();
+
+        $this->emit('showAlert', 'success', "Data berhasil di perbarui.");
+        return to_route('admin.users');
+    }
+
+    public function render()
+    {
+        return view('livewire.users.edit-user')->layout('livewire.layouts.main', ['href' => 'Users', 'name' => 'Add']);
+    }
+}
