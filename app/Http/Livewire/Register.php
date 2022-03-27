@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\RateLimiter;
 use Livewire\Component;
 
 class Register extends Component
@@ -25,6 +26,15 @@ class Register extends Component
 
     public function register()
     {
+        if (RateLimiter::tooManyAttempts('login', 3)) {
+            $seconds = RateLimiter::availableIn('login');
+
+            return session()->flash('message', 'Percobaan terlalu banyak. Akses ditolak selama: ' . $seconds . ' detik');
+        }
+        if (RateLimiter::remaining('login', 3)) {
+            RateLimiter::hit('login');
+        }
+
         $validateData = $this->validate();
         $user = User::create([
             'name'     => $validateData['name'],

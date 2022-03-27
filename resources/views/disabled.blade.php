@@ -3,11 +3,11 @@
 <div class="container">
     <div class="card">
         <div class="card-header">
-            Your account are waiting for approval from the administrator.
+            Your account are waiting for approval from the administrator.   
         </div>
         <div class="card-footer">
             <form action="{{ route('logout') }}" method="post">
-                @csrf
+                @csrf 
                 <button class="btn btn-sm btn-primary" type="submit">Logout</button>
             </form>
         </div>

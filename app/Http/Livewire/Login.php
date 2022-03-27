@@ -23,15 +23,14 @@ class Login extends Component
 
     public function login()
     {
-        $validateData = $this->validate();
-        if (RateLimiter::remaining('login', 3)) {
-            RateLimiter::hit('login');
-        }
         if (RateLimiter::tooManyAttempts('login', 3)) {
             $seconds = RateLimiter::availableIn('login');
 
             return session()->flash('message', 'Percobaan terlalu banyak. Akses ditolak selama: ' . $seconds . ' detik');
         }
+
+        $validateData = $this->validate();
+
         if (Auth::attempt($validateData)) {
             request()->session()->regenerate();
             if (Auth::guard()->user()->hasRole('SuperAdmin')) {
@@ -42,6 +41,9 @@ class Login extends Component
                 return to_route('home');
             }
         } else {
+            if (RateLimiter::remaining('login', 3)) {
+                RateLimiter::hit('login');
+            }
             session()->flash('message', 'Your Email or Password are Incorrect');
         }
     }
