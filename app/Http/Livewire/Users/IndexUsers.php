@@ -122,6 +122,25 @@ class IndexUsers extends Component
         $this->emit('showAlert', 'success', 'Data berhasil dihapus');
     }
 
+    public function upLevel($id)
+    {
+        try {
+            $find = User::find($id);
+            $find->removeRole('disabled');
+            $find->assignRole('user');
+        } catch (QueryException $q) {
+            $this->emit('showAlert', 'error', 'Gagal menaikkan level. ' . $q->getMessage());
+
+            return;
+        } catch (\Exception $e) {
+            $this->emit('showAlert', 'error', 'Gagal menaikkan level: ' . $e->getMessage());
+
+            return;
+        }
+
+        $this->emit('showAlert', 'success', 'Level berhasil di naikkan');
+    }
+
     public function render()
     {
         $users = $this->baseRender(User::class)->paginate(10);

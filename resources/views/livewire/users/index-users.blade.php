@@ -59,6 +59,7 @@
                             <th>No.</th>
                             <th>Nama</th>
                             <th>Email</th>
+                            <th>Role</th>
                             <td>Terdaftar</td>
                             <td>Terakhir diperbarui</td>
                             <th colspan="2" class="text-center">Action</th>
@@ -74,6 +75,17 @@
                                 <td>{{ ($users->currentpage() - 1) * $users->perpage() + $loop->index + 1 }}</td>
                                 <td>{{ $user->name }}</td>
                                 <td>{{ $user->email }}</td>
+                                <td class="text-center">
+                                    @if ($user->getRoleNames()->get(0) == 'disabled')
+                                        <button class="btn btn-success" wire:click="upLevel({{ $user->id }})"
+                                            wire:key="level-up-{{ $user->id }}"><i class="fas fa-arrow-up"></i>
+                                            Level
+                                            Up to User</button>
+                                    @else
+                                        <span
+                                            class="badge rounded-pill bg-info">{{ $user->getRoleNames()->get(0) }}</span>
+                                    @endif
+                                </td>
                                 <td>{{ $user->created_at }}</td>
                                 <td>{{ $user->updated_at }}</td>
                                 <td class="text-center"><button class="btn btn-sm btn-primary"
