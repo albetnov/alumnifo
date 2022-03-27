@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Users;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
+use Spatie\Permission\Models\Role;
 
 class EditUser extends Component
 {
@@ -13,12 +14,16 @@ class EditUser extends Component
     public $password;
     public $conpass;
     public $selectedId;
+    public $roles;
+    public $role;
 
     public function mount(User $user)
     {
         $this->name = $user->name;
         $this->email = $user->email;
         $this->selectedId = $user->id;
+        $this->roles = Role::get();
+        $this->role = Role::where('name', $user->getRoleNames()->get(0))->first()->id;
     }
 
     protected function rules()
@@ -28,6 +33,7 @@ class EditUser extends Component
             'email' => 'required|unique:users,id,' . Auth::user()->id,
             'password' => 'nullable|min:8',
             'conpass' => 'required_with:password|same:password',
+            'role' => 'required|exists:roles,id'
         ];
     }
 
@@ -51,7 +57,10 @@ class EditUser extends Component
         try {
             $data['password'] = bcrypt($this->password);
             unset($data['conpass']);
+            unset($data['role']);
             $user = User::where('id', $this->selectedId)->firstOrFail();
+            $user->removeRole($user->getRoleNames()->get(0));
+            $user->assignRole($this->role);
             $user->update($data);
         } catch (\Exception $e) {
             $this->emit('showAlert', 'error', "Data gagal di perbarui: {$e->getMessage()}");

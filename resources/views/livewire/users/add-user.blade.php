@@ -46,6 +46,23 @@
                     @enderror
                 </div>
 
+                <div class="form-group">
+                    <label for="role">Role: </label>
+                    <select
+                        class="form-select @error('role') is-invalid @elseif($role != '') is-valid @enderror"
+                        name="role" id="role" {!! wireModel('role') !!}>
+                        <option value="">-</option>
+                        @foreach ($roles as $role)
+                            <option value="{{ $role->id }}">{{ $role->name }}</option>
+                        @endforeach
+                    </select>
+                    @error('role')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
+                </div>
+
                 <button class="btn btn-sm btn-primary" type="submit">Create</button>
                 <button class="btn btn-sm btn-secondary" type="button"
                     onclick="location.href='{{ route('admin.users') }}'">Back</button>

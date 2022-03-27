@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Users;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
+use Spatie\Permission\Models\Role;
 
 class AddUser extends Component
 {
@@ -12,6 +13,13 @@ class AddUser extends Component
     public $email;
     public $password;
     public $conpass;
+    public $roles;
+    public $role;
+
+    public function mount()
+    {
+        $this->roles = Role::get();
+    }
 
     protected function rules()
     {
@@ -20,6 +28,7 @@ class AddUser extends Component
             'email' => 'required|unique:users,id,' . Auth::user()->id,
             'password' => 'required|min:8',
             'conpass' => 'required_with:password|same:password',
+            'role' => 'required|exists:roles,id'
         ];
     }
 
@@ -34,6 +43,7 @@ class AddUser extends Component
         $this->email = "";
         $this->password = "";
         $this->conpass = "";
+        $this->role = "";
     }
 
     public function store()
@@ -43,7 +53,9 @@ class AddUser extends Component
         try {
             $data['password'] = bcrypt($this->password);
             unset($data['conpass']);
-            User::create($data);
+            unset($data['role']);
+            $user = User::create($data);
+            $user->assignRole($this->role);
         } catch (\Exception $e) {
             $this->emit('showAlert', 'error', "Data gagal di simpan: {$e->getMessage()}");
             return;
