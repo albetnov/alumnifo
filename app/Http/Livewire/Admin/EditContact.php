@@ -25,10 +25,10 @@ class EditContact extends Component
     protected function rules()
     {
         return [
-            'name' => 'required|max:64',
-            'email' => 'required|email',
-            'subject' => 'required|max:128',
-            'contact_message' => 'required'
+            'name'            => 'required|max:64',
+            'email'           => 'required|email',
+            'subject'         => 'required|max:128',
+            'contact_message' => 'required',
         ];
     }
 
@@ -56,11 +56,13 @@ class EditContact extends Component
             $contact->update($data);
         } catch (\Exception $e) {
             $this->emit('showAlert', 'error', "Data gagal di perbarui: {$e->getMessage()}");
+
             return;
         }
         $this->resetForm();
 
         $this->emit('showAlert', 'success', "Data berhasil di perbarui.");
+
         return to_route('admin.contact');
     }
 

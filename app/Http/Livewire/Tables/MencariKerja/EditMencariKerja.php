@@ -3,8 +3,10 @@
 namespace App\Http\Livewire\Tables\MencariKerja;
 
 use App\Models\MencariKerja;
-use Illuminate\Support\Facades\{Auth, Storage};
-use Livewire\{Component, WithFileUploads};
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class EditMencariKerja extends Component
 {

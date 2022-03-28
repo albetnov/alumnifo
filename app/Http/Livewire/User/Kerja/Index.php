@@ -16,6 +16,7 @@ class Index extends Component
     public function render()
     {
         $kerjas = $this->baseRender(Kerja::class)->paginate(10);
+
         return view('livewire.user.kerja.index', compact('kerjas'))->layout('guest');
     }
 }

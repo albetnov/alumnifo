@@ -29,11 +29,11 @@ class EditUser extends Component
     protected function rules()
     {
         return [
-            'name' => 'required',
-            'email' => 'required|unique:users,id,' . Auth::user()->id,
+            'name'     => 'required',
+            'email'    => 'required|unique:users,id,'.Auth::user()->id,
             'password' => 'nullable|min:8',
-            'conpass' => 'required_with:password|same:password',
-            'role' => 'required|exists:roles,id'
+            'conpass'  => 'required_with:password|same:password',
+            'role'     => 'required|exists:roles,id',
         ];
     }
 
@@ -64,11 +64,13 @@ class EditUser extends Component
             $user->update($data);
         } catch (\Exception $e) {
             $this->emit('showAlert', 'error', "Data gagal di perbarui: {$e->getMessage()}");
+
             return;
         }
         $this->resetForm();
 
         $this->emit('showAlert', 'success', "Data berhasil di perbarui.");
+
         return to_route('admin.users');
     }
 

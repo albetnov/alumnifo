@@ -4,15 +4,19 @@ namespace App\Http\Livewire\Tables\Kuliah;
 
 use App\Http\Livewire\Modules\BaseTable;
 use App\Models\Kuliah;
-use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
-use Illuminate\Support\Facades\{Auth, Hash, RateLimiter, Storage};
-use Livewire\{Component, WithPagination};
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\Facades\Storage;
+use Livewire\Component;
+use Livewire\WithPagination;
 
 class IndexKuliah extends Component
 {
-    use WithPagination, BaseTable;
+    use WithPagination;
+    use BaseTable;
 
     protected $paginationTheme = 'bootstrap';
     public $imgPreview = false;
@@ -25,7 +29,7 @@ class IndexKuliah extends Component
 
     protected $rules = [
         'password' => 'required',
-        'items' => 'numeric'
+        'items'    => 'numeric',
     ];
 
     public function updated($fields)
@@ -48,22 +52,24 @@ class IndexKuliah extends Component
         if (RateLimiter::tooManyAttempts('password-confirmation', 3)) {
             $seconds = RateLimiter::availableIn('password-confirmation');
 
-            return $this->emit('showAlert', 'error', 'Percobaan terlalu banyak. Akses ditolak selama: ' . $seconds);
+            return $this->emit('showAlert', 'error', 'Percobaan terlalu banyak. Akses ditolak selama: '.$seconds);
         }
         if (!Hash::check($this->password, Auth::user()->password)) {
             return $this->emit('showAlert', 'error', 'Password salah!');
         }
         $this->emit('showAlert', 'success', 'Akses Sudo terbuka');
+
         try {
             foreach (Kuliah::get() as $kuliah) {
                 if ($kuliah->gambar) {
-                    Storage::disk('public')->delete('kuliah/' . $kuliah->gambar);
+                    Storage::disk('public')->delete('kuliah/'.$kuliah->gambar);
                 }
                 $kuliah->delete();
             }
         } catch (\Exception $e) {
             return $this->emit('showAlert', 'error', "Gagal menghapus data: {$e->getMessage()}");
         }
+
         return $this->emit('showAlert', 'success', 'Semua data dah hilang');
     }
 
@@ -73,11 +79,12 @@ class IndexKuliah extends Component
             try {
                 $find = Kuliah::where('id', $item)->first();
                 if ($find->gambar) {
-                    Storage::disk('public')->delete('kuliah/' . $find->gambar);
+                    Storage::disk('public')->delete('kuliah/'.$find->gambar);
                 }
                 $find->delete();
             } catch (\Exception $e) {
                 $this->emit('showAlert', 'error', "Gagal menghapus data: {$e->getMessage()}");
+
                 return;
                 break;
             }
@@ -133,15 +140,15 @@ class IndexKuliah extends Component
         try {
             $find = Kuliah::find($this->selectedId)->firstOrFail();
             if ($find->gambar) {
-                Storage::disk('public')->delete('kuliah/' . $find->gambar);
+                Storage::disk('public')->delete('kuliah/'.$find->gambar);
             }
             $find->delete();
         } catch (QueryException $q) {
-            $this->emit('showAlert', 'error', 'Gagal menghapus data. ' . $q->getMessage());
+            $this->emit('showAlert', 'error', 'Gagal menghapus data. '.$q->getMessage());
 
             return;
         } catch (\Exception $e) {
-            $this->emit('showAlert', 'error', 'Gagal menghapus data: ' . $e->getMessage());
+            $this->emit('showAlert', 'error', 'Gagal menghapus data: '.$e->getMessage());
 
             return;
         }
@@ -151,6 +158,7 @@ class IndexKuliah extends Component
     public function render()
     {
         $kuliahs = $this->baseRender(Kuliah::class, 'name', 'nama_universitas', 'jurusan')->paginate(10);
+
         return view('livewire.tables.kuliah.index-kuliah', compact('kuliahs'))->layout('livewire.layouts.main', ['href' => 'Tables', 'name' => 'Kuliah']);
     }
 }

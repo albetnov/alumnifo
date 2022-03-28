@@ -26,7 +26,7 @@ class Login extends Component
         if (RateLimiter::tooManyAttempts('login', 3)) {
             $seconds = RateLimiter::availableIn('login');
 
-            return session()->flash('message', 'Percobaan terlalu banyak. Akses ditolak selama: ' . $seconds . ' detik');
+            return session()->flash('message', 'Percobaan terlalu banyak. Akses ditolak selama: '.$seconds.' detik');
         }
 
         $validateData = $this->validate();
@@ -35,7 +35,7 @@ class Login extends Component
             request()->session()->regenerate();
             if (Auth::guard()->user()->hasRole('SuperAdmin')) {
                 return to_route('admin.dashboard');
-            } else if (Auth::guard()->user()->hasRole('disabled')) {
+            } elseif (Auth::guard()->user()->hasRole('disabled')) {
                 return to_route('disabled.dashboard');
             } else {
                 return to_route('home');

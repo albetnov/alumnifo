@@ -30,11 +30,11 @@ class EditKuliah extends Component
     }
 
     protected $rules = [
-        'name'            => 'required',
-        'jenis_kelamin'   => 'required|in:l,p',
+        'name'             => 'required',
+        'jenis_kelamin'    => 'required|in:l,p',
         'nama_universitas' => 'required',
-        'jurusan'         => 'required',
-        'gambar'          => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+        'jurusan'          => 'required',
+        'gambar'           => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
     ];
 
     public function updated($fields)

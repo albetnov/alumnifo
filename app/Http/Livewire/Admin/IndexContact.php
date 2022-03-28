@@ -30,7 +30,7 @@ class IndexContact extends Component
 
     protected $rules = [
         'password' => 'required',
-        'items' => 'numeric'
+        'items'    => 'numeric',
     ];
 
     public function updated($fields)
@@ -53,17 +53,19 @@ class IndexContact extends Component
         if (RateLimiter::tooManyAttempts('password-confirmation', 3)) {
             $seconds = RateLimiter::availableIn('password-confirmation');
 
-            return $this->emit('showAlert', 'error', 'Percobaan terlalu banyak. Akses ditolak selama: ' . $seconds);
+            return $this->emit('showAlert', 'error', 'Percobaan terlalu banyak. Akses ditolak selama: '.$seconds);
         }
         if (!Hash::check($this->password, Auth::user()->password)) {
             return $this->emit('showAlert', 'error', 'Password salah!');
         }
         $this->emit('showAlert', 'success', 'Akses Sudo terbuka');
+
         try {
             PublicContact::truncate();
         } catch (\Exception $e) {
             return $this->emit('showAlert', 'error', "Gagal menghapus data: {$e->getMessage()}");
         }
+
         return $this->emit('showAlert', 'success', 'Semua data dah hilang');
     }
 
@@ -75,6 +77,7 @@ class IndexContact extends Component
                 $find->delete();
             } catch (\Exception $e) {
                 $this->emit('showAlert', 'error', "Gagal menghapus data: {$e->getMessage()}");
+
                 return;
                 break;
             }
@@ -105,6 +108,7 @@ class IndexContact extends Component
             $data = PublicContact::where('id', $id)->firstOrFail();
         } catch (ModelNotFoundException $e) {
             $this->emit('showAlert', 'error', 'Data tidak ditemukan');
+
             return;
         }
         $this->deleteOpened = true;
@@ -116,10 +120,12 @@ class IndexContact extends Component
     public function openMessage($id)
     {
         $this->cleanup();
+
         try {
             $data = PublicContact::where('id', $id)->firstOrFail();
         } catch (ModelNotFoundException $e) {
             $this->emit('showAlert', 'error', 'Data tidak ditemukan');
+
             return;
         }
         $this->messagePreview = true;
@@ -135,11 +141,11 @@ class IndexContact extends Component
             $find = PublicContact::where('id', $this->selectedId)->firstOrFail();
             $find->delete();
         } catch (QueryException $q) {
-            $this->emit('showAlert', 'error', 'Gagal menghapus data. ' . $q->getMessage());
+            $this->emit('showAlert', 'error', 'Gagal menghapus data. '.$q->getMessage());
 
             return;
         } catch (\Exception $e) {
-            $this->emit('showAlert', 'error', 'Gagal menghapus data: ' . $e->getMessage());
+            $this->emit('showAlert', 'error', 'Gagal menghapus data: '.$e->getMessage());
 
             return;
         }

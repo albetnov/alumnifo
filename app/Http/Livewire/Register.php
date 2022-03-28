@@ -30,7 +30,7 @@ class Register extends Component
         if (RateLimiter::tooManyAttempts('login', 3)) {
             $seconds = RateLimiter::availableIn('login');
 
-            return session()->flash('message', 'Percobaan terlalu banyak. Akses ditolak selama: ' . $seconds . ' detik');
+            return session()->flash('message', 'Percobaan terlalu banyak. Akses ditolak selama: '.$seconds.' detik');
         }
         if (RateLimiter::remaining('login', 3)) {
             RateLimiter::hit('login');
@@ -44,6 +44,7 @@ class Register extends Component
         ]);
         $user->assignRole('disabled');
         Auth::login($user);
+
         return to_route('disabled.dashboard')->with('message', 'Welcome To Dashboard');
     }
 

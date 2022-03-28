@@ -14,7 +14,6 @@ trait BaseTable
 
     public function closeAll()
     {
-
     }
 
     public function updated($fields)

@@ -3,8 +3,10 @@
 namespace App\Http\Livewire\Tables\KerjaKuliah;
 
 use App\Models\KerjaKuliah;
-use Illuminate\Support\Facades\{Auth, Storage};
-use Livewire\{Component, WithFileUploads};
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class EditKerjaKuliah extends Component
 {
@@ -77,7 +79,7 @@ class EditKerjaKuliah extends Component
                 unset($data['gambar']);
             } else {
                 if ($currentData->gambar) {
-                    Storage::disk('public')->delete('kerja-kuliah/' . $currentData->gambar);
+                    Storage::disk('public')->delete('kerja-kuliah/'.$currentData->gambar);
                 }
                 $name = time().hash("sha256", $this->gambar->getClientOriginalName()).$this->gambar->getClientOriginalName();
                 $this->gambar->storeAs('public/kerja-kuliah', $name);

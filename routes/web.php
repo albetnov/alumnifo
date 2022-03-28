@@ -1,16 +1,28 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
-use App\Http\Livewire\{Dashboard, Home, Login, ProfileManager, Register};
 use App\Http\Livewire\Admin\EditContact;
 use App\Http\Livewire\Admin\IndexContact;
-use App\Http\Livewire\Tables\Kerja\{AddKerja, EditKerja, IndexKerja};
-use App\Http\Livewire\Tables\Kuliah\{AddKuliah, EditKuliah, IndexKuliah};
-use App\Http\Livewire\Tables\KerjaKuliah\{AddKerjaKuliah, EditKerjaKuliah, IndexKerjaKuliah};
+use App\Http\Livewire\Dashboard;
+use App\Http\Livewire\Home;
+use App\Http\Livewire\Login;
+use App\Http\Livewire\ProfileManager;
+use App\Http\Livewire\Register;
+use App\Http\Livewire\Tables\Kerja\AddKerja;
+use App\Http\Livewire\Tables\Kerja\EditKerja;
+use App\Http\Livewire\Tables\Kerja\IndexKerja;
+use App\Http\Livewire\Tables\KerjaKuliah\AddKerjaKuliah;
+use App\Http\Livewire\Tables\KerjaKuliah\EditKerjaKuliah;
+use App\Http\Livewire\Tables\KerjaKuliah\IndexKerjaKuliah;
+use App\Http\Livewire\Tables\Kuliah\AddKuliah;
+use App\Http\Livewire\Tables\Kuliah\EditKuliah;
+use App\Http\Livewire\Tables\Kuliah\IndexKuliah;
 use App\Http\Livewire\Tables\MencariKerja\AddMencariKerja;
 use App\Http\Livewire\Tables\MencariKerja\EditMencariKerja;
 use App\Http\Livewire\Tables\MencariKerja\IndexMencariKerja;
-use App\Http\Livewire\Tables\Usaha\{AddUsaha, EditUsaha, IndexUsaha};
+use App\Http\Livewire\Tables\Usaha\AddUsaha;
+use App\Http\Livewire\Tables\Usaha\EditUsaha;
+use App\Http\Livewire\Tables\Usaha\IndexUsaha;
 use App\Http\Livewire\User\Kerja\Index;
 use App\Http\Livewire\Users\AddUser;
 use App\Http\Livewire\Users\EditUser;
@@ -51,7 +63,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::group(['middleware' => ['role_or_permission:SuperAdmin|edit profile']], function () {
         Route::get('/profile', ProfileManager::class)->name('profile');
     });
-
 
     Route::group(['as' => 'table.', 'prefix' => 'table'], function () {
         Route::get('kerja', IndexKerja::class)->middleware('role_or_permission:SuperAdmin|viewKerja')->name('kerja.index');
