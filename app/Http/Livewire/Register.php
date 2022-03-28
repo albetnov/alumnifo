@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\RateLimiter;
 use Livewire\Component;
@@ -15,7 +16,7 @@ class Register extends Component
 
     protected $rules = [
         'name'     => 'required|min:3',
-        'email'    => 'required|email',
+        'email'    => 'required|email|unique:users',
         'password' => 'required|min:3',
     ];
 
@@ -42,6 +43,7 @@ class Register extends Component
             'password' => Hash::make($validateData['password']),
         ]);
         $user->assignRole('disabled');
+        Auth::login($user);
         return to_route('disabled.dashboard')->with('message', 'Welcome To Dashboard');
     }
 

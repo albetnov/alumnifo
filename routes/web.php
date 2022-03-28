@@ -9,6 +9,7 @@ use App\Http\Livewire\Tables\MencariKerja\AddMencariKerja;
 use App\Http\Livewire\Tables\MencariKerja\EditMencariKerja;
 use App\Http\Livewire\Tables\MencariKerja\IndexMencariKerja;
 use App\Http\Livewire\Tables\Usaha\{AddUsaha, EditUsaha, IndexUsaha};
+use App\Http\Livewire\User\Kerja\Index;
 use App\Http\Livewire\Users\AddUser;
 use App\Http\Livewire\Users\EditUser;
 use App\Http\Livewire\Users\IndexUsers;
@@ -69,9 +70,10 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('mencari-kerja/add', AddMencariKerja::class)->middleware('role_or_permission:SuperAdmin|addMencariKerja')->name('mencari-kerja.add');
         Route::get('mencari-kerja/edit/{mencariKerja}', EditMencariKerja::class)->middleware('role_or_permission:SuperAdmin|editMencariKerja')->name('mencari-kerja.edit');
     });
-    // Route::group(['middleware' => ['role:user']], function() {
-    // Route::get('/home', HomeUser::class)->name('home.user');
-    // });
+
+    Route::group(['middleware' => ['role:user'], 'prefix' => 'user', 'as' => 'user.'], function () {
+        Route::get('kerja', Index::class)->name('kerja');
+    });
 
     Route::group(['middleware' => ['role:disabled']], function () {
         Route::view('/disabled/dashboard', 'disabled')->name('disabled.dashboard');

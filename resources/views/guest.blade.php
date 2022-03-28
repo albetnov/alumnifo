@@ -40,7 +40,56 @@
 
 
 <body>
+    <header wire:ignore id="header" class="d-flex align-items-center ">
+        <div class="container-fluid container-xxl d-flex align-items-center">
+
+            <div id="logo" class="me-auto">
+                <!-- Uncomment below if you prefer to use a text logo -->
+                <!-- <h1><a href="index.html">The<span>Event</span></a></h1>-->
+            </div>
+
+            <nav id="navbar" class="navbar order-last order-lg-0">
+                @if (!Auth::check())
+                    <ul>
+                        <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
+                        <li><a class="nav-link scrollto" href="#about">About</a></li>
+                        <li><a class="nav-link scrollto" href="#speakers">Team</a></li>
+                        <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+                    </ul>
+                @else
+                    <ul>
+                        <li><a href="{{ route('home') }}"
+                                class="nav-link {{ strpos(Route::currentRouteName(), 'home') === 0 ? 'active' : '' }}">Home</a>
+                        </li>
+                        <li><a href="{{ route('user.kerja') }}"
+                                class="nav-link {{ strpos(Route::currentRouteName(), 'user.kerja') === 0 ? 'active' : '' }}">Kerja</a>
+                        </li>
+                        <li><a href="">Kuliah</a></li>
+                        <li><a href="">Kerja Kuliah</a></li>
+                        <li><a href="">Mencari Kerja</a></li>
+                        <li><a href="">Membuka Usaha</a></li>
+                    </ul>
+                @endif
+                <i class="bi bi-list mobile-nav-toggle"></i>
+            </nav>
+            <!-- .navbar -->
+            @auth
+                <form action="{{ route('logout') }}" method="post">
+                    @csrf
+                    <button type="submit" class="buy-tickets scrollto">Logout</button>
+                </form>
+            @else
+                <a class="buy-tickets scrollto" href="{{ route('register') }}">Sign Up</a>
+                <a class="buy-tickets scrollto" href="{{ route('login') }}">Login</a>
+            @endauth
+
+
+        </div>
+    </header>
+    <!-- End Header -->
     {{ $slot }}
+    </div>
+
     <!-- ======= Footer ======= -->
     <footer id="footer">
 
@@ -56,6 +105,10 @@
         Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=TheEvent
       -->
                 Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+                <p>Created by: <a href="https://github.com/albetnov">Albet Novendo</a>, <a
+                        href="https://github.com/0SeN0">Sendy Wahyudi</a>, <a
+                        href="https://github.com/irwandandka">Irwanda Andika</a></p>
+                <p>Open Source Project: <a href="https://github.com/albetnov/alumnifo">Alumnifo Github</a></p>
             </div>
         </div>
     </footer>
