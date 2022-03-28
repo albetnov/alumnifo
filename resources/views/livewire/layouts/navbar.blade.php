@@ -23,7 +23,7 @@
                     </a>
                 </li>
                 <li class="nav-item mt-3">
-                    <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Authorization</h6>
+                    <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Users</h6>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link {{ strpos(Route::currentRouteName(), 'admin.users') === 0 ? 'active' : '' }}"
@@ -33,6 +33,16 @@
                             <i class="fas fa-users text-dark"></i>
                         </div>
                         <span class="nav-link-text ms-1">Manage Users</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ strpos(Route::currentRouteName(), 'admin.contact') === 0 ? 'active' : '' }}"
+                        href="{{ route('admin.contact') }}">
+                        <div
+                            class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="fas fa-address-book text-dark"></i>
+                        </div>
+                        <span class="nav-link-text ms-1">Manage Contact</span>
                     </a>
                 </li>
                 <li class="nav-item mt-3">

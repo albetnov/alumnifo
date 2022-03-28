@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Livewire\{Dashboard, Home, Login, ProfileManager, Register};
+use App\Http\Livewire\Admin\EditContact;
+use App\Http\Livewire\Admin\IndexContact;
 use App\Http\Livewire\Tables\Kerja\{AddKerja, EditKerja, IndexKerja};
 use App\Http\Livewire\Tables\Kuliah\{AddKuliah, EditKuliah, IndexKuliah};
 use App\Http\Livewire\Tables\KerjaKuliah\{AddKerjaKuliah, EditKerjaKuliah, IndexKerjaKuliah};
@@ -42,6 +44,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('users/add', AddUser::class)->name('users.add');
         Route::get('users/edit/{user}', EditUser::class)->name('users.edit');
         Route::get('dashboard', Dashboard::class)->name('dashboard');
+        Route::get('contact', IndexContact::class)->name('contact');
+        Route::get('contact/edit/{publicContact}', EditContact::class)->name('contact.edit');
     });
 
     Route::group(['middleware' => ['role_or_permission:SuperAdmin|edit profile']], function () {

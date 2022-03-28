@@ -1,29 +1,32 @@
 <?php
 
-namespace App\Http\Livewire\Users;
+namespace App\Http\Livewire\Admin;
 
-use App\Models\User;
-use Livewire\Component;
-use Livewire\WithPagination;
 use App\Http\Livewire\Modules\BaseTable;
+use App\Models\PublicContact;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\RateLimiter;
+use Livewire\Component;
+use Livewire\WithPagination;
 
-class IndexUsers extends Component
+class IndexContact extends Component
 {
     use WithPagination;
     use BaseTable;
 
     protected $paginationTheme = 'bootstrap';
+    public $messagePreview = false;
     public $name;
     public $deleteOpened = false;
     public $selectedId;
     public $items = [];
     public $bulkAction = false;
     public $password;
+    public $email;
+    public $message;
 
     protected $rules = [
         'password' => 'required',
@@ -57,7 +60,7 @@ class IndexUsers extends Component
         }
         $this->emit('showAlert', 'success', 'Akses Sudo terbuka');
         try {
-            User::truncate();
+            PublicContact::truncate();
         } catch (\Exception $e) {
             return $this->emit('showAlert', 'error', "Gagal menghapus data: {$e->getMessage()}");
         }
@@ -68,7 +71,7 @@ class IndexUsers extends Component
     {
         foreach ($this->items as $item) {
             try {
-                $find = User::where('id', $item)->first();
+                $find = PublicContact::where('id', $item)->first();
                 $find->delete();
             } catch (\Exception $e) {
                 $this->emit('showAlert', 'error', "Gagal menghapus data: {$e->getMessage()}");
@@ -83,10 +86,15 @@ class IndexUsers extends Component
 
     private function cleanup()
     {
+        if ($this->messagePreview) {
+            $this->messagePreview = false;
+            $this->email = "";
+            $this->message = "";
+        }
         if ($this->deleteOpened) {
-            $this->name = "";
             $this->selectedId = "";
         }
+        $this->name = "";
     }
 
     public function openDelete($id)
@@ -94,8 +102,9 @@ class IndexUsers extends Component
         $this->cleanup();
 
         try {
-            $data = User::where('id', $id)->firstOrFail();
+            $data = PublicContact::where('id', $id)->firstOrFail();
         } catch (ModelNotFoundException $e) {
+            $this->emit('showAlert', 'error', 'Data tidak ditemukan');
             return;
         }
         $this->deleteOpened = true;
@@ -104,10 +113,26 @@ class IndexUsers extends Component
         $this->emit('openModal', 'deletePreview');
     }
 
+    public function openMessage($id)
+    {
+        $this->cleanup();
+        try {
+            $data = PublicContact::where('id', $id)->firstOrFail();
+        } catch (ModelNotFoundException $e) {
+            $this->emit('showAlert', 'error', 'Data tidak ditemukan');
+            return;
+        }
+        $this->messagePreview = true;
+        $this->name = $data->name;
+        $this->email = $data->email;
+        $this->message = $data->message;
+        $this->emit('openModal', 'messagePreview');
+    }
+
     public function deleteData()
     {
         try {
-            $find = User::find($this->selectedId)->firstOrFail();
+            $find = PublicContact::where('id', $this->selectedId)->firstOrFail();
             $find->delete();
         } catch (QueryException $q) {
             $this->emit('showAlert', 'error', 'Gagal menghapus data. ' . $q->getMessage());
@@ -121,29 +146,10 @@ class IndexUsers extends Component
         $this->emit('showAlert', 'success', 'Data berhasil dihapus');
     }
 
-    public function upLevel($id)
-    {
-        try {
-            $find = User::find($id);
-            $find->removeRole('disabled');
-            $find->assignRole('user');
-        } catch (QueryException $q) {
-            $this->emit('showAlert', 'error', 'Gagal menaikkan level. ' . $q->getMessage());
-
-            return;
-        } catch (\Exception $e) {
-            $this->emit('showAlert', 'error', 'Gagal menaikkan level: ' . $e->getMessage());
-
-            return;
-        }
-
-        $this->emit('showAlert', 'success', 'Level berhasil di naikkan');
-    }
-
     public function render()
     {
-        $users = $this->baseRender(User::class)->paginate(10);
+        $contacts = $this->baseRender(PublicContact::class)->paginate(10);
 
-        return view('livewire.users.index-users', compact('users'))->layout('livewire.layouts.main', ['href' => 'Users', 'name' => 'Users List']);
+        return view('livewire.admin.index-contact', compact('contacts'))->layout('livewire.layouts.main', ['href' => 'Manage Users', 'name' => 'Contact']);
     }
 }
