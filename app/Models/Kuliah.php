@@ -6,22 +6,25 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Scout\Attributes\SearchUsingFullText;
 use Laravel\Scout\Searchable;
-use Spatie\Sluggable\{HasSlug, SlugOptions};
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 
 class Kuliah extends Model
 {
-    use HasFactory, HasSlug, Searchable;
+    use HasFactory;
+    use HasSlug;
+    use Searchable;
 
-    protected $fillable = ['name','jenis_kelamin','nama_universitas','jurusan','gambar','dibuat'];
+    protected $fillable = ['name', 'jenis_kelamin', 'nama_universitas', 'jurusan', 'gambar', 'dibuat'];
 
     #[SearchUsingFullText(['name', 'nama_universitas', 'jurusan'])]
     public function toSearchableArray()
     {
         return [
-            'name'            => $this->name,
+            'name'             => $this->name,
             'nama_universitas' => $this->nama_universitas,
-            'jurusan'         => $this->jurusan,
-            'dibuat'          => $this->dibuat,
+            'jurusan'          => $this->jurusan,
+            'dibuat'           => $this->dibuat,
         ];
     }
 

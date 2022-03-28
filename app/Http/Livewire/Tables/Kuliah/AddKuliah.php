@@ -4,7 +4,8 @@ namespace App\Http\Livewire\Tables\Kuliah;
 
 use App\Models\Kuliah;
 use Illuminate\Support\Facades\Auth;
-use Livewire\{Component, WithFileUploads};
+use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class AddKuliah extends Component
 {
@@ -16,11 +17,11 @@ class AddKuliah extends Component
     public $gambar;
 
     protected $rules = [
-        'name'            => 'required',
-        'jenis_kelamin'   => 'required|in:l,p',
+        'name'             => 'required',
+        'jenis_kelamin'    => 'required|in:l,p',
         'nama_universitas' => 'required',
-        'jurusan'         => 'required',
-        'gambar'          => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+        'jurusan'          => 'required',
+        'gambar'           => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
     ];
 
     public function updated($fields)
@@ -53,11 +54,13 @@ class AddKuliah extends Component
             Kuliah::create($data);
         } catch (\Exception $e) {
             $this->emit('showAlert', 'error', "Data gagal di simpan: {$e->getMessage()}");
+
             return;
         }
         $this->resetForm();
 
         $this->emit('showAlert', 'success', "Data berhasil di simpan.");
+
         return to_route('table.kuliah.index');
     }
 

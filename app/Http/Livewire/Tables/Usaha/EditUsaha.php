@@ -3,8 +3,10 @@
 namespace App\Http\Livewire\Tables\Usaha;
 
 use App\Models\Usaha;
-use Illuminate\Support\Facades\{Auth, Storage};
-use Livewire\{Component, WithFileUploads};
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class EditUsaha extends Component
 {

@@ -4,7 +4,8 @@ namespace App\Http\Livewire\Tables\Usaha;
 
 use App\Models\Usaha;
 use Illuminate\Support\Facades\Auth;
-use Livewire\{Component, WithFileUploads};
+use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class AddUsaha extends Component
 {
@@ -56,11 +57,13 @@ class AddUsaha extends Component
             Usaha::create($data);
         } catch (\Exception $e) {
             $this->emit('showAlert', 'error', "Data gagal di simpan: {$e->getMessage()}");
+
             return;
         }
         $this->resetForm();
 
         $this->emit('showAlert', 'success', "Data berhasil di simpan.");
+
         return to_route('table.usaha.index');
     }
 

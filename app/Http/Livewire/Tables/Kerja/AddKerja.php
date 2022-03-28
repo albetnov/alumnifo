@@ -57,11 +57,13 @@ class AddKerja extends Component
             Kerja::create($data);
         } catch (\Exception $e) {
             $this->emit('showAlert', 'error', "Data gagal di simpan: {$e->getMessage()}");
+
             return;
         }
         $this->resetForm();
 
         $this->emit('showAlert', 'success', "Data berhasil di simpan.");
+
         return to_route('table.kerja.index');
     }
 

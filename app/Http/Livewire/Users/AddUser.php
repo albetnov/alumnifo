@@ -24,11 +24,11 @@ class AddUser extends Component
     protected function rules()
     {
         return [
-            'name' => 'required',
-            'email' => 'required|unique:users,id,' . Auth::user()->id,
+            'name'     => 'required',
+            'email'    => 'required|unique:users,id,'.Auth::user()->id,
             'password' => 'required|min:8',
-            'conpass' => 'required_with:password|same:password',
-            'role' => 'required|exists:roles,id'
+            'conpass'  => 'required_with:password|same:password',
+            'role'     => 'required|exists:roles,id',
         ];
     }
 
@@ -58,11 +58,13 @@ class AddUser extends Component
             $user->assignRole($this->role);
         } catch (\Exception $e) {
             $this->emit('showAlert', 'error', "Data gagal di simpan: {$e->getMessage()}");
+
             return;
         }
         $this->resetForm();
 
         $this->emit('showAlert', 'success', "Data berhasil di simpan.");
+
         return to_route('admin.users');
     }
 

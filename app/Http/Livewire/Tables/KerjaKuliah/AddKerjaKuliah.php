@@ -4,7 +4,8 @@ namespace App\Http\Livewire\Tables\KerjaKuliah;
 
 use App\Models\KerjaKuliah;
 use Illuminate\Support\Facades\Auth;
-use Livewire\{Component, WithFileUploads};
+use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class AddKerjaKuliah extends Component
 {
@@ -62,11 +63,13 @@ class AddKerjaKuliah extends Component
             KerjaKuliah::create($data);
         } catch (\Exception $e) {
             $this->emit('showAlert', 'error', "Data gagal di simpan: {$e->getMessage()}");
+
             return;
         }
         $this->resetForm();
 
         $this->emit('showAlert', 'success', "Data berhasil di simpan.");
+
         return to_route('table.kerja-kuliah.index');
     }
 

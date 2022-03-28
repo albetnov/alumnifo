@@ -2,15 +2,15 @@
 
 namespace App\Http\Livewire\Users;
 
-use App\Models\User;
-use Livewire\Component;
-use Livewire\WithPagination;
 use App\Http\Livewire\Modules\BaseTable;
+use App\Models\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\RateLimiter;
+use Livewire\Component;
+use Livewire\WithPagination;
 
 class IndexUsers extends Component
 {
@@ -27,7 +27,7 @@ class IndexUsers extends Component
 
     protected $rules = [
         'password' => 'required',
-        'items' => 'numeric'
+        'items'    => 'numeric',
     ];
 
     public function updated($fields)
@@ -50,17 +50,19 @@ class IndexUsers extends Component
         if (RateLimiter::tooManyAttempts('password-confirmation', 3)) {
             $seconds = RateLimiter::availableIn('password-confirmation');
 
-            return $this->emit('showAlert', 'error', 'Percobaan terlalu banyak. Akses ditolak selama: ' . $seconds);
+            return $this->emit('showAlert', 'error', 'Percobaan terlalu banyak. Akses ditolak selama: '.$seconds);
         }
         if (!Hash::check($this->password, Auth::user()->password)) {
             return $this->emit('showAlert', 'error', 'Password salah!');
         }
         $this->emit('showAlert', 'success', 'Akses Sudo terbuka');
+
         try {
             User::truncate();
         } catch (\Exception $e) {
             return $this->emit('showAlert', 'error', "Gagal menghapus data: {$e->getMessage()}");
         }
+
         return $this->emit('showAlert', 'success', 'Semua data dah hilang');
     }
 
@@ -72,6 +74,7 @@ class IndexUsers extends Component
                 $find->delete();
             } catch (\Exception $e) {
                 $this->emit('showAlert', 'error', "Gagal menghapus data: {$e->getMessage()}");
+
                 return;
                 break;
             }
@@ -110,11 +113,11 @@ class IndexUsers extends Component
             $find = User::find($this->selectedId)->firstOrFail();
             $find->delete();
         } catch (QueryException $q) {
-            $this->emit('showAlert', 'error', 'Gagal menghapus data. ' . $q->getMessage());
+            $this->emit('showAlert', 'error', 'Gagal menghapus data. '.$q->getMessage());
 
             return;
         } catch (\Exception $e) {
-            $this->emit('showAlert', 'error', 'Gagal menghapus data: ' . $e->getMessage());
+            $this->emit('showAlert', 'error', 'Gagal menghapus data: '.$e->getMessage());
 
             return;
         }
@@ -128,11 +131,11 @@ class IndexUsers extends Component
             $find->removeRole('disabled');
             $find->assignRole('user');
         } catch (QueryException $q) {
-            $this->emit('showAlert', 'error', 'Gagal menaikkan level. ' . $q->getMessage());
+            $this->emit('showAlert', 'error', 'Gagal menaikkan level. '.$q->getMessage());
 
             return;
         } catch (\Exception $e) {
-            $this->emit('showAlert', 'error', 'Gagal menaikkan level: ' . $e->getMessage());
+            $this->emit('showAlert', 'error', 'Gagal menaikkan level: '.$e->getMessage());
 
             return;
         }

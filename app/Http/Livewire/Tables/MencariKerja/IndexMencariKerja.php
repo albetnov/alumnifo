@@ -6,12 +6,17 @@ use App\Http\Livewire\Modules\BaseTable;
 use App\Models\MencariKerja;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
-use Illuminate\Support\Facades\{Auth, Hash, RateLimiter, Storage};
-use Livewire\{Component, WithPagination};
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\Facades\Storage;
+use Livewire\Component;
+use Livewire\WithPagination;
 
 class IndexMencariKerja extends Component
 {
-    use WithPagination, BaseTable;
+    use WithPagination;
+    use BaseTable;
 
     protected $paginationTheme = 'bootstrap';
     public $imgPreview = false;
@@ -24,7 +29,7 @@ class IndexMencariKerja extends Component
 
     protected $rules = [
         'password' => 'required',
-        'items' => 'numeric'
+        'items'    => 'numeric',
     ];
 
     public function updated($fields)
@@ -47,22 +52,24 @@ class IndexMencariKerja extends Component
         if (RateLimiter::tooManyAttempts('password-confirmation', 3)) {
             $seconds = RateLimiter::availableIn('password-confirmation');
 
-            return $this->emit('showAlert', 'error', 'Percobaan terlalu banyak. Akses ditolak selama: ' . $seconds);
+            return $this->emit('showAlert', 'error', 'Percobaan terlalu banyak. Akses ditolak selama: '.$seconds);
         }
         if (!Hash::check($this->password, Auth::user()->password)) {
             return $this->emit('showAlert', 'error', 'Password salah!');
         }
         $this->emit('showAlert', 'success', 'Akses Sudo terbuka');
+
         try {
             foreach (MencariKerja::get() as $mencariKerja) {
                 if ($mencariKerja->gambar) {
-                    Storage::disk('public')->delete('mencari-kerja/' . $mencariKerja->gambar);
+                    Storage::disk('public')->delete('mencari-kerja/'.$mencariKerja->gambar);
                 }
                 $mencariKerja->delete();
             }
         } catch (\Exception $e) {
             return $this->emit('showAlert', 'error', "Gagal menghapus data: {$e->getMessage()}");
         }
+
         return $this->emit('showAlert', 'success', 'Semua data dah hilang');
     }
 
@@ -72,11 +79,12 @@ class IndexMencariKerja extends Component
             try {
                 $find = MencariKerja::where('id', $item)->first();
                 if ($find->gambar) {
-                    Storage::disk('public')->delete('mencari-kerja/' . $find->gambar);
+                    Storage::disk('public')->delete('mencari-kerja/'.$find->gambar);
                 }
                 $find->delete();
             } catch (\Exception $e) {
                 $this->emit('showAlert', 'error', "Gagal menghapus data: {$e->getMessage()}");
+
                 return;
                 break;
             }
@@ -132,15 +140,15 @@ class IndexMencariKerja extends Component
         try {
             $find = MencariKerja::find($this->selectedId)->firstOrFail();
             if ($find->gambar) {
-                Storage::disk('public')->delete('mencari-kerja/' . $find->gambar);
+                Storage::disk('public')->delete('mencari-kerja/'.$find->gambar);
             }
             $find->delete();
         } catch (QueryException $q) {
-            $this->emit('showAlert', 'error', 'Gagal menghapus data. ' . $q->getMessage());
+            $this->emit('showAlert', 'error', 'Gagal menghapus data. '.$q->getMessage());
 
             return;
         } catch (\Exception $e) {
-            $this->emit('showAlert', 'error', 'Gagal menghapus data: ' . $e->getMessage());
+            $this->emit('showAlert', 'error', 'Gagal menghapus data: '.$e->getMessage());
 
             return;
         }
@@ -149,7 +157,8 @@ class IndexMencariKerja extends Component
 
     public function render()
     {
-        $dataMencariKerja = $this->baseRender(MencariKerja::class, 'name', 'jenis_kelamin', 'alamat','alasan_mencari_kerja','kontak')->paginate(10);
+        $dataMencariKerja = $this->baseRender(MencariKerja::class, 'name', 'jenis_kelamin', 'alamat', 'alasan_mencari_kerja', 'kontak')->paginate(10);
+
         return view('livewire.tables.mencari-kerja.index-mencari-kerja', compact('dataMencariKerja'))->layout('livewire.layouts.main', ['href' => 'Tables', 'name' => 'MencariKerja']);
     }
 }

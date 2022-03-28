@@ -4,7 +4,6 @@ namespace App\Http\Livewire\Tables\Kerja;
 
 use App\Http\Livewire\Modules\BaseTable;
 use App\Models\Kerja;
-use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Auth;
@@ -30,7 +29,7 @@ class IndexKerja extends Component
 
     protected $rules = [
         'password' => 'required',
-        'items' => 'numeric'
+        'items'    => 'numeric',
     ];
 
     public function updated($fields)
@@ -53,22 +52,24 @@ class IndexKerja extends Component
         if (RateLimiter::tooManyAttempts('password-confirmation', 3)) {
             $seconds = RateLimiter::availableIn('password-confirmation');
 
-            return $this->emit('showAlert', 'error', 'Percobaan terlalu banyak. Akses ditolak selama: ' . $seconds);
+            return $this->emit('showAlert', 'error', 'Percobaan terlalu banyak. Akses ditolak selama: '.$seconds);
         }
         if (!Hash::check($this->password, Auth::user()->password)) {
             return $this->emit('showAlert', 'error', 'Password salah!');
         }
         $this->emit('showAlert', 'success', 'Akses Sudo terbuka');
+
         try {
             foreach (Kerja::get() as $kerja) {
                 if ($kerja->gambar) {
-                    Storage::disk('public')->delete('kerja/' . $kerja->gambar);
+                    Storage::disk('public')->delete('kerja/'.$kerja->gambar);
                 }
                 $kerja->delete();
             }
         } catch (\Exception $e) {
             return $this->emit('showAlert', 'error', "Gagal menghapus data: {$e->getMessage()}");
         }
+
         return $this->emit('showAlert', 'success', 'Semua data dah hilang');
     }
 
@@ -78,11 +79,12 @@ class IndexKerja extends Component
             try {
                 $find = Kerja::where('id', $item)->first();
                 if ($find->gambar) {
-                    Storage::disk('public')->delete('kerja/' . $find->gambar);
+                    Storage::disk('public')->delete('kerja/'.$find->gambar);
                 }
                 $find->delete();
             } catch (\Exception $e) {
                 $this->emit('showAlert', 'error', "Gagal menghapus data: {$e->getMessage()}");
+
                 return;
                 break;
             }
@@ -138,15 +140,15 @@ class IndexKerja extends Component
         try {
             $find = Kerja::find($this->selectedId)->firstOrFail();
             if ($find->gambar) {
-                Storage::disk('public')->delete('kerja/' . $find->gambar);
+                Storage::disk('public')->delete('kerja/'.$find->gambar);
             }
             $find->delete();
         } catch (QueryException $q) {
-            $this->emit('showAlert', 'error', 'Gagal menghapus data. ' . $q->getMessage());
+            $this->emit('showAlert', 'error', 'Gagal menghapus data. '.$q->getMessage());
 
             return;
         } catch (\Exception $e) {
-            $this->emit('showAlert', 'error', 'Gagal menghapus data: ' . $e->getMessage());
+            $this->emit('showAlert', 'error', 'Gagal menghapus data: '.$e->getMessage());
 
             return;
         }
