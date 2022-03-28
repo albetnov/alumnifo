@@ -22,8 +22,11 @@
                         <div class="col">
                             <div class="card shadow m-3" style="width: 18rem;">
                                 @if ($kerja->gambar)
-                                    <img src="{{ asset('storage/kerja/' . $kerja->gambar) }}" class="card-img-top"
-                                        alt="placeholder">
+                                    <img src="{{ asset('storage/kerja/' . $kerja->gambar) }}" style="max-height:12rem"
+                                        class="card-img-top" alt="placeholder">
+                                @else
+                                    <img src="https://via.placeholder.com/150/000000/FFFFFF/?text=No Image"
+                                        style="max-height:12rem" alt="no-image">
                                 @endif
                                 <div class="card-body">
                                     <h5 class="card-title">{{ $kerja->name }}</h5>
