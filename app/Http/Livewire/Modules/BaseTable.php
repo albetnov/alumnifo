@@ -16,7 +16,7 @@ trait BaseTable
     {
     }
 
-    public function updated($fields)
+    public function updatedBase($fields)
     {
         if ($fields == 'to' || $fields == 'from') {
             $this->validate([

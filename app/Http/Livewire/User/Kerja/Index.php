@@ -13,6 +13,11 @@ class Index extends Component
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
 
+    public function updated($fields)
+    {
+        $this->updatedBase($fields);
+    }
+
     public function render()
     {
         $kerjas = $this->baseRender(Kerja::class)->paginate(10);

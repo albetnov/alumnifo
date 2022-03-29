@@ -3,12 +3,10 @@
 namespace App\Http\Livewire\Tables\KerjaKuliah;
 
 use App\Http\Livewire\Modules\BaseTable;
+use App\Http\Livewire\Modules\BulkDelete;
 use App\Models\KerjaKuliah;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -17,81 +15,24 @@ class IndexKerjaKuliah extends Component
 {
     use WithPagination;
     use BaseTable;
+    use BulkDelete;
 
     protected $paginationTheme = 'bootstrap';
     public $imgPreview = false;
     public $name;
     public $deleteOpened = false;
     public $selectedId;
-    public $items = [];
-    public $bulkAction = false;
-    public $password;
 
-    protected $rules = [
-        'password' => 'required',
-        'items'    => 'numeric',
-    ];
+    public function mount()
+    {
+        $this->setModel(KerjaKuliah::class);
+        $this->hasPhoto(true, 'kerjakuliah');
+    }
 
     public function updated($fields)
     {
-        if ($fields == 'items') {
-            $this->bulkAction = true;
-        } else {
-            $this->validateOnly($fields);
-        }
-        if ($this->items === []) {
-            $this->bulkAction = false;
-        }
-    }
-
-    public function enterSudo()
-    {
-        if (RateLimiter::remaining('password-confirmation', 3)) {
-            RateLimiter::hit('password-confirmation');
-        }
-        if (RateLimiter::tooManyAttempts('password-confirmation', 3)) {
-            $seconds = RateLimiter::availableIn('password-confirmation');
-
-            return $this->emit('showAlert', 'error', 'Percobaan terlalu banyak. Akses ditolak selama: '.$seconds);
-        }
-        if (!Hash::check($this->password, Auth::user()->password)) {
-            return $this->emit('showAlert', 'error', 'Password salah!');
-        }
-        $this->emit('showAlert', 'success', 'Akses Sudo terbuka');
-
-        try {
-            foreach (KerjaKuliah::get() as $kerjaKuliah) {
-                if ($kerjaKuliah->gambar) {
-                    Storage::disk('public')->delete('kerja-kuliah/'.$kerjaKuliah->gambar);
-                }
-                $kerjaKuliah->delete();
-            }
-        } catch (\Exception $e) {
-            return $this->emit('showAlert', 'error', "Gagal menghapus data: {$e->getMessage()}");
-        }
-
-        return $this->emit('showAlert', 'success', 'Semua data dah hilang');
-    }
-
-    public function bulkDelete()
-    {
-        foreach ($this->items as $item) {
-            try {
-                $find = KerjaKuliah::where('id', $item)->first();
-                if ($find->gambar) {
-                    Storage::disk('public')->delete('kerja-kuliah/'.$find->gambar);
-                }
-                $find->delete();
-            } catch (\Exception $e) {
-                $this->emit('showAlert', 'error', "Gagal menghapus data: {$e->getMessage()}");
-
-                return;
-                break;
-            }
-        }
-        $this->items = [];
-        $this->bulkAction = false;
-        $this->emit('showAlert', 'success', 'Data berhasil dihapus.');
+        $this->updatedBulk($fields);
+        $this->updatedBase($fields);
     }
 
     private function cleanup()
@@ -113,6 +54,7 @@ class IndexKerjaKuliah extends Component
         try {
             $data = KerjaKuliah::where('id', $id)->firstOrFail();
         } catch (ModelNotFoundException $e) {
+            $this->emit('showAlert', 'error', 'Gagal mendapat data');
             return;
         }
         $this->imgPreview = $data->gambar;
@@ -127,6 +69,7 @@ class IndexKerjaKuliah extends Component
         try {
             $data = KerjaKuliah::where('id', $id)->firstOrFail();
         } catch (ModelNotFoundException $e) {
+            $this->emit('showAlert', 'error', 'Gagal mendapat data');
             return;
         }
         $this->deleteOpened = true;
@@ -140,15 +83,15 @@ class IndexKerjaKuliah extends Component
         try {
             $find = KerjaKuliah::find($this->selectedId)->firstOrFail();
             if ($find->gambar) {
-                Storage::disk('public')->delete('kerja-kuliah/'.$find->gambar);
+                Storage::disk('public')->delete('kerjakuliah/' . $find->gambar);
             }
             $find->delete();
         } catch (QueryException $q) {
-            $this->emit('showAlert', 'error', 'Gagal menghapus data. '.$q->getMessage());
+            $this->emit('showAlert', 'error', 'Gagal menghapus data. ' . $q->getMessage());
 
             return;
         } catch (\Exception $e) {
-            $this->emit('showAlert', 'error', 'Gagal menghapus data: '.$e->getMessage());
+            $this->emit('showAlert', 'error', 'Gagal menghapus data: ' . $e->getMessage());
 
             return;
         }
