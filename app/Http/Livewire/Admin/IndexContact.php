@@ -89,11 +89,11 @@ class IndexContact extends Component
             $find = PublicContact::where('id', $this->selectedId)->firstOrFail();
             $find->delete();
         } catch (QueryException $q) {
-            $this->emit('showAlert', 'error', 'Gagal menghapus data. ' . $q->getMessage());
+            $this->emit('showAlert', 'error', 'Gagal menghapus data. '.$q->getMessage());
 
             return;
         } catch (\Exception $e) {
-            $this->emit('showAlert', 'error', 'Gagal menghapus data: ' . $e->getMessage());
+            $this->emit('showAlert', 'error', 'Gagal menghapus data: '.$e->getMessage());
 
             return;
         }

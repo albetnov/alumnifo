@@ -53,11 +53,11 @@ class IndexUsers extends Component
             $find = User::find($this->selectedId)->firstOrFail();
             $find->delete();
         } catch (QueryException $q) {
-            $this->emit('showAlert', 'error', 'Gagal menghapus data. ' . $q->getMessage());
+            $this->emit('showAlert', 'error', 'Gagal menghapus data. '.$q->getMessage());
 
             return;
         } catch (\Exception $e) {
-            $this->emit('showAlert', 'error', 'Gagal menghapus data: ' . $e->getMessage());
+            $this->emit('showAlert', 'error', 'Gagal menghapus data: '.$e->getMessage());
 
             return;
         }
@@ -71,11 +71,11 @@ class IndexUsers extends Component
             $find->removeRole('disabled');
             $find->assignRole('user');
         } catch (QueryException $q) {
-            $this->emit('showAlert', 'error', 'Gagal menaikkan level. ' . $q->getMessage());
+            $this->emit('showAlert', 'error', 'Gagal menaikkan level. '.$q->getMessage());
 
             return;
         } catch (\Exception $e) {
-            $this->emit('showAlert', 'error', 'Gagal menaikkan level: ' . $e->getMessage());
+            $this->emit('showAlert', 'error', 'Gagal menaikkan level: '.$e->getMessage());
 
             return;
         }
