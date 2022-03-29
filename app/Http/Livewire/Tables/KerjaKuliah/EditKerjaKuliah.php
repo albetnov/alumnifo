@@ -79,9 +79,9 @@ class EditKerjaKuliah extends Component
                 unset($data['gambar']);
             } else {
                 if ($currentData->gambar) {
-                    Storage::disk('public')->delete('kerjakuliah/' . $currentData->gambar);
+                    Storage::disk('public')->delete('kerjakuliah/'.$currentData->gambar);
                 }
-                $name = time() . hash("sha256", $this->gambar->getClientOriginalName()) . $this->gambar->getClientOriginalName();
+                $name = time().hash("sha256", $this->gambar->getClientOriginalName()).$this->gambar->getClientOriginalName();
                 $this->gambar->storeAs('public/kerjakuliah', $name);
                 $data['gambar'] = $name;
             }
