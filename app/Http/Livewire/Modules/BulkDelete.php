@@ -10,7 +10,12 @@ use Illuminate\Support\Facades\Storage;
 trait BulkDelete
 {
     public $model;
-    public $items = [], $bulkAction = false, $hasPhoto = false, $password, $fieldName = "gambar", $pathName;
+    public $items = [];
+    public $bulkAction = false;
+    public $hasPhoto = false;
+    public $password;
+    public $fieldName = "gambar";
+    public $pathName;
 
     protected $rules = [
         'password' => 'required',
@@ -37,7 +42,7 @@ trait BulkDelete
         if (RateLimiter::tooManyAttempts('password-confirmation', 3)) {
             $seconds = RateLimiter::availableIn('password-confirmation');
 
-            return $this->emit('showAlert', 'error', 'Percobaan terlalu banyak. Akses ditolak selama: ' . $seconds);
+            return $this->emit('showAlert', 'error', 'Percobaan terlalu banyak. Akses ditolak selama: '.$seconds);
         }
         if (!Hash::check($this->password, Auth::user()->password)) {
             return $this->emit('showAlert', 'error', 'Password salah!');
@@ -49,7 +54,7 @@ trait BulkDelete
                 foreach ($this->model::get() as $fetch) {
                     $fieldName = $this->fieldName;
                     if ($fetch->$fieldName) {
-                        Storage::disk('public')->delete("{$this->pathName}/" . $fetch->gambar);
+                        Storage::disk('public')->delete("{$this->pathName}/".$fetch->gambar);
                     }
                     $fetch->delete();
                 }
@@ -90,7 +95,7 @@ trait BulkDelete
                 if ($this->hasPhoto) {
                     $fieldName = $this->fieldName;
                     if ($find->$fieldName) {
-                        Storage::disk('public')->delete("{$this->pathName}/" . $find->gambar);
+                        Storage::disk('public')->delete("{$this->pathName}/".$find->gambar);
                     }
                 }
                 $find->delete();

@@ -55,6 +55,7 @@ class IndexKerjaKuliah extends Component
             $data = KerjaKuliah::where('id', $id)->firstOrFail();
         } catch (ModelNotFoundException $e) {
             $this->emit('showAlert', 'error', 'Gagal mendapat data');
+
             return;
         }
         $this->imgPreview = $data->gambar;
@@ -70,6 +71,7 @@ class IndexKerjaKuliah extends Component
             $data = KerjaKuliah::where('id', $id)->firstOrFail();
         } catch (ModelNotFoundException $e) {
             $this->emit('showAlert', 'error', 'Gagal mendapat data');
+
             return;
         }
         $this->deleteOpened = true;
@@ -83,15 +85,15 @@ class IndexKerjaKuliah extends Component
         try {
             $find = KerjaKuliah::find($this->selectedId)->firstOrFail();
             if ($find->gambar) {
-                Storage::disk('public')->delete('kerjakuliah/' . $find->gambar);
+                Storage::disk('public')->delete('kerjakuliah/'.$find->gambar);
             }
             $find->delete();
         } catch (QueryException $q) {
-            $this->emit('showAlert', 'error', 'Gagal menghapus data. ' . $q->getMessage());
+            $this->emit('showAlert', 'error', 'Gagal menghapus data. '.$q->getMessage());
 
             return;
         } catch (\Exception $e) {
-            $this->emit('showAlert', 'error', 'Gagal menghapus data: ' . $e->getMessage());
+            $this->emit('showAlert', 'error', 'Gagal menghapus data: '.$e->getMessage());
 
             return;
         }
