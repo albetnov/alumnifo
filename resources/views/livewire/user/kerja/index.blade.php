@@ -2,7 +2,8 @@
     <!--Body-->
     <section wire:ignore id="hero">
         <div class="hero-container" data-aos="zoom-in" data-aos-delay="100">
-            <h1 class="mb-4 pb-0">Table<span> Kerja</span></h1>
+            <h1 class="mb-4 pb-0">Alumni Berstatus<span> Kerja</span></h1>
+            <p class="text-muted">Daftar dari Alumni yang berstatus bekerja</p>
         </div>
     </section>
 
@@ -13,6 +14,12 @@
             <div class="container" wire:ignore.self data-aos="fade-up">
                 <div class="section-header">
                     <h2>Daftar Alumni yang sedang berkerja</h2>
+                    @include('livewire.tables.filter', [
+                        'btnContent' => 'Filter by Date',
+                        'class' => 'btn btn-danger mb-1',
+                        'preventDefault' => true,
+                        'custom' => 'livewire.user.filter',
+                    ])
                     <input type="search" class="form-control" placeholder="Search" name="search" id="search"
                         {!! wireModel('search') !!}>
                 </div>

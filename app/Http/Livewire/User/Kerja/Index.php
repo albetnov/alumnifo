@@ -13,6 +13,11 @@ class Index extends Component
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
 
+    public function mount()
+    {
+        $this->filterUsingYear(true);
+    }
+
     public function updated($fields)
     {
         $this->updatedBase($fields);

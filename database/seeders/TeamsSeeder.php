@@ -20,6 +20,7 @@ class TeamsSeeder extends Seeder
             'link_twitter' => 'https://twitter.com/AlbetNv',
             'link_ig'      => 'https://instagram.com/al_nv4',
             'link_fb'      => 'https://www.facebook.com/profile.php?id=100077882502140',
+            'link_in'      => 'https://www.linkedin.com/in/albet-novendo-a95762234/',
             'photo'        => 'sample1.jpg',
         ]);
         Teams::create([
