@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Usaha;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -9,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class UsahaFactory extends Factory
 {
+    protected $model = Usaha::class;
     /**
      * Define the model's default state.
      *
@@ -16,8 +18,14 @@ class UsahaFactory extends Factory
      */
     public function definition()
     {
+        $jk = ['l', 'p'];
         return [
-            //
+            'name' => $this->faker->name(),
+            'jenis_kelamin' => $jk[rand(0, 1)],
+            'jenis_usaha' => $this->faker->sentence(),
+            'alamat_usaha'         => $this->faker->streetAddress(),
+            'tahun_usaha'     => rand(2000, 2100),
+            'dibuat'          => 'Root',
         ];
     }
 }

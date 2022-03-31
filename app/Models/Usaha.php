@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Database\Factories\UsahaFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Scout\Attributes\SearchUsingFullText;
@@ -39,5 +40,10 @@ class Usaha extends Model
     public function getRouteKeyName()
     {
         return 'slug';
+    }
+
+    protected static function newFactory()
+    {
+        return UsahaFactory::new();
     }
 }

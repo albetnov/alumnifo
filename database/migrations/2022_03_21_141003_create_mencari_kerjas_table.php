@@ -4,7 +4,8 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class() extends Migration {
+return new class() extends Migration
+{
     /**
      * Run the migrations.
      *
@@ -18,7 +19,7 @@ return new class() extends Migration {
             $table->string('slug');
             $table->enum('jenis_kelamin', ['l', 'p']);
             $table->string('alamat');
-            $table->string('alasan_mencari_kerja');
+            $table->longText('alasan_mencari_kerja');
             $table->string('kontak');
             $table->string('gambar')->nullable();
             $table->string('dibuat');

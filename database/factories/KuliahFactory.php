@@ -2,15 +2,15 @@
 
 namespace Database\Factories;
 
-use App\Models\MencariKerja;
+use App\Models\Kuliah;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\MencariKerja>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Kuliah>
  */
-class MencariKerjaFactory extends Factory
+class KuliahFactory extends Factory
 {
-    protected $model = MencariKerja::class;
+    protected $model = Kuliah::class;
     /**
      * Define the model's default state.
      *
@@ -22,9 +22,8 @@ class MencariKerjaFactory extends Factory
         return [
             'name' => $this->faker->name(),
             'jenis_kelamin' => $jk[rand(0, 1)],
-            'alamat' => $this->faker->streetAddress(),
-            'alasan_mencari_kerja' => $this->faker->paragraph(),
-            'kontak'         => $this->faker->phoneNumber(),
+            'nama_universitas' => $this->faker->sentence(),
+            'jurusan' => $this->faker->word(),
             'dibuat'          => 'Root',
         ];
     }
