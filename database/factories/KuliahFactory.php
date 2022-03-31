@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 class KuliahFactory extends Factory
 {
     protected $model = Kuliah::class;
+
     /**
      * Define the model's default state.
      *
@@ -19,12 +20,13 @@ class KuliahFactory extends Factory
     public function definition()
     {
         $jk = ['l', 'p'];
+
         return [
-            'name' => $this->faker->name(),
-            'jenis_kelamin' => $jk[rand(0, 1)],
+            'name'             => $this->faker->name(),
+            'jenis_kelamin'    => $jk[rand(0, 1)],
             'nama_universitas' => $this->faker->sentence(),
-            'jurusan' => $this->faker->word(),
-            'dibuat'          => 'Root',
+            'jurusan'          => $this->faker->word(),
+            'dibuat'           => 'Root',
         ];
     }
 }

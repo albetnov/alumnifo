@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 class MencariKerjaFactory extends Factory
 {
     protected $model = MencariKerja::class;
+
     /**
      * Define the model's default state.
      *
@@ -19,13 +20,14 @@ class MencariKerjaFactory extends Factory
     public function definition()
     {
         $jk = ['l', 'p'];
+
         return [
-            'name' => $this->faker->name(),
-            'jenis_kelamin' => $jk[rand(0, 1)],
-            'alamat' => $this->faker->streetAddress(),
+            'name'                 => $this->faker->name(),
+            'jenis_kelamin'        => $jk[rand(0, 1)],
+            'alamat'               => $this->faker->streetAddress(),
             'alasan_mencari_kerja' => $this->faker->paragraph(),
-            'kontak'         => $this->faker->phoneNumber(),
-            'dibuat'          => 'Root',
+            'kontak'               => $this->faker->phoneNumber(),
+            'dibuat'               => 'Root',
         ];
     }
 }

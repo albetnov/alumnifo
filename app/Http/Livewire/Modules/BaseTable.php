@@ -23,7 +23,7 @@ trait BaseTable
             if ($this->byYear) {
                 $this->validate([
                     'from' => 'required|numeric|digits:4',
-                    'to' => 'required_with:from|numeric|digits:4'
+                    'to'   => 'required_with:from|numeric|digits:4',
                 ]);
             } else {
                 $this->validate([
@@ -54,7 +54,7 @@ trait BaseTable
         if ($this->byYear) {
             $this->validate([
                 'from' => 'required|numeric|digits:4',
-                'to' => 'required_with:from|numeric|digits:4|after_or_equal:from'
+                'to'   => 'required_with:from|numeric|digits:4|after_or_equal:from',
             ]);
         } else {
             $this->validate([
@@ -69,7 +69,7 @@ trait BaseTable
         $this->closeAll();
     }
 
-    public function filterUsingYear(Bool $boolean)
+    public function filterUsingYear(bool $boolean)
     {
         $this->byYear = $boolean;
     }
