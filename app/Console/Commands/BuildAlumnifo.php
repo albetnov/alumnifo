@@ -44,7 +44,7 @@ class BuildAlumnifo extends Command
 
         if (!$rebuild) {
             $this->info('Detecting .env file');
-            if (!file_exists(__DIR__ . '/../../../.env')) {
+            if (!file_exists(__DIR__.'/../../../.env')) {
                 $this->info('.env file is not detected in base directory.');
                 $this->info('Please configure your .env. We will generate .env file for you.');
                 $this->info('After .env configured, run this command again.');
@@ -63,19 +63,18 @@ class BuildAlumnifo extends Command
             $this->info("Attempting to storage link...");
             Artisan::call('storage:link');
             $this->info("Copying resources...");
-            $directory = __DIR__ . '/../../../public/files/teams';
+            $directory = __DIR__.'/../../../public/files/teams';
             $files = array_diff(scandir($directory), ['.', '..']);
-            $todir = __DIR__ . '/../../../public/storage/teams';
+            $todir = __DIR__.'/../../../public/storage/teams';
             mkdir($todir);
             foreach ($files as $file) {
-                copy($directory . "/{$file}", $todir . "/{$file}");
+                copy($directory."/{$file}", $todir."/{$file}");
             }
             $this->info('Copied successfully.');
             $this->info("Alumnifo Build has successfully runned.");
         } else {
             $this->info("Rebuilding Alumnifo completed successfully.");
         }
-
 
         return 0;
     }
