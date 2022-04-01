@@ -59,15 +59,23 @@
                 @else
                     <ul>
                         <li><a href="{{ route('home') }}"
-                                class="nav-link {{ strpos(Route::currentRouteName(), 'home') === 0 ? 'active' : '' }}">Home</a>
+                                class="nav-link {{ str_starts_with('home', Route::currentRouteName()) === true ? 'active' : '' }}">Home</a>
                         </li>
                         <li><a href="{{ route('user.kerja') }}"
-                                class="nav-link {{ strpos(Route::currentRouteName(), 'user.kerja') === 0 ? 'active' : '' }}">Kerja</a>
+                                class="nav-link {{ str_contains('user.kerja', Route::currentRouteName()) === true ? 'active' : '' }}">Kerja</a>
                         </li>
-                        <li><a href="">Kuliah</a></li>
-                        <li><a href="">Kerja Kuliah</a></li>
-                        <li><a href="">Mencari Kerja</a></li>
-                        <li><a href="">Membuka Usaha</a></li>
+                        <li><a href="{{ route('user.kuliah') }}"
+                                class="nav-link {{ str_starts_with('user.kuliah', Route::currentRouteName()) === true ? 'active' : '' }}">Kuliah</a>
+                        </li>
+                        <li><a href="{{ route('user.kerjakuliah') }}"
+                                class="nav-link {{ preg_match('[user.kerjakuliah]', Route::currentRouteName()) === 1 ? 'active' : '' }}">Kerja
+                                Kuliah</a></li>
+                        <li><a href="{{ route('user.mencarikerja') }}"
+                                class="nav-link {{ str_starts_with('user.mencarikerja', Route::currentRouteName()) === true ? 'active' : '' }}">Mencari
+                                Kerja</a></li>
+                        <li><a href="{{ route('user.usaha') }}"
+                                class="nav-link {{ str_starts_with('user.usaha', Route::currentRouteName()) === true ? 'active' : '' }}">Membuka
+                                Usaha</a></li>
                     </ul>
                 @endif
                 <i class="bi bi-list mobile-nav-toggle"></i>

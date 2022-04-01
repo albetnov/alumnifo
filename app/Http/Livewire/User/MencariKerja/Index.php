@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Livewire\User\Kerja;
+namespace App\Http\Livewire\User\MencariKerja;
 
 use App\Http\Livewire\Modules\BaseTable;
-use App\Models\Kerja;
+use App\Models\MencariKerja;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -13,11 +13,6 @@ class Index extends Component
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
 
-    public function mount()
-    {
-        $this->filterUsingYear();
-    }
-
     public function updated($fields)
     {
         $this->updatedBase($fields);
@@ -25,8 +20,8 @@ class Index extends Component
 
     public function render()
     {
-        $kerjas = $this->baseRender(Kerja::class)->paginate(10);
+        $findJobs = $this->baseRender(MencariKerja::class)->paginate(10);
 
-        return view('livewire.user.kerja.index', compact('kerjas'))->layout('guest');
+        return view('livewire.user.mencari-kerja.index', compact('findJobs'))->layout('guest');
     }
 }

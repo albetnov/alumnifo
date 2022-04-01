@@ -2,8 +2,8 @@
     <!--Body-->
     <section wire:ignore id="hero">
         <div class="hero-container" data-aos="zoom-in" data-aos-delay="100">
-            <h1 class="mb-4 pb-0">Alumni Berstatus<span> Kerja</span></h1>
-            <p class="text-muted">Daftar dari Alumni yang berstatus bekerja</p>
+            <h1 class="mb-4 pb-0">Alumni Berstatus<span> Kuliah</span></h1>
+            <p class="text-muted">Daftar dari Alumni yang berstatus sedang kuliah</p>
         </div>
     </section>
 
@@ -13,38 +13,36 @@
         <section class="m-3 mb-3">
             <div class="container" wire:ignore.self data-aos="fade-up">
                 <div class="section-header">
-                    <h2>Daftar Alumni yang sedang berkerja</h2>
+                    <h2>Daftar Alumni yang sedang kuliah</h2>
                     @include('livewire.tables.filter', [
                         'btnContent' => 'Filter by Date',
                         'class' => 'btn btn-danger mb-1',
-                        'preventDefault' => true,
-                        'custom' => 'livewire.user.filter',
                     ])
                     <input type="search" class="form-control" placeholder="Search" name="search" id="search"
                         {!! wireModel('search') !!}>
                 </div>
 
                 <div class="row row-cols-3">
-                    @foreach ($kerjas as $kerja)
+                    @foreach ($collages as $collage)
                         <div class="col">
                             <div class="card shadow m-3" style="width: 18rem;">
-                                @if ($kerja->gambar)
-                                    <img src="{{ asset('storage/kerja/' . $kerja->gambar) }}" style="max-height:12rem"
-                                        class="card-img-top" alt="placeholder">
+                                @if ($collage->gambar)
+                                    <img src="{{ asset('storage/kuliah/' . $collage->gambar) }}"
+                                        style="max-height:12rem" class="card-img-top" alt="placeholder">
                                 @else
                                     <img src="https://via.placeholder.com/150/000000/FFFFFF/?text=No Image"
                                         style="max-height:12rem" alt="no-image">
                                 @endif
                                 <div class="card-body">
-                                    <h5 class="card-title">{{ $kerja->name }}</h5>
+                                    <h5 class="card-title">{{ $collage->name }}</h5>
                                     <p class="card-text">
                                     <ul>
                                         <li>Jenis Kelamin:
-                                            {{ $kerja->jenis_kelamin == 'l' ? 'Laki-Laki' : 'Perempuan' }}</li>
-                                        <li>Nama Perusahaan: {{ $kerja->nama_perusahaan }}</li>
-                                        <li>Jabatan: {{ $kerja->jabatan }}</li>
-                                        <li>Tahun Kerja: {{ $kerja->tahun_kerja }}</li>
-                                        <li>Di daftarkan oleh: {{ $kerja->dibuat }}</li>
+                                            {{ $collage->jenis_kelamin == 'l' ? 'Laki-Laki' : 'Perempuan' }}</li>
+                                        <li>Nama Universitas: {{ $collage->nama_universitas }}</li>
+                                        <li>Jurusan: {{ $collage->jurusan }}</li>
+                                        <li>Didaftarkan: {{ $collage->created_at }}</li>
+                                        <li>Di daftarkan oleh: {{ $collage->dibuat }}</li>
                                     </ul>
                                     </p>
                                     <div class="btn-group dropup">
@@ -63,7 +61,7 @@
                         </div>
                     @endforeach
                 </div>
-                {{ $kerjas->withQueryString()->links() }}
+                {{ $collages->withQueryString()->links() }}
             </div>
 
         </section>

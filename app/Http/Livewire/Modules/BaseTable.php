@@ -11,7 +11,7 @@ trait BaseTable
     public $to;
     public $search;
     public $filter_date;
-    public $byYear;
+    public $byYear = false;
 
     public function closeAll()
     {
@@ -69,9 +69,9 @@ trait BaseTable
         $this->closeAll();
     }
 
-    public function filterUsingYear(Bool $boolean)
+    public function filterUsingYear($fieldName = 'tahun_kerja')
     {
-        $this->byYear = $boolean;
+        $this->byYear = $fieldName;
     }
 
     public function baseRender($model)
@@ -80,7 +80,7 @@ trait BaseTable
         $models = $this->search ? $model::search($this->search) : $model::latest();
         if ($this->filter_date) {
             if ($this->byYear) {
-                $models->where('tahun_kerja', '<=', $this->to)->where('tahun_kerja', '>=', $this->from);
+                $models->where($this->byYear, '<=', $this->to)->where('tahun_kerja', '>=', $this->from);
             } else {
                 $models->whereDate('created_at', '<=', $this->to)->whereDate('created_at', '>=', $this->from);
             }

@@ -24,6 +24,10 @@ use App\Http\Livewire\Tables\Usaha\AddUsaha;
 use App\Http\Livewire\Tables\Usaha\EditUsaha;
 use App\Http\Livewire\Tables\Usaha\IndexUsaha;
 use App\Http\Livewire\User\Kerja\Index;
+use App\Http\Livewire\User\KerjaKuliah\Index as KerjaKuliahIndex;
+use App\Http\Livewire\User\Kuliah\Index as KuliahIndex;
+use App\Http\Livewire\User\MencariKerja\Index as MencariKerjaIndex;
+use App\Http\Livewire\User\Usaha\Index as UsahaIndex;
 use App\Http\Livewire\Users\AddUser;
 use App\Http\Livewire\Users\EditUser;
 use App\Http\Livewire\Users\IndexUsers;
@@ -88,6 +92,10 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::group(['middleware' => ['role:user'], 'prefix' => 'user', 'as' => 'user.'], function () {
         Route::get('kerja', Index::class)->name('kerja');
+        Route::get('kuliah', KuliahIndex::class)->name('kuliah');
+        Route::get('kerja_kuliah', KerjaKuliahIndex::class)->name('kerjakuliah');
+        Route::get('mencari_kerja', MencariKerjaIndex::class)->name('mencarikerja');
+        Route::get('usaha', UsahaIndex::class)->name('usaha');
     });
 
     Route::group(['middleware' => ['role:disabled']], function () {

@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Livewire\User\Kerja;
+namespace App\Http\Livewire\User\KerjaKuliah;
 
 use App\Http\Livewire\Modules\BaseTable;
-use App\Models\Kerja;
+use App\Models\KerjaKuliah;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -25,8 +25,8 @@ class Index extends Component
 
     public function render()
     {
-        $kerjas = $this->baseRender(Kerja::class)->paginate(10);
+        $kerjaKuliah = $this->baseRender(KerjaKuliah::class)->paginate(10);
 
-        return view('livewire.user.kerja.index', compact('kerjas'))->layout('guest');
+        return view('livewire.user.kerja-kuliah.index', compact('kerjaKuliah'))->layout('guest');
     }
 }
