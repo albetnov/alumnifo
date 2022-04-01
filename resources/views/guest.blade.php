@@ -82,13 +82,41 @@
             </nav>
             <!-- .navbar -->
             @auth
-                <form action="{{ route('logout') }}" method="post">
-                    @csrf
-                    <button type="submit" class="buy-tickets scrollto">Logout</button>
-                </form>
+                <div class="dropdown">
+                    <button class="buy-tickets dropdown-toggle" type="button" id="profileDropdown" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Profile
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="profileDropdown">
+                        <li>
+                            <h6 class="dropdown-header">Manage Profiles</h6>
+                        </li>
+                        <li><a class="dropdown-item" href="{{ route('profile') }}">{{ Auth::user()->name }}</a></li>
+                        <li>
+                            <form action="{{ route('logout') }}" method="post">
+                                @csrf
+                                <button type="submit" class="dropdown-item">Logout</button>
+                            </form>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                            <h6 class="dropdown-header">Participate</h6>
+                        </li>
+                        <li><a class="dropdown-item" href="#">Kerja</a></li>
+                        <li><a class="dropdown-item" href="#">Kuliah</a></li>
+                        <li><a class="dropdown-item" href="#">Kerja & Kuliah</a></li>
+                        <li><a class="dropdown-item" href="#">Mencari Kerja</a></li>
+                        <li><a class="dropdown-item" href="#">Membuka Usaha</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                            <h6 class="dropdown-header">Meet Alumni</h6>
+                        </li>
+                        <li><a class="dropdown-item" href="#">Chatting</a></li>
+                    </ul>
+                </div>
             @else
-                <a class="buy-tickets scrollto" href="{{ route('register') }}">Sign Up</a>
-                <a class="buy-tickets scrollto" href="{{ route('login') }}">Login</a>
+                <a class="buy-tickets" href="{{ route('register') }}">Sign Up</a>
+                <a class="buy-tickets" href="{{ route('login') }}">Login</a>
             @endauth
 
 

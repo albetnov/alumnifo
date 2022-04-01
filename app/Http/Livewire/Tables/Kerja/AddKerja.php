@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Tables\Kerja;
 
+use App\Http\Livewire\Modules\RoleHelper;
 use App\Models\Kerja;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
@@ -49,7 +50,7 @@ class AddKerja extends Component
             if (!$this->gambar) {
                 unset($data['gambar']);
             } else {
-                $name = time().hash("sha256", $this->gambar->getClientOriginalName()).$this->gambar->getClientOriginalName();
+                $name = time() . hash("sha256", $this->gambar->getClientOriginalName()) . $this->gambar->getClientOriginalName();
                 $this->gambar->storeAs('public/kerja', $name);
                 $data['gambar'] = $name;
             }
@@ -64,11 +65,12 @@ class AddKerja extends Component
 
         $this->emit('showAlert', 'success', "Data berhasil di simpan.");
 
-        return to_route('table.kerja.index');
+        return RoleHelper::redirectByRoles('home', 'tables.kerja.index');
     }
 
     public function render()
     {
-        return view('livewire.tables.kerja.add')->layout('livewire.layouts.main', ['href' => 'Tables/Kerja', 'name' => 'Add']);
+        return RoleHelper::showViewByRoles('livewire.user.kerja.add', 'livewire.tables.kerja.add')
+            ->adminLayoutData(['href' => 'Tables/Kerja', 'name' => 'Add'])->render();
     }
 }
