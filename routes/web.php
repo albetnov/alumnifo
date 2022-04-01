@@ -23,7 +23,6 @@ use App\Http\Livewire\Tables\MencariKerja\IndexMencariKerja;
 use App\Http\Livewire\Tables\Usaha\AddUsaha;
 use App\Http\Livewire\Tables\Usaha\EditUsaha;
 use App\Http\Livewire\Tables\Usaha\IndexUsaha;
-use App\Http\Livewire\User\Kerja\Add as KerjaAdd;
 use App\Http\Livewire\User\Kerja\Index as KerjaIndex;
 use App\Http\Livewire\User\KerjaKuliah\Index as KerjaKuliahIndex;
 use App\Http\Livewire\User\Kuliah\Index as KuliahIndex;

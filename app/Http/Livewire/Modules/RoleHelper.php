@@ -4,11 +4,15 @@ namespace App\Http\Livewire\Modules;
 
 use Illuminate\Support\Facades\Auth;
 
-
 class RoleHelper
 {
-    private static $userDestination, $superAdminDestination;
-    private $userLayoutName = "guest", $adminLayoutName = "livewire.layouts.main", $userLayoutData, $adminLayoutData, $viewData = [];
+    private static $userDestination;
+    private static $superAdminDestination;
+    private $userLayoutName = "guest";
+    private $adminLayoutName = "livewire.layouts.main";
+    private $userLayoutData;
+    private $adminLayoutData;
+    private $viewData = [];
 
     public static function redirectByRoles($userDestination, $superAdminDestination)
     {
@@ -23,36 +27,42 @@ class RoleHelper
     {
         self::$userDestination = $userDestination;
         self::$superAdminDestination = $superAdminDestination;
-        return new self;
+
+        return new self();
     }
 
     public function userLayout($layoutName)
     {
         $this->userLayoutName = $layoutName;
+
         return $this;
     }
 
     public function adminLayout($layoutName)
     {
         $this->adminLayoutName = $layoutName;
+
         return $this;
     }
 
     public function userLayoutData($layoutData)
     {
         $this->userLayoutData = $layoutData;
+
         return $this;
     }
 
     public function adminLayoutData($layoutData)
     {
         $this->adminLayoutData = $layoutData;
+
         return $this;
     }
 
     public function viewData($viewData)
     {
         $this->viewData = $viewData;
+
         return $this;
     }
 
@@ -62,6 +72,7 @@ class RoleHelper
             if (!$this->adminLayoutData) {
                 throw new \Exception('adminLayoutData() is required');
             }
+
             return view(self::$superAdminDestination, $this->viewData)->layout($this->adminLayoutName, $this->adminLayoutData);
         }
 

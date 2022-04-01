@@ -12,6 +12,7 @@ class Add extends Component
     public $jabatan;
     public $tahun_kerja;
     public $gambar;
+
     public function render()
     {
         return view('livewire.user.kerja.add')->layout('guest');
