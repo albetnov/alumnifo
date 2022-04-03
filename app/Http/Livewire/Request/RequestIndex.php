@@ -10,6 +10,7 @@ use App\Models\Kuliah;
 use App\Models\MencariKerja;
 use App\Models\Request;
 use App\Models\Usaha;
+use App\Models\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Auth;
@@ -71,11 +72,11 @@ class RequestIndex extends Component
             $find = Request::find($this->selectedId);
             $find->delete();
         } catch (QueryException $q) {
-            $this->emit('showAlert', 'error', 'Gagal menghapus data. '.$q->getMessage());
+            $this->emit('showAlert', 'error', 'Gagal menghapus data. ' . $q->getMessage());
 
             return;
         } catch (\Exception $e) {
-            $this->emit('showAlert', 'error', 'Gagal menghapus data: '.$e->getMessage());
+            $this->emit('showAlert', 'error', 'Gagal menghapus data: ' . $e->getMessage());
 
             return;
         }
@@ -112,6 +113,11 @@ class RequestIndex extends Component
     public function approve($id)
     {
         $query = Request::find($id);
+        $user = User::find($query->user_id);
+        if (!$user->hasPermissionTo('participate')) {
+            $user->givePermissionTo('participate');
+        }
+
         $query->update([
             'status'     => 'accepted',
             'handled_by' => Auth::user()->name,
@@ -123,6 +129,11 @@ class RequestIndex extends Component
     public function decline($id)
     {
         $query = Request::find($id);
+        $user = User::find($query->user_id);
+        if (!$user->hasPermissionTo('participate')) {
+            $user->givePermissionTo('participate');
+        }
+
         $query->update([
             'status'     => 'rejected',
             'handled_by' => Auth::user()->name,
