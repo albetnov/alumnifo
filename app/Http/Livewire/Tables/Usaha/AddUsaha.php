@@ -50,7 +50,7 @@ class AddUsaha extends Component
             if (!$this->gambar) {
                 unset($data['gambar']);
             } else {
-                $name = time() . hash("sha256", $this->gambar->getClientOriginalName()) . $this->gambar->getClientOriginalName();
+                $name = time().hash("sha256", $this->gambar->getClientOriginalName()).$this->gambar->getClientOriginalName();
                 $this->gambar->storeAs('public/usaha', $name);
                 $data['gambar'] = $name;
             }
@@ -65,6 +65,7 @@ class AddUsaha extends Component
         $this->resetForm();
 
         $this->emit('showAlert', 'success', "Data berhasil di simpan.");
+
         return RoleHelper::redirectByRoles('home', 'table.usaha.index');
     }
 
@@ -73,7 +74,7 @@ class AddUsaha extends Component
         return RoleHelper::showViewByRoles('livewire.user.usaha.add', 'livewire.tables.usaha.add-usaha')
             ->adminLayoutData([
                 'href' => 'Tables/Usaha',
-                'name' => 'Add'
+                'name' => 'Add',
             ])->render();
     }
 }
