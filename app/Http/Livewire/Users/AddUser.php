@@ -25,7 +25,7 @@ class AddUser extends Component
     {
         return [
             'name'     => 'required',
-            'email'    => 'required|unique:users,id,' . Auth::user()->id,
+            'email'    => 'required|unique:users,id,'.Auth::user()->id,
             'password' => 'required|min:8',
             'conpass'  => 'required_with:password|same:password',
             'role'     => 'required|exists:roles,id',

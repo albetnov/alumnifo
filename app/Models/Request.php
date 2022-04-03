@@ -9,7 +9,8 @@ use Laravel\Scout\Searchable;
 
 class Request extends Model
 {
-    use HasFactory, Searchable;
+    use HasFactory;
+    use Searchable;
 
     protected $fillable = ['table_type', 'user_id', 'status', 'handled_by'];
 
@@ -18,8 +19,8 @@ class Request extends Model
     {
         return [
             'table_type' => $this->table_type,
-            'user_id' => $this->user_id,
-            'status' => $this->status,
+            'user_id'    => $this->user_id,
+            'status'     => $this->status,
             'handled_by' => $this->handled_by,
         ];
     }
@@ -27,7 +28,8 @@ class Request extends Model
     /**
      * Scope a query to only users accepted shown.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     *
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeAccepted($query)

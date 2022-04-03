@@ -30,7 +30,7 @@ class EditUser extends Component
     {
         return [
             'name'     => 'required',
-            'email'    => 'required|unique:users,id,' . Auth::user()->id,
+            'email'    => 'required|unique:users,id,'.Auth::user()->id,
             'password' => 'nullable|min:8',
             'conpass'  => 'required_with:password|same:password',
             'role'     => 'required|exists:roles,id',
