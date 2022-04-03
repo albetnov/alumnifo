@@ -53,7 +53,9 @@
                                             <span class="visually-hidden">Toggle Action</span> Action
                                         </button>
                                         <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item" href="#">Request Edit</a></li>
+                                            <li><a class="dropdown-item"
+                                                    href="{{ route('user.edit.kerja', $kerja->slug) }}">Request
+                                                    Edit</a></li>
                                             <li><a class="dropdown-item" href="#">Request Delete</a></li>
                                         </ul>
                                     </div>

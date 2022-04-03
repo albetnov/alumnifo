@@ -8,6 +8,7 @@ use App\Http\Livewire\Home;
 use App\Http\Livewire\Login;
 use App\Http\Livewire\ProfileManager;
 use App\Http\Livewire\Register;
+use App\Http\Livewire\Request\RequestEditIndex;
 use App\Http\Livewire\Request\RequestIndex;
 use App\Http\Livewire\Tables\Kerja\AddKerja;
 use App\Http\Livewire\Tables\Kerja\EditKerja;
@@ -24,6 +25,7 @@ use App\Http\Livewire\Tables\MencariKerja\IndexMencariKerja;
 use App\Http\Livewire\Tables\Usaha\AddUsaha;
 use App\Http\Livewire\Tables\Usaha\EditUsaha;
 use App\Http\Livewire\Tables\Usaha\IndexUsaha;
+use App\Http\Livewire\User\Kerja\EditKerjaUser;
 use App\Http\Livewire\User\Kerja\Index as KerjaIndex;
 use App\Http\Livewire\User\KerjaKuliah\Index as KerjaKuliahIndex;
 use App\Http\Livewire\User\Kuliah\Index as KuliahIndex;
@@ -64,6 +66,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('contact', IndexContact::class)->name('contact');
         Route::get('contact/edit/{publicContact}', EditContact::class)->name('contact.edit');
         Route::get('request', RequestIndex::class)->name('request');
+        Route::get('request/edit', RequestEditIndex::class)->name('request.edit');
     });
 
     Route::group(['middleware' => ['role_or_permission:SuperAdmin|edit profile']], function () {
@@ -105,6 +108,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('add/kuliah', AddKuliah::class)->name('add.kuliah');
             Route::get('add/mencari_kerja', AddMencariKerja::class)->name('add.mencarikerja');
             Route::get('add/usaha', AddUsaha::class)->name('add.usaha');
+            Route::get('edit/kerja/{kerja}', EditKerjaUser::class)->name('edit.kerja');
         });
     });
 

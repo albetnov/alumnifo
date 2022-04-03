@@ -83,7 +83,7 @@
                             </div>
                             <button class="btn btn-sm btn-primary" type="submit">Create</button>
                             <button class="btn btn-sm btn-secondary" type="button"
-                                onclick="location.href='{{ route('table.kerja.index') }}'">Back</button>
+                                onclick="location.href='{{ route('user.mencarikerja') }}'">Back</button>
                         </form>
                     </div>
                 </div>

@@ -30,7 +30,7 @@ class RoleHelper
         return $data;
     }
 
-    private static function validate()
+    public static function validate()
     {
         $user = Auth::user();
         if ($user->hasRole('user') && $user->hasPermissionTo('participate')) {

@@ -4,14 +4,14 @@
         <section class="m-3 mb-3 vh-100 d-flex align-items-center justify-content-center">
             <div class="container" wire:ignore.self data-aos="fade-up">
                 <div class="section-header">
-                    <h4 class="text-center">Fomulir Alumni yang sedang membuka usaha</h4>
+                    <h4 class="text-center">Fomulir Alumni Bekerja</h4>
                 </div>
                 <div class="card shadow">
                     <div class="card-header">
-                        Add Data Membuka Usaha
+                        Edit Data Kerja
                     </div>
                     <div class="card-body">
-                        <form wire:submit.prevent='store' enctype="multipart/form-data">
+                        <form wire:submit.prevent='update' enctype="multipart/form-data">
                             <div class="row row-cols-2">
                                 <div class="col-12 col-md-6 mb-3">
                                     <label for="nama">Nama: </label>
@@ -36,29 +36,29 @@
                                     @enderror
                                 </div>
                                 <div class="col-12 col-md-6 mb-3">
-                                    <label for="jenis_usaha">Jenis Usaha: </label>
+                                    <label for="np">Nama Perusahaan: </label>
                                     <input type="text"
-                                        class="form-control @error('jenis_usaha') is-invalid @elseif($jenis_usaha != '') is-valid @enderror"
-                                        name="jenis_usaha" {!! wireModel('jenis_usaha') !!}>
-                                    @error('jenis_usaha')
+                                        class="form-control @error('nama_perusahaan') is-invalid @elseif($nama_perusahaan != '') is-valid @enderror"
+                                        name="nama_perusahaan" {!! wireModel('nama_perusahaan') !!}>
+                                    @error('nama_perusahaan')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 <div class="col-12 col-md-6 mb-3">
-                                    <label for="alamat_usaha">Alamat Usaha: </label>
+                                    <label for="jabatan">Jabatan: </label>
                                     <input type="text"
-                                        class="form-control @error('alamat_usaha') is-invalid @elseif($alamat_usaha != '') is-valid @enderror"
-                                        name="alamat_usaha" {!! wireModel('alamat_usaha') !!}>
-                                    @error('alamat_usaha')
+                                        class="form-control @error('jabatan') is-invalid @elseif($jabatan != '') is-valid @enderror"
+                                        name="jabatan" {!! wireModel('jabatan') !!}>
+                                    @error('jabatan')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 <div class="col-12 col-md-6 mb-3">
-                                    <label for="tahun_usaha">Tahun Usaha: </label>
-                                    <input type="text"
-                                        class="form-control @error('tahun_usaha') is-invalid @elseif($tahun_usaha != '') is-valid @enderror"
-                                        name="tahun_usaha" {!! wireModel('tahun_usaha') !!}>
-                                    @error('tahun_usaha')
+                                    <label for="tk">Tahun Kerja: </label>
+                                    <input type="number" min="2000" value="2000"
+                                        class="form-control @error('tahun_kerja') is-invalid @elseif($tahun_kerja != '') is-valid @enderror"
+                                        name="tahun_kerja" {!! wireModel('tahun_kerja') !!}>
+                                    @error('tahun_kerja')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
@@ -68,12 +68,12 @@
                                         class="form-control @error('gambar') is-invalid @elseif($gambar != '') is-valid @enderror"
                                         {!! wireModel('gambar') !!} wire:loading.remove wire:target="gambar">
                                     <div class="alert alert-primary shadow text-light" wire:loading
-                                        wire:target="gambar">Uploading...
+                                        wire:target="gambar">
+                                        Uploading...
                                     </div>
                                     @error('gambar')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
-
                                     @if ($gambar)
                                         <p>Preview:</p>
                                         <img src="{{ $gambar->temporaryUrl() }}"
@@ -81,9 +81,9 @@
                                     @endif
                                 </div>
                             </div>
-                            <button class="btn btn-sm btn-primary" type="submit">Create</button>
+                            <button class="btn btn-sm btn-primary" type="submit">Edit</button>
                             <button class="btn btn-sm btn-secondary" type="button"
-                                onclick="location.href='{{ route('user.usaha') }}'">Back</button>
+                                onclick="location.href='{{ route('user.kerja') }}'">Back</button>
                         </form>
                     </div>
                 </div>
