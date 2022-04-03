@@ -79,15 +79,15 @@ class IndexUsaha extends Component
         try {
             $find = Usaha::find($this->selectedId)->firstOrFail();
             if ($find->gambar) {
-                Storage::disk('public')->delete('usaha/'.$find->gambar);
+                Storage::disk('public')->delete('usaha/' . $find->gambar);
             }
             $find->delete();
         } catch (QueryException $q) {
-            $this->emit('showAlert', 'error', 'Gagal menghapus data. '.$q->getMessage());
+            $this->emit('showAlert', 'error', 'Gagal menghapus data. ' . $q->getMessage());
 
             return;
         } catch (\Exception $e) {
-            $this->emit('showAlert', 'error', 'Gagal menghapus data: '.$e->getMessage());
+            $this->emit('showAlert', 'error', 'Gagal menghapus data: ' . $e->getMessage());
 
             return;
         }
@@ -96,7 +96,7 @@ class IndexUsaha extends Component
 
     public function render()
     {
-        $dataUsaha = $this->baseRender(Usaha::class, 'name', 'jenis_usaha', 'alamat_usaha')->paginate(10);
+        $dataUsaha = $this->baseRender(Usaha::class)->cleanRequest()->paginate(10);
 
         return view('livewire.tables.usaha.index-usaha', compact('dataUsaha'))->layout('livewire.layouts.main', ['href' => 'Tables', 'name' => 'Usaha']);
     }

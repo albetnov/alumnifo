@@ -20,7 +20,7 @@ class Index extends Component
 
     public function render()
     {
-        $collages = $this->baseRender(Kuliah::class)->paginate(10);
+        $collages = $this->baseRender(Kuliah::class)->cleanRequest()->paginate(10);
 
         return view('livewire.user.kuliah.index', compact('collages'))->layout('guest');
     }

@@ -25,7 +25,7 @@ class Index extends Component
 
     public function render()
     {
-        $kerjaKuliah = $this->baseRender(KerjaKuliah::class)->paginate(10);
+        $kerjaKuliah = $this->baseRender(KerjaKuliah::class)->cleanRequest()->paginate(10);
 
         return view('livewire.user.kerja-kuliah.index', compact('kerjaKuliah'))->layout('guest');
     }

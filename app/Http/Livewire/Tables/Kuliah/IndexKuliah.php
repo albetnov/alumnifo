@@ -85,15 +85,15 @@ class IndexKuliah extends Component
         try {
             $find = Kuliah::find($this->selectedId)->firstOrFail();
             if ($find->gambar) {
-                Storage::disk('public')->delete('kuliah/'.$find->gambar);
+                Storage::disk('public')->delete('kuliah/' . $find->gambar);
             }
             $find->delete();
         } catch (QueryException $q) {
-            $this->emit('showAlert', 'error', 'Gagal menghapus data. '.$q->getMessage());
+            $this->emit('showAlert', 'error', 'Gagal menghapus data. ' . $q->getMessage());
 
             return;
         } catch (\Exception $e) {
-            $this->emit('showAlert', 'error', 'Gagal menghapus data: '.$e->getMessage());
+            $this->emit('showAlert', 'error', 'Gagal menghapus data: ' . $e->getMessage());
 
             return;
         }
@@ -102,7 +102,7 @@ class IndexKuliah extends Component
 
     public function render()
     {
-        $kuliahs = $this->baseRender(Kuliah::class, 'name', 'nama_universitas', 'jurusan')->paginate(10);
+        $kuliahs = $this->baseRender(Kuliah::class)->cleanRequest()->paginate(10);
 
         return view('livewire.tables.kuliah.index-kuliah', compact('kuliahs'))->layout('livewire.layouts.main', ['href' => 'Tables', 'name' => 'Kuliah']);
     }

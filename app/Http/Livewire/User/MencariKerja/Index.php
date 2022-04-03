@@ -20,7 +20,7 @@ class Index extends Component
 
     public function render()
     {
-        $findJobs = $this->baseRender(MencariKerja::class)->paginate(10);
+        $findJobs = $this->baseRender(MencariKerja::class)->cleanRequest()->paginate(10);
 
         return view('livewire.user.mencari-kerja.index', compact('findJobs'))->layout('guest');
     }

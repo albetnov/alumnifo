@@ -25,7 +25,7 @@ class Index extends Component
 
     public function render()
     {
-        $businesses = $this->baseRender(Usaha::class)->paginate(10);
+        $businesses = $this->baseRender(Usaha::class)->cleanRequest()->paginate(10);
 
         return view('livewire.user.usaha.index', compact('businesses'))->layout('guest');
     }
