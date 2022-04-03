@@ -23,9 +23,9 @@ class UserSeeder extends Seeder
         $admin->assignRole('SuperAdmin');
 
         $asep = User::create([
-            'name' => 'Asep Surasep',
-            'email' => 'asep@mail.com',
-            'password' => bcrypt('asep12345')
+            'name'     => 'Asep Surasep',
+            'email'    => 'asep@mail.com',
+            'password' => bcrypt('asep12345'),
         ]);
 
         $asep->assignRole('user');

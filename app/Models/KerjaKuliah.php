@@ -35,7 +35,8 @@ class KerjaKuliah extends Model
     /**
      * Scope a query to shows user without request or user with approved request.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     *
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeCleanRequest($query)

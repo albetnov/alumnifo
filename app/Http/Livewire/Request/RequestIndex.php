@@ -71,11 +71,11 @@ class RequestIndex extends Component
             $find = Request::find($this->selectedId);
             $find->delete();
         } catch (QueryException $q) {
-            $this->emit('showAlert', 'error', 'Gagal menghapus data. ' . $q->getMessage());
+            $this->emit('showAlert', 'error', 'Gagal menghapus data. '.$q->getMessage());
 
             return;
         } catch (\Exception $e) {
-            $this->emit('showAlert', 'error', 'Gagal menghapus data: ' . $e->getMessage());
+            $this->emit('showAlert', 'error', 'Gagal menghapus data: '.$e->getMessage());
 
             return;
         }
@@ -85,6 +85,7 @@ class RequestIndex extends Component
     public function openDetails($id)
     {
         $this->cleanUp();
+
         try {
             $query = Kerja::where('id_request', $id)->first();
             $this->tableType = "kerja";
@@ -112,8 +113,8 @@ class RequestIndex extends Component
     {
         $query = Request::find($id);
         $query->update([
-            'status' => 'accepted',
-            'handled_by' => Auth::user()->name
+            'status'     => 'accepted',
+            'handled_by' => Auth::user()->name,
         ]);
 
         $this->emit('showAlert', 'success', 'Data berhasil di ijinkan');
@@ -123,8 +124,8 @@ class RequestIndex extends Component
     {
         $query = Request::find($id);
         $query->update([
-            'status' => 'rejected',
-            'handled_by' => Auth::user()->name
+            'status'     => 'rejected',
+            'handled_by' => Auth::user()->name,
         ]);
 
         $this->emit('showAlert', 'success', 'Data berhasil di tolak');
@@ -135,7 +136,7 @@ class RequestIndex extends Component
         $requests = $this->baseRender(Request::class);
         if ($this->status == 'accepted') {
             $requests = $requests->where('status', 'accepted')->paginate(10);
-        } else if ($this->status == 'rejected') {
+        } elseif ($this->status == 'rejected') {
             $requests = $requests->where('status', 'rejected')->paginate(10);
         } else {
             $requests = $requests->where('status', 'pending')->paginate(10);

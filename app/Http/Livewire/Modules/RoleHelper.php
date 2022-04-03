@@ -19,13 +19,14 @@ class RoleHelper
     {
         $request = Request::create([
             'table_type' => $table,
-            'user_id' => Auth::user()->id,
-            'status' => 'pending',
+            'user_id'    => Auth::user()->id,
+            'status'     => 'pending',
         ]);
 
         if (Auth::user()->hasRole('user')) {
             $data['id_request'] = $request->id;
         }
+
         return $data;
     }
 
