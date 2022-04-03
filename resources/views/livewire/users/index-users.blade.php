@@ -10,8 +10,8 @@
                 @include('livewire.tables.search')
                 @include('livewire.tables.bulkdelete', [
                     'msg' => 'ANDA JUGA AKAN LOGOUT
-                                SECARA OTOMATIS.
-                                PEMULIHAN DATA SUPERUSER DAPAT DILAKUKAN DENGAN PROSES SEEDING MANUAL.',
+                                                SECARA OTOMATIS.
+                                                PEMULIHAN DATA SUPERUSER DAPAT DILAKUKAN DENGAN PROSES SEEDING MANUAL.',
                 ])
             </div>
         </div>
@@ -25,8 +25,8 @@
                             <th>Nama</th>
                             <th>Email</th>
                             <th>Role</th>
-                            <td>Terdaftar</td>
-                            <td>Terakhir diperbarui</td>
+                            <th>Terdaftar</th>
+                            <th>Terakhir diperbarui</th>
                             <th colspan="2" class="text-center">Action</th>
                         </tr>
                     </thead>
@@ -51,8 +51,8 @@
                                             class="badge rounded-pill bg-info">{{ $user->getRoleNames()->get(0) }}</span>
                                     @endif
                                 </td>
-                                <td>{{ $user->created_at }}</td>
-                                <td>{{ $user->updated_at }}</td>
+                                <td>{{ $user->created_at->diffForHumans() }}</td>
+                                <td>{{ $user->updated_at->diffForHumans() }}</td>
                                 <td class="text-center"><button class="btn btn-sm btn-primary"
                                         onclick="location.href='{{ route('admin.users.edit', $user->slug) }}'"><i
                                             class="fas fa-pen"></i></button></td>

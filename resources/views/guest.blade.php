@@ -98,15 +98,23 @@
                                 <button type="submit" class="dropdown-item">Logout</button>
                             </form>
                         </li>
-                        <li>
-                            <hr class="dropdown-divider">
-                            <h6 class="dropdown-header">Participate</h6>
-                        </li>
-                        <li><a class="dropdown-item" href="#">Kerja</a></li>
-                        <li><a class="dropdown-item" href="#">Kuliah</a></li>
-                        <li><a class="dropdown-item" href="#">Kerja & Kuliah</a></li>
-                        <li><a class="dropdown-item" href="#">Mencari Kerja</a></li>
-                        <li><a class="dropdown-item" href="#">Membuka Usaha</a></li>
+                        @if (Auth::user()->hasPermissionTo('participate'))
+                            <li>
+                                <hr class="dropdown-divider">
+                                <h6 class="dropdown-header">Participate</h6>
+                            </li>
+                            <li><a class="dropdown-item" href="#">Kerja</a></li>
+                            <li><a class="dropdown-item" href="#">Kuliah</a></li>
+                            <li><a class="dropdown-item" href="#">Kerja & Kuliah</a></li>
+                            <li><a class="dropdown-item" href="#">Mencari Kerja</a></li>
+                            <li><a class="dropdown-item" href="#">Membuka Usaha</a></li>
+                        @else
+                            <li>
+                                <hr class="dropdown-divider">
+                                <h6 class="dropdown-header">Request On Going</h6>
+                            </li>
+                            <li><a href="#" class="dropdown-item">Your Request</a></li>
+                        @endif
                         <li>
                             <hr class="dropdown-divider">
                             <h6 class="dropdown-header">Meet Alumni</h6>

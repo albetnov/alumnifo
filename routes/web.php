@@ -8,6 +8,7 @@ use App\Http\Livewire\Home;
 use App\Http\Livewire\Login;
 use App\Http\Livewire\ProfileManager;
 use App\Http\Livewire\Register;
+use App\Http\Livewire\Request\RequestIndex;
 use App\Http\Livewire\Tables\Kerja\AddKerja;
 use App\Http\Livewire\Tables\Kerja\EditKerja;
 use App\Http\Livewire\Tables\Kerja\IndexKerja;
@@ -62,6 +63,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('dashboard', Dashboard::class)->name('dashboard');
         Route::get('contact', IndexContact::class)->name('contact');
         Route::get('contact/edit/{publicContact}', EditContact::class)->name('contact.edit');
+        Route::get('request', RequestIndex::class)->name('request');
     });
 
     Route::group(['middleware' => ['role_or_permission:SuperAdmin|edit profile']], function () {

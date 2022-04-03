@@ -19,8 +19,8 @@
                             <th>Nama</th>
                             <th>Email</th>
                             <th>Subject</th>
-                            <td>Terdaftar</td>
-                            <td>Terakhir diperbarui</td>
+                            <th>Terdaftar</th>
+                            <th>Terakhir diperbarui</th>
                             <th colspan="3" class="text-center">Action</th>
                         </tr>
                     </thead>
@@ -36,8 +36,8 @@
                                 <td>{{ $contact->name }}</td>
                                 <td>{{ $contact->email }}</td>
                                 <td>{{ $contact->subject }}</td>
-                                <td>{{ $contact->created_at }}</td>
-                                <td>{{ $contact->updated_at }}</td>
+                                <td>{{ $contact->created_at->diffForHumans() }}</td>
+                                <td>{{ $contact->updated_at->diffForHumans() }}</td>
                                 <td class="text-center">
                                     <button class="btn btn-sm btn-info" wire:click="openMessage({{ $contact->id }})"
                                         wire:key="open-message{{ $contact->id }}"><i

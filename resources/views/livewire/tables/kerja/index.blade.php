@@ -24,7 +24,7 @@
                             <th>Jabatan</th>
                             <th>Tahun Kerja</th>
                             <th>Dibuat oleh</th>
-                            <td>Terdaftar</td>
+                            <th>Terdaftar</th>
                             <th colspan="3">Action</th>
                         </tr>
                     </thead>
@@ -42,7 +42,7 @@
                                 <td>{{ $kerja->jabatan }}</td>
                                 <td>{{ $kerja->tahun_kerja }}</td>
                                 <td>{{ $kerja->dibuat }}</td>
-                                <td>{{ $kerja->created_at }}</td>
+                                <td>{{ $kerja->created_at->diffForHumans() }}</td>
                                 @if ($kerja->gambar)
                                     <td class="text-center"><button class="btn btn-sm btn-info"
                                             wire:click='openImg({{ $kerja->id }})'
