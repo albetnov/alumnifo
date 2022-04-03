@@ -72,7 +72,7 @@ class EditKerjaUser extends Component
             if (!$this->gambar) {
                 unset($data['gambar']);
             } else {
-                $name = time() . hash("sha256", $this->gambar->getClientOriginalName()) . $this->gambar->getClientOriginalName();
+                $name = time().hash("sha256", $this->gambar->getClientOriginalName()).$this->gambar->getClientOriginalName();
                 $this->gambar->storeAs('public/kerja', $name);
             }
             $data['dibuat'] = Auth::user()->name;
@@ -80,9 +80,9 @@ class EditKerjaUser extends Component
 
             RequestEdit::create([
                 'id_container' => $container->id,
-                'id_user' => Auth::user()->id,
-                'id_table' => $this->selectedId,
-                'table_type' => 'kerja'
+                'id_user'      => Auth::user()->id,
+                'id_table'     => $this->selectedId,
+                'table_type'   => 'kerja',
             ]);
 
             RoleHelper::validate();
@@ -90,6 +90,7 @@ class EditKerjaUser extends Component
 
         $this->resetForm();
         $this->emit('showAlert', 'success', "Permintaan berhasil diajukan.");
+
         return to_route('user.kerja');
     }
 

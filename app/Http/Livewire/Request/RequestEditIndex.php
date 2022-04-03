@@ -75,11 +75,11 @@ class RequestEditIndex extends Component
                 $find->delete();
             });
         } catch (QueryException $q) {
-            $this->emit('showAlert', 'error', 'Gagal menghapus data. ' . $q->getMessage());
+            $this->emit('showAlert', 'error', 'Gagal menghapus data. '.$q->getMessage());
 
             return;
         } catch (\Exception $e) {
-            $this->emit('showAlert', 'error', 'Gagal menghapus data: ' . $e->getMessage());
+            $this->emit('showAlert', 'error', 'Gagal menghapus data: '.$e->getMessage());
 
             return;
         }
@@ -114,10 +114,10 @@ class RequestEditIndex extends Component
             $container = Container::find($query->id_container);
 
             $data = [
-                'name' => $container->name,
+                'name'            => $container->name,
                 'nama_perusahaan' => $container->nama_perusahaan,
-                'jabatan' => $container->jabatan,
-                'tahun_kerja' => $container->tahun_kerja
+                'jabatan'         => $container->jabatan,
+                'tahun_kerja'     => $container->tahun_kerja,
             ];
             if ($container->gambar) {
                 $data['gambar'] = $container->gambar;
@@ -126,8 +126,8 @@ class RequestEditIndex extends Component
 
             $query->update([
                 'id_container' => null,
-                'status'     => 'accepted',
-                'handled_by' => Auth::user()->name,
+                'status'       => 'accepted',
+                'handled_by'   => Auth::user()->name,
             ]);
 
             $container->delete();
@@ -152,8 +152,8 @@ class RequestEditIndex extends Component
 
             $query->update([
                 'id_container' => null,
-                'status'     => 'rejected',
-                'handled_by' => Auth::user()->name,
+                'status'       => 'rejected',
+                'handled_by'   => Auth::user()->name,
             ]);
 
             $container->delete();
