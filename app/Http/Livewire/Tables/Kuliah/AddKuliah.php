@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Tables\Kuliah;
 
+use App\Http\Livewire\Modules\RoleHelper;
 use App\Models\Kuliah;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
@@ -46,11 +47,12 @@ class AddKuliah extends Component
             if (!$this->gambar) {
                 unset($data['gambar']);
             } else {
-                $name = time().hash("sha256", $this->gambar->getClientOriginalName()).$this->gambar->getClientOriginalName();
+                $name = time() . hash("sha256", $this->gambar->getClientOriginalName()) . $this->gambar->getClientOriginalName();
                 $this->gambar->storeAs('public/kuliah', $name);
                 $data['gambar'] = $name;
             }
             $data['dibuat'] = Auth::user()->name;
+            $data = RoleHelper::alterByRole($data, 'Kuliah');
             Kuliah::create($data);
         } catch (\Exception $e) {
             $this->emit('showAlert', 'error', "Data gagal di simpan: {$e->getMessage()}");
@@ -61,11 +63,12 @@ class AddKuliah extends Component
 
         $this->emit('showAlert', 'success', "Data berhasil di simpan.");
 
-        return to_route('table.kuliah.index');
+        return RoleHelper::redirectByRoles('home', 'table.kuliah.index');
     }
 
     public function render()
     {
-        return view('livewire.tables.kuliah.add-kuliah')->layout('livewire.layouts.main', ['href' => 'Tables/Kuliah', 'name' => 'Add']);
+        return RoleHelper::showViewByRoles('livewire.user.kuliah.add', 'livewire.tables.kuliah.add-kuliah')
+            ->adminLayoutData(['href' => 'Tables/Kuliah', 'name' => 'Add'])->render();
     }
 }

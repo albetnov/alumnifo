@@ -101,6 +101,10 @@ Route::group(['middleware' => ['auth']], function () {
 
         Route::middleware('permission:participate')->group(function () {
             Route::get('add/kerja', AddKerja::class)->name('add.kerja');
+            Route::get('add/kerjakuliah', AddKerjaKuliah::class)->name('add.kerjakuliah');
+            Route::get('add/kuliah', AddKuliah::class)->name('add.kuliah');
+            Route::get('add/mencari_kerja', AddMencariKerja::class)->name('add.mencarikerja');
+            Route::get('add/usaha', AddUsaha::class)->name('add.usaha');
         });
     });
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Tables\Usaha;
 
+use App\Http\Livewire\Modules\RoleHelper;
 use App\Models\Usaha;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
@@ -49,11 +50,12 @@ class AddUsaha extends Component
             if (!$this->gambar) {
                 unset($data['gambar']);
             } else {
-                $name = time().hash("sha256", $this->gambar->getClientOriginalName()).$this->gambar->getClientOriginalName();
+                $name = time() . hash("sha256", $this->gambar->getClientOriginalName()) . $this->gambar->getClientOriginalName();
                 $this->gambar->storeAs('public/usaha', $name);
                 $data['gambar'] = $name;
             }
             $data['dibuat'] = Auth::user()->name;
+            $data = RoleHelper::alterByRole($data, 'Usaha');
             Usaha::create($data);
         } catch (\Exception $e) {
             $this->emit('showAlert', 'error', "Data gagal di simpan: {$e->getMessage()}");
@@ -63,12 +65,15 @@ class AddUsaha extends Component
         $this->resetForm();
 
         $this->emit('showAlert', 'success', "Data berhasil di simpan.");
-
-        return to_route('table.usaha.index');
+        return RoleHelper::redirectByRoles('home', 'table.usaha.index');
     }
 
     public function render()
     {
-        return view('livewire.tables.usaha.add-usaha')->layout('livewire.layouts.main', ['href' => 'Tables/Usaha', 'name' => 'Add']);
+        return RoleHelper::showViewByRoles('livewire.user.usaha.add', 'livewire.tables.usaha.add-usaha')
+            ->adminLayoutData([
+                'href' => 'Tables/Usaha',
+                'name' => 'Add'
+            ])->render();
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Tables\MencariKerja;
 
+use App\Http\Livewire\Modules\RoleHelper;
 use App\Models\MencariKerja;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
@@ -49,11 +50,12 @@ class AddMencariKerja extends Component
             if (!$this->gambar) {
                 unset($data['gambar']);
             } else {
-                $name = time().hash("sha256", $this->gambar->getClientOriginalName()).$this->gambar->getClientOriginalName();
+                $name = time() . hash("sha256", $this->gambar->getClientOriginalName()) . $this->gambar->getClientOriginalName();
                 $this->gambar->storeAs('public/mencarikerja', $name);
                 $data['gambar'] = $name;
             }
             $data['dibuat'] = Auth::user()->name;
+            $data = RoleHelper::alterByRole($data, 'MencariKerja');
             MencariKerja::create($data);
         } catch (\Exception $e) {
             $this->emit('showAlert', 'error', "Data gagal di simpan: {$e->getMessage()}");
@@ -64,11 +66,15 @@ class AddMencariKerja extends Component
 
         $this->emit('showAlert', 'success', "Data berhasil di simpan.");
 
-        return to_route('table.mencari-kerja.index');
+        return RoleHelper::redirectByRoles('home', 'table.mencari-kerja.index');
     }
 
     public function render()
     {
-        return view('livewire.tables.mencari-kerja.add-mencari-kerja')->layout('livewire.layouts.main', ['href' => 'Tables/MencariKerja', 'name' => 'Add']);
+        return RoleHelper::showViewByRoles('livewire.user.mencari-kerja.add', 'livewire.tables.mencari-kerja.add-mencari-kerja')
+            ->adminLayoutData([
+                'href' => 'Tables/MencariKerja',
+                'name' => 'Add'
+            ])->render();
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Tables\KerjaKuliah;
 
+use App\Http\Livewire\Modules\RoleHelper;
 use App\Models\KerjaKuliah;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
@@ -55,11 +56,12 @@ class AddKerjaKuliah extends Component
             if (!$this->gambar) {
                 unset($data['gambar']);
             } else {
-                $name = time().hash("sha256", $this->gambar->getClientOriginalName()).$this->gambar->getClientOriginalName();
+                $name = time() . hash("sha256", $this->gambar->getClientOriginalName()) . $this->gambar->getClientOriginalName();
                 $this->gambar->storeAs('public/kerjakuliah', $name);
                 $data['gambar'] = $name;
             }
             $data['dibuat'] = Auth::user()->name;
+            $data = RoleHelper::alterByRole($data, 'KerjaKuliah');
             KerjaKuliah::create($data);
         } catch (\Exception $e) {
             $this->emit('showAlert', 'error', "Data gagal di simpan: {$e->getMessage()}");
@@ -70,11 +72,12 @@ class AddKerjaKuliah extends Component
 
         $this->emit('showAlert', 'success', "Data berhasil di simpan.");
 
-        return to_route('table.kerja-kuliah.index');
+        return RoleHelper::redirectByRoles('home', 'table.kerja-kuliah.index');
     }
 
     public function render()
     {
-        return view('livewire.tables.kerja-kuliah.add-kerja-kuliah')->layout('livewire.layouts.main', ['href' => 'Tables/KerjaKuliah', 'name' => 'Add']);
+        return RoleHelper::showViewByRoles('livewire.user.kerja-kuliah.add', 'livewire.tables.kerja-kuliah.add-kerja-kuliah')
+            ->adminLayoutData(['href' => 'Tables/KerjaKuliah', 'name' => 'Add'])->render();
     }
 }

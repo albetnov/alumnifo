@@ -103,11 +103,13 @@
                                 <hr class="dropdown-divider">
                                 <h6 class="dropdown-header">Participate</h6>
                             </li>
-                            <li><a class="dropdown-item" href="#">Kerja</a></li>
-                            <li><a class="dropdown-item" href="#">Kuliah</a></li>
-                            <li><a class="dropdown-item" href="#">Kerja & Kuliah</a></li>
-                            <li><a class="dropdown-item" href="#">Mencari Kerja</a></li>
-                            <li><a class="dropdown-item" href="#">Membuka Usaha</a></li>
+                            <li><a class="dropdown-item" href="{{ route('user.add.kerja') }}">Kerja</a></li>
+                            <li><a class="dropdown-item" href="{{ route('user.add.kuliah') }}">Kuliah</a></li>
+                            <li><a class="dropdown-item" href="{{ route('user.add.kerjakuliah') }}">Kerja & Kuliah</a>
+                            </li>
+                            <li><a class="dropdown-item" href="{{ route('user.add.mencarikerja') }}">Mencari Kerja</a>
+                            </li>
+                            <li><a class="dropdown-item" href="{{ route('user.add.usaha') }}">Membuka Usaha</a></li>
                         @else
                             <li>
                                 <hr class="dropdown-divider">
