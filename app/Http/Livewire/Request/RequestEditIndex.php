@@ -6,7 +6,11 @@ use App\Http\Livewire\Modules\BaseTable;
 use App\Http\Livewire\Modules\BulkDelete;
 use App\Models\Container;
 use App\Models\Kerja;
+use App\Models\KerjaKuliah;
+use App\Models\Kuliah;
+use App\Models\MencariKerja;
 use App\Models\RequestEdit;
+use App\Models\Usaha;
 use App\Models\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
@@ -75,11 +79,11 @@ class RequestEditIndex extends Component
                 $find->delete();
             });
         } catch (QueryException $q) {
-            $this->emit('showAlert', 'error', 'Gagal menghapus data. '.$q->getMessage());
+            $this->emit('showAlert', 'error', 'Gagal menghapus data. ' . $q->getMessage());
 
             return;
         } catch (\Exception $e) {
-            $this->emit('showAlert', 'error', 'Gagal menghapus data: '.$e->getMessage());
+            $this->emit('showAlert', 'error', 'Gagal menghapus data: ' . $e->getMessage());
 
             return;
         }
@@ -100,6 +104,66 @@ class RequestEditIndex extends Component
         $this->emit('openModal', 'detailsPreview');
     }
 
+    private function alterByTables($query)
+    {
+        $tableType = strtolower($query->table_type);
+        $container = Container::find($query->id_container);
+        $data = [];
+
+        if ($container->gambar) {
+            $data['gambar'] = $container->gambar;
+        }
+
+        $data['name'] = $container->nama;
+        $data['jenis_kelamin'] = $container->jenis_kelamin;
+
+        if ($tableType == 'kerja') {
+            $data[] = [
+                'nama_perusahaan' => $container->nama_perusahaan,
+                'jabatan'         => $container->jabatan,
+                'tahun_kerja'     => $container->tahun_kerja,
+            ];
+            Kerja::find($query->id_table)->update($data);
+        } else if ($tableType == 'kerjakuliah') {
+            $data[] = [
+                'nama_perusahaan' => $container->nama_perusahaan,
+                'jabatan'         => $container->jabatan,
+                'tahun_kerja'     => $container->tahun_kerja,
+                'nama_universitas' => $container->nama_universitas,
+                'jurusan' => $container->jurusan,
+            ];
+            KerjaKuliah::find($query->id_table)->update($data);
+        } else if ($tableType == 'kuliah') {
+            $data[] = [
+                'nama_universitas' => $container->nama_universitas,
+                'jurusan' => $container->jurusan,
+            ];
+            Kuliah::find($query->id_table)->update($data);
+        } else if ($tableType == 'mencarikerja') {
+            $data[] = [
+                'alamat' => $container->alamat,
+                'alasan_mencari_kerja' => $container->alasan_mencari_kerja,
+                'kontak'                => $container->kontak,
+            ];
+            MencariKerja::find($query->id_table)->update($data);
+        } else {
+            $data[] = [
+                'jenis_usaha' => $container->jenis_usaha,
+                'alamat_usaha' => $container->alamat_usaha,
+                'tahun_usaha' => $container->tahun_usaha
+            ];
+            Usaha::find($query->id_table)->update($data);
+        }
+
+        $query->update([
+            'id_container' => null,
+            'status'       => 'accepted',
+            'handled_by'   => Auth::user()->name,
+        ]);
+
+        $container->delete();
+    }
+
     public function approve($id)
     {
         DB::transaction(function () use ($id) {
@@ -111,26 +175,7 @@ class RequestEditIndex extends Component
             if (!$user->hasPermissionTo('participate')) {
                 $user->givePermissionTo('participate');
             }
-            $container = Container::find($query->id_container);
-
-            $data = [
-                'name'            => $container->name,
-                'nama_perusahaan' => $container->nama_perusahaan,
-                'jabatan'         => $container->jabatan,
-                'tahun_kerja'     => $container->tahun_kerja,
-            ];
-            if ($container->gambar) {
-                $data['gambar'] = $container->gambar;
-            }
-            Kerja::find($query->id_table)->update($data);
-
-            $query->update([
-                'id_container' => null,
-                'status'       => 'accepted',
-                'handled_by'   => Auth::user()->name,
-            ]);
-
-            $container->delete();
+            $this->alterByTables($query);
         });
 
         return $this->emit('showAlert', 'success', 'Data berhasil di ijinkan');
