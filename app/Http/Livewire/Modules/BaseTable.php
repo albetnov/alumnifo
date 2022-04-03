@@ -77,6 +77,7 @@ trait BaseTable
     public function baseRender($model)
     {
         header('referrer-policy:same-origin');
+
         $models = $this->search ? $model::search($this->search) : $model::latest();
         if ($this->filter_date) {
             if ($this->byYear) {

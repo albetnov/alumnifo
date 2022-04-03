@@ -24,6 +24,17 @@ class Request extends Model
         ];
     }
 
+    /**
+     * Scope a query to only users accepted shown.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeAccepted($query)
+    {
+        return $query->where('status', 'accepted');
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id', 'id');

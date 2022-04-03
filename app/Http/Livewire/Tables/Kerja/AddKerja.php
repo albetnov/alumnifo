@@ -45,16 +45,16 @@ class AddKerja extends Component
     public function store()
     {
         $data = $this->validate();
-
         try {
             if (!$this->gambar) {
                 unset($data['gambar']);
             } else {
-                $name = time().hash("sha256", $this->gambar->getClientOriginalName()).$this->gambar->getClientOriginalName();
+                $name = time() . hash("sha256", $this->gambar->getClientOriginalName()) . $this->gambar->getClientOriginalName();
                 $this->gambar->storeAs('public/kerja', $name);
                 $data['gambar'] = $name;
             }
             $data['dibuat'] = Auth::user()->name;
+            $data = RoleHelper::alterByRole($data, 'Kerja');
             Kerja::create($data);
         } catch (\Exception $e) {
             $this->emit('showAlert', 'error', "Data gagal di simpan: {$e->getMessage()}");

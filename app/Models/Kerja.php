@@ -29,6 +29,24 @@ class Kerja extends Model
         ];
     }
 
+    /**
+     * Scope a query to shows user without request or user with approved request.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeCleanRequest($query)
+    {
+        return $query->with('request')->whereNull('id_request')->orWhereHas('request', function ($q) {
+            return $q->accepted();
+        });
+    }
+
+    public function request()
+    {
+        return $this->belongsTo(Request::class, 'id_request', 'id');
+    }
+
     protected static function newFactory()
     {
         return KerjaFactory::new();
