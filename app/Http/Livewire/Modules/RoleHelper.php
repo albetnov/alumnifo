@@ -14,8 +14,20 @@ class RoleHelper
     private $adminLayoutData;
     private $viewData = [];
 
-    public static function redirectByRoles($userDestination, $superAdminDestination)
+    private static function validate()
     {
+        $user = Auth::user();
+        if ($user->hasRole('user') && $user->hasPermissionTo('participate')) {
+            $user->revokePermissionTo('participate');
+        }
+    }
+
+    public static function redirectByRoles($userDestination, $superAdminDestination, $deactiveValiate = false)
+    {
+        if (!$deactiveValiate) {
+            self::validate();
+        }
+
         if (Auth::user()->hasRole('SuperAdmin')) {
             return to_route($superAdminDestination);
         }

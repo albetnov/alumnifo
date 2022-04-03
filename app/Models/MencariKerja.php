@@ -16,7 +16,7 @@ class MencariKerja extends Model
     use HasSlug;
     use Searchable;
 
-    protected $fillable = ['name', 'jenis_kelamin', 'alamat', 'alasan_mencari_kerja', 'kontak', 'dibuat', 'gambar'];
+    protected $fillable = ['name', 'jenis_kelamin', 'alamat', 'alasan_mencari_kerja', 'kontak', 'dibuat', 'gambar', 'id_request'];
 
     #[SearchUsingFullText(['name', 'alamat', 'alasan_mencari_kerja', 'kontak'])]
     public function toSearchableArray()

@@ -15,5 +15,6 @@ class PermissionSeeder extends Seeder
     public function run()
     {
         Permission::create(['name' => 'edit profile']);
+        Permission::create(['name' => 'participate']);
     }
 }

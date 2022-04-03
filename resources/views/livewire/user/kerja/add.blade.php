@@ -13,7 +13,7 @@
                     <div class="card-body">
                         <form wire:submit.prevent='store' enctype="multipart/form-data">
                             <div class="row row-cols-2">
-                                <div class="col mb-3">
+                                <div class="col-12 col-md-6 mb-3">
                                     <label for="nama">Nama: </label>
                                     <input type="text"
                                         class="form-control @error('name') is-invalid @elseif($name != '') is-valid @enderror"
@@ -22,7 +22,7 @@
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
-                                <div class="col mb-3">
+                                <div class="col-12 col-md-6 mb-3">
                                     <label for="jk">Jenis Kelamin: </label>
                                     <select
                                         class="form-control @error('jenis_kelamin') is-invalid @elseif($jenis_kelamin != '') is-valid @enderror"
@@ -35,7 +35,7 @@
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
-                                <div class="col mb-3">
+                                <div class="col-12 col-md-6 mb-3">
                                     <label for="np">Nama Perusahaan: </label>
                                     <input type="text"
                                         class="form-control @error('nama_perusahaan') is-invalid @elseif($nama_perusahaan != '') is-valid @enderror"
@@ -44,7 +44,7 @@
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
-                                <div class="col mb-3">
+                                <div class="col-12 col-md-6 mb-3">
                                     <label for="jabatan">Jabatan: </label>
                                     <input type="text"
                                         class="form-control @error('jabatan') is-invalid @elseif($jabatan != '') is-valid @enderror"
@@ -53,7 +53,7 @@
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
-                                <div class="col mb-3">
+                                <div class="col-12 col-md-6 mb-3">
                                     <label for="tk">Tahun Kerja: </label>
                                     <input type="number" min="2000" value="2000"
                                         class="form-control @error('tahun_kerja') is-invalid @elseif($tahun_kerja != '') is-valid @enderror"
@@ -62,7 +62,7 @@
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
-                                <div class="col mb-3">
+                                <div class="col-12 col-md-6 mb-3">
                                     <label for="gambar">Gambar</label>
                                     <input type="file" name="gambar"
                                         class="form-control @error('gambar') is-invalid @elseif($gambar != '') is-valid @enderror"
@@ -76,7 +76,8 @@
                                     @enderror
                                     @if ($gambar)
                                         <p>Preview:</p>
-                                        <img src="{{ $gambar->temporaryUrl() }}" alt="preview">
+                                        <img src="{{ $gambar->temporaryUrl() }}"
+                                            style="max-width:300px;max-height:300px" alt="preview">
                                     @endif
                                 </div>
                             </div>

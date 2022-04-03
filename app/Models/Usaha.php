@@ -16,7 +16,7 @@ class Usaha extends Model
     use HasSlug;
     use Searchable;
 
-    protected $fillable = ['name', 'jenis_kelamin', 'jenis_usaha', 'alamat_usaha', 'tahun_usaha', 'gambar', 'dibuat'];
+    protected $fillable = ['name', 'jenis_kelamin', 'jenis_usaha', 'alamat_usaha', 'tahun_usaha', 'gambar', 'dibuat', 'id_request'];
 
     #[SearchUsingFullText(['name', 'jenis_usaha', 'alamat_usaha'])]
     public function toSearchableArray()

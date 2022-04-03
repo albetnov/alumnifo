@@ -32,10 +32,15 @@ class IndexUsers extends Component
         $this->updatedBase($fields);
     }
 
+    public function cleanUp()
+    {
+        $this->name = "";
+        $this->deleteOpened = false;
+        $this->selectedId = "";
+    }
+
     public function openDelete($id)
     {
-        $this->cleanup();
-
         try {
             $data = User::where('id', $id)->firstOrFail();
         } catch (ModelNotFoundException $e) {
@@ -50,14 +55,14 @@ class IndexUsers extends Component
     public function deleteData()
     {
         try {
-            $find = User::find($this->selectedId)->firstOrFail();
+            $find = User::find($this->selectedId);
             $find->delete();
         } catch (QueryException $q) {
-            $this->emit('showAlert', 'error', 'Gagal menghapus data. '.$q->getMessage());
+            $this->emit('showAlert', 'error', 'Gagal menghapus data. ' . $q->getMessage());
 
             return;
         } catch (\Exception $e) {
-            $this->emit('showAlert', 'error', 'Gagal menghapus data: '.$e->getMessage());
+            $this->emit('showAlert', 'error', 'Gagal menghapus data: ' . $e->getMessage());
 
             return;
         }
@@ -70,12 +75,13 @@ class IndexUsers extends Component
             $find = User::find($id);
             $find->removeRole('disabled');
             $find->assignRole('user');
+            $find->givePermissionTo('participate');
         } catch (QueryException $q) {
-            $this->emit('showAlert', 'error', 'Gagal menaikkan level. '.$q->getMessage());
+            $this->emit('showAlert', 'error', 'Gagal menaikkan level. ' . $q->getMessage());
 
             return;
         } catch (\Exception $e) {
-            $this->emit('showAlert', 'error', 'Gagal menaikkan level: '.$e->getMessage());
+            $this->emit('showAlert', 'error', 'Gagal menaikkan level: ' . $e->getMessage());
 
             return;
         }

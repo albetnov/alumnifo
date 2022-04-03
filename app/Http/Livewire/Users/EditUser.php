@@ -30,7 +30,7 @@ class EditUser extends Component
     {
         return [
             'name'     => 'required',
-            'email'    => 'required|unique:users,id,'.Auth::user()->id,
+            'email'    => 'required|unique:users,id,' . Auth::user()->id,
             'password' => 'nullable|min:8',
             'conpass'  => 'required_with:password|same:password',
             'role'     => 'required|exists:roles,id',
@@ -61,6 +61,9 @@ class EditUser extends Component
             $user = User::where('id', $this->selectedId)->firstOrFail();
             $user->removeRole($user->getRoleNames()->get(0));
             $user->assignRole($this->role);
+            if ($this->role == '3' && !$user->hasPermissionTo('participate')) {
+                $user->givePermissionTo('participate');
+            }
             $user->update($data);
         } catch (\Exception $e) {
             $this->emit('showAlert', 'error', "Data gagal di perbarui: {$e->getMessage()}");

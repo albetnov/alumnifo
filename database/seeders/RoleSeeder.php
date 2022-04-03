@@ -20,6 +20,5 @@ class RoleSeeder extends Seeder
         $role->givePermissionTo($permission);
         Role::create(['name' => 'disabled']);
         Role::create(['name' => 'user']);
-        // Role::create(['name' => 'user']);
     }
 }

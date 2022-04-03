@@ -25,7 +25,7 @@ class AddUser extends Component
     {
         return [
             'name'     => 'required',
-            'email'    => 'required|unique:users,id,'.Auth::user()->id,
+            'email'    => 'required|unique:users,id,' . Auth::user()->id,
             'password' => 'required|min:8',
             'conpass'  => 'required_with:password|same:password',
             'role'     => 'required|exists:roles,id',
@@ -56,6 +56,9 @@ class AddUser extends Component
             unset($data['role']);
             $user = User::create($data);
             $user->assignRole($this->role);
+            if ($this->role == '3') {
+                $user->givePermissionTo('participate');
+            }
         } catch (\Exception $e) {
             $this->emit('showAlert', 'error', "Data gagal di simpan: {$e->getMessage()}");
 

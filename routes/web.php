@@ -92,11 +92,14 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::group(['middleware' => ['role:user'], 'prefix' => 'user', 'as' => 'user.'], function () {
         Route::get('kerja', KerjaIndex::class)->name('kerja');
-        Route::get('add/kerja', AddKerja::class)->name('add.kerja');
         Route::get('kuliah', KuliahIndex::class)->name('kuliah');
         Route::get('kerja_kuliah', KerjaKuliahIndex::class)->name('kerjakuliah');
         Route::get('mencari_kerja', MencariKerjaIndex::class)->name('mencarikerja');
         Route::get('usaha', UsahaIndex::class)->name('usaha');
+
+        Route::middleware('permission:participate')->group(function () {
+            Route::get('add/kerja', AddKerja::class)->name('add.kerja');
+        });
     });
 
     Route::group(['middleware' => ['role:disabled']], function () {

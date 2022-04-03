@@ -16,7 +16,7 @@ class Kuliah extends Model
     use HasSlug;
     use Searchable;
 
-    protected $fillable = ['name', 'jenis_kelamin', 'nama_universitas', 'jurusan', 'gambar', 'dibuat'];
+    protected $fillable = ['name', 'jenis_kelamin', 'nama_universitas', 'jurusan', 'gambar', 'dibuat', 'id_request'];
 
     #[SearchUsingFullText(['name', 'nama_universitas', 'jurusan'])]
     public function toSearchableArray()
