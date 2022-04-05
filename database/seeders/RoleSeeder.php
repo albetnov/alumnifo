@@ -18,7 +18,9 @@ class RoleSeeder extends Seeder
         $role = Role::create(['name' => 'SuperAdmin']);
         $permission = Permission::find(1)->get();
         $role->givePermissionTo($permission);
+        $role->givePermissionTo('chatting');
         Role::create(['name' => 'disabled']);
-        Role::create(['name' => 'user']);
+        $user = Role::create(['name' => 'user']);
+        $user->givePermissionTo('chatting');
     }
 }

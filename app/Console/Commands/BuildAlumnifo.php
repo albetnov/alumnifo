@@ -12,7 +12,7 @@ class BuildAlumnifo extends Command
      *
      * @var string
      */
-    protected $signature = 'build:alumnifo {--rebuild}';
+    protected $signature = 'build:alumnifo {--rebuild} {--no-dummy}';
 
     /**
      * The console command description.
@@ -39,6 +39,7 @@ class BuildAlumnifo extends Command
     public function handle()
     {
         $rebuild = $this->option('rebuild');
+        $noDummy = $this->option('no-dummy');
         $this->info('Alumnifo by <bg=blue;fg=white>Albet Novendo</>, <bg=red;fg=white>Sendy Wahyudi</>, <bg=yellow;fg=white>Irwanda Andika</>');
         $this->info('Building Alumnifo...');
 
@@ -56,7 +57,15 @@ class BuildAlumnifo extends Command
         }
 
         $this->info('Migrating databases...');
-        Artisan::call('migrate:fresh --seed');
+        if (!$noDummy) {
+            Artisan::call('migrate:fresh --seed');
+        } else {
+            Artisan::call('migrate:fresh');
+            Artisan::call('db:seed --class=Database\\Seeders\\PermissionSeeder');
+            Artisan::call('db:seed --class=Database\\Seeders\\RoleSeeder');
+            Artisan::call('db:seed --class=Database\\Seeders\\TeamsSeeder');
+            Artisan::call('db:seed --class=Database\\Seeders\\UserSeeder');
+        }
         $this->info('Migrating completed.');
 
         if (!$rebuild) {

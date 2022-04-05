@@ -16,5 +16,6 @@ class PermissionSeeder extends Seeder
     {
         Permission::create(['name' => 'edit profile']);
         Permission::create(['name' => 'participate']);
+        Permission::create(['name' => 'chatting']);
     }
 }
