@@ -15,14 +15,14 @@ return [
     |-------------------------------------
     */
     'routes' => [
-        'prefix' => env('CHATIFY_ROUTES_PREFIX', 'chatify'),
+        'prefix'     => env('CHATIFY_ROUTES_PREFIX', 'chatify'),
         'middleware' => env('CHATIFY_ROUTES_MIDDLEWARE', ['web', 'auth', 'permission:chatting']),
-        'namespace' => env('CHATIFY_ROUTES_NAMESPACE', 'Chatify\Http\Controllers'),
+        'namespace'  => env('CHATIFY_ROUTES_NAMESPACE', 'Chatify\Http\Controllers'),
     ],
     'api_routes' => [
-        'prefix' => env('CHATIFY_API_ROUTES_PREFIX', 'chatify/api'),
+        'prefix'     => env('CHATIFY_API_ROUTES_PREFIX', 'chatify/api'),
         'middleware' => env('CHATIFY_API_ROUTES_MIDDLEWARE', ['api']),
-        'namespace' => env('CHATIFY_API_ROUTES_NAMESPACE', 'Chatify\Http\Controllers\Api'),
+        'namespace'  => env('CHATIFY_API_ROUTES_NAMESPACE', 'Chatify\Http\Controllers\Api'),
     ],
 
     /*
@@ -31,11 +31,11 @@ return [
     |-------------------------------------
     */
     'pusher' => [
-        'key' => env('PUSHER_APP_KEY'),
-        'secret' => env('PUSHER_APP_SECRET'),
-        'app_id' => env('PUSHER_APP_ID'),
+        'key'     => env('PUSHER_APP_KEY'),
+        'secret'  => env('PUSHER_APP_SECRET'),
+        'app_id'  => env('PUSHER_APP_ID'),
         'options' => [
-            'cluster' => env('PUSHER_APP_CLUSTER'),
+            'cluster'   => env('PUSHER_APP_CLUSTER'),
             'encrypted' => false,
         ],
     ],
@@ -46,7 +46,7 @@ return [
     |-------------------------------------
     */
     'user_avatar' => [
-        'folder' => 'users-avatar',
+        'folder'  => 'users-avatar',
         'default' => 'avatar.png',
     ],
 
@@ -56,11 +56,11 @@ return [
     |-------------------------------------
     */
     'attachments' => [
-        'folder' => 'attachments',
+        'folder'              => 'attachments',
         'download_route_name' => 'attachments.download',
-        'allowed_images' => (array) ['png', 'jpg', 'jpeg', 'gif'],
-        'allowed_files' => (array) ['zip', 'rar', 'txt'],
-        'max_upload_size' => 150, // MB
+        'allowed_images'      => (array) ['png', 'jpg', 'jpeg', 'gif'],
+        'allowed_files'       => (array) ['zip', 'rar', 'txt'],
+        'max_upload_size'     => 150, // MB
     ],
 
     /*
