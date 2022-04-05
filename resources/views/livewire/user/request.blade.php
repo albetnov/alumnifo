@@ -19,10 +19,23 @@
                                         <th>Status</th>
                                         <th>Di proses oleh</th>
                                         <th>Didaftarkan</th>
+                                        <th class="text-center">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-
+                                    @if ($data != null)
+                                        <tr>
+                                            <td>{{ $data->table_type }}</td>
+                                            <td>{{ $data->status }}</td>
+                                            <td>{{ $data->handled_by ?? 'Belum Ada' }}</td>
+                                            <td>{{ $data->created_at->diffForHumans() }}</td>
+                                            <td class="text-center"><button class="btn btn-danger btn-sm"
+                                                    wire:click="cancel()">Batalkan
+                                                    Permintaan</button></td>
+                                        </tr>
+                                    @else
+                                        <td>NO DATA</td>
+                                    @endif
                                 </tbody>
                             </table>
                         </div>
