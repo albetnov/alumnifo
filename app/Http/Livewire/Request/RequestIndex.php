@@ -14,6 +14,7 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -70,23 +71,25 @@ class RequestIndex extends Component
     {
         try {
             $find = Request::find($this->selectedId);
+            $query = $this->findTables($find->id);
+            if ($query->gambar) {
+                Storage::disk('public')->delete($this->tableType . '/' . $query->gambar);
+            }
             $find->delete();
         } catch (QueryException $q) {
-            $this->emit('showAlert', 'error', 'Gagal menghapus data. '.$q->getMessage());
+            $this->emit('showAlert', 'error', 'Gagal menghapus data. ' . $q->getMessage());
 
             return;
         } catch (\Exception $e) {
-            $this->emit('showAlert', 'error', 'Gagal menghapus data: '.$e->getMessage());
+            $this->emit('showAlert', 'error', 'Gagal menghapus data: ' . $e->getMessage());
 
             return;
         }
         $this->emit('showAlert', 'success', 'Data berhasil dihapus');
     }
 
-    public function openDetails($id)
+    private function findTables($id)
     {
-        $this->cleanUp();
-
         try {
             $query = Kerja::where('id_request', $id)->first();
             $this->tableType = "kerja";
@@ -103,6 +106,14 @@ class RequestIndex extends Component
             $query = Usaha::where('id_request', $id)->first();
             $this->tableType = "usaha";
         }
+        return $query;
+    }
+
+    public function openDetails($id)
+    {
+        $this->cleanUp();
+
+        $query = $this->findTables($id);
 
         $this->detailsOpened = true;
         $this->modelQuery = $query;

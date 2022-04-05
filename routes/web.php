@@ -34,6 +34,7 @@ use App\Http\Livewire\User\Kuliah\EditKuliahUser;
 use App\Http\Livewire\User\Kuliah\Index as KuliahIndex;
 use App\Http\Livewire\User\MencariKerja\EditMencariKerjaUser;
 use App\Http\Livewire\User\MencariKerja\Index as MencariKerjaIndex;
+use App\Http\Livewire\User\Request;
 use App\Http\Livewire\User\Usaha\EditUsahaUser;
 use App\Http\Livewire\User\Usaha\Index as UsahaIndex;
 use App\Http\Livewire\Users\AddUser;
@@ -107,6 +108,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('mencari_kerja', MencariKerjaIndex::class)->name('mencarikerja');
         Route::get('usaha', UsahaIndex::class)->name('usaha');
         Route::get('delete', Delete::class)->name('delete');
+        Route::get('request', Request::class)->name('request');
 
         Route::middleware('permission:participate')->group(function () {
             Route::get('add/kerja', AddKerja::class)->name('add.kerja');

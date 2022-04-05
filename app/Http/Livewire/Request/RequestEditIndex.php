@@ -75,7 +75,11 @@ class RequestEditIndex extends Component
             DB::transaction(function () {
                 $find = RequestEdit::find($this->selectedId);
                 if ($find->id_container) {
-                    Container::find($find->id_container)->delete();
+                    $container = Container::find($find->id_container);
+                    if ($container->gambar) {
+                        Storage::disk('public')->delete($find->table_type . '/' . $container->gambar);
+                    }
+                    $container->delete();
                 }
                 $find->delete();
             });
@@ -211,7 +215,7 @@ class RequestEditIndex extends Component
                 $user->givePermissionTo('participate');
             }
 
-            $container = Container::find($query->id_container)->delete();
+            $container = Container::find($query->id_container);
 
             $query->update([
                 'id_container' => null,
@@ -219,6 +223,9 @@ class RequestEditIndex extends Component
                 'handled_by'   => Auth::user()->name,
             ]);
 
+            if ($container->gambar) {
+                Storage::disk('public')->delete($query->table_type . '/' . $container->gambar);
+            }
             $container->delete();
         });
 

@@ -116,7 +116,7 @@
                                 <hr class="dropdown-divider">
                                 <h6 class="dropdown-header">Request On Going</h6>
                             </li>
-                            <li><a href="#" class="dropdown-item">Your Request</a></li>
+                            <li><a href="{{ route('user.request') }}" class="dropdown-item">Your Request</a></li>
                         @endif
                         <li>
                             <hr class="dropdown-divider">
