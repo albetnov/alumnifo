@@ -68,7 +68,7 @@ class EditKuliahUser extends Component
             if (!$this->gambar) {
                 unset($data['gambar']);
             } else {
-                $name = time() . hash("sha256", $this->gambar->getClientOriginalName()) . $this->gambar->getClientOriginalName();
+                $name = time().hash("sha256", $this->gambar->getClientOriginalName()).$this->gambar->getClientOriginalName();
                 $this->gambar->storeAs('public/kuliah', $name);
             }
             $data['dibuat'] = Auth::user()->name;

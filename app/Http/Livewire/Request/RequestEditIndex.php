@@ -77,18 +77,18 @@ class RequestEditIndex extends Component
                 if ($find->id_container) {
                     $container = Container::find($find->id_container);
                     if ($container->gambar) {
-                        Storage::disk('public')->delete($find->table_type . '/' . $container->gambar);
+                        Storage::disk('public')->delete($find->table_type.'/'.$container->gambar);
                     }
                     $container->delete();
                 }
                 $find->delete();
             });
         } catch (QueryException $q) {
-            $this->emit('showAlert', 'error', 'Gagal menghapus data. ' . $q->getMessage());
+            $this->emit('showAlert', 'error', 'Gagal menghapus data. '.$q->getMessage());
 
             return;
         } catch (\Exception $e) {
-            $this->emit('showAlert', 'error', 'Gagal menghapus data: ' . $e->getMessage());
+            $this->emit('showAlert', 'error', 'Gagal menghapus data: '.$e->getMessage());
 
             return;
         }
@@ -112,7 +112,7 @@ class RequestEditIndex extends Component
     private function deleteImage($query, $path)
     {
         if ($query->gambar) {
-            Storage::disk('public')->delete($path . '/' .  $query->gambar);
+            Storage::disk('public')->delete($path.'/'.$query->gambar);
         }
     }
 
@@ -138,29 +138,29 @@ class RequestEditIndex extends Component
             $find = Kerja::find($query->id_table);
             $this->deleteImage($find, 'kerja');
             $find->update($data);
-        } else if ($tableType == 'kerjakuliah') {
+        } elseif ($tableType == 'kerjakuliah') {
             $data[] = [
-                'nama_perusahaan' => $container->nama_perusahaan,
-                'jabatan'         => $container->jabatan,
-                'tahun_kerja'     => $container->tahun_kerja,
+                'nama_perusahaan'  => $container->nama_perusahaan,
+                'jabatan'          => $container->jabatan,
+                'tahun_kerja'      => $container->tahun_kerja,
                 'nama_universitas' => $container->nama_universitas,
-                'jurusan' => $container->jurusan,
+                'jurusan'          => $container->jurusan,
             ];
             $find = KerjaKuliah::find($query->id_table);
             $this->deleteImage($find, 'kerjakuliah');
             $find->update($data);
-        } else if ($tableType == 'kuliah') {
+        } elseif ($tableType == 'kuliah') {
             $data[] = [
                 'nama_universitas' => $container->nama_universitas,
-                'jurusan' => $container->jurusan,
+                'jurusan'          => $container->jurusan,
             ];
             $find = Kuliah::find($query->id_table);
             $this->deleteImage($find, 'kuliah');
             $find->update($data);
-        } else if ($tableType == 'mencarikerja') {
+        } elseif ($tableType == 'mencarikerja') {
             $data[] = [
-                'alamat' => $container->alamat,
-                'alasan_mencari_kerja' => $container->alasan_mencari_kerja,
+                'alamat'                => $container->alamat,
+                'alasan_mencari_kerja'  => $container->alasan_mencari_kerja,
                 'kontak'                => $container->kontak,
             ];
             $find = MencariKerja::find($query->id_table);
@@ -168,9 +168,9 @@ class RequestEditIndex extends Component
             $find->update($data);
         } else {
             $data[] = [
-                'jenis_usaha' => $container->jenis_usaha,
+                'jenis_usaha'  => $container->jenis_usaha,
                 'alamat_usaha' => $container->alamat_usaha,
-                'tahun_usaha' => $container->tahun_usaha
+                'tahun_usaha'  => $container->tahun_usaha,
             ];
             $find = Usaha::find($query->id_table);
             $this->deleteImage($find, 'usaha');
@@ -224,7 +224,7 @@ class RequestEditIndex extends Component
             ]);
 
             if ($container->gambar) {
-                Storage::disk('public')->delete($query->table_type . '/' . $container->gambar);
+                Storage::disk('public')->delete($query->table_type.'/'.$container->gambar);
             }
             $container->delete();
         });
