@@ -122,7 +122,7 @@
                             <hr class="dropdown-divider">
                             <h6 class="dropdown-header">Meet Alumni</h6>
                         </li>
-                        <li><a class="dropdown-item" href="#">Chatting</a></li>
+                        <li><a class="dropdown-item" href="{{ route('chatify') }}">Chatting</a></li>
                     </ul>
                 </div>
             @else
