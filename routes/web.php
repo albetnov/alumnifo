@@ -25,11 +25,16 @@ use App\Http\Livewire\Tables\MencariKerja\IndexMencariKerja;
 use App\Http\Livewire\Tables\Usaha\AddUsaha;
 use App\Http\Livewire\Tables\Usaha\EditUsaha;
 use App\Http\Livewire\Tables\Usaha\IndexUsaha;
+use App\Http\Livewire\User\Delete;
 use App\Http\Livewire\User\Kerja\EditKerjaUser;
 use App\Http\Livewire\User\Kerja\Index as KerjaIndex;
+use App\Http\Livewire\User\KerjaKuliah\EditKerjaKuliahUser;
 use App\Http\Livewire\User\KerjaKuliah\Index as KerjaKuliahIndex;
+use App\Http\Livewire\User\Kuliah\EditKuliahUser;
 use App\Http\Livewire\User\Kuliah\Index as KuliahIndex;
+use App\Http\Livewire\User\MencariKerja\EditMencariKerjaUser;
 use App\Http\Livewire\User\MencariKerja\Index as MencariKerjaIndex;
+use App\Http\Livewire\User\Usaha\EditUsahaUser;
 use App\Http\Livewire\User\Usaha\Index as UsahaIndex;
 use App\Http\Livewire\Users\AddUser;
 use App\Http\Livewire\Users\EditUser;
@@ -101,6 +106,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('kerja_kuliah', KerjaKuliahIndex::class)->name('kerjakuliah');
         Route::get('mencari_kerja', MencariKerjaIndex::class)->name('mencarikerja');
         Route::get('usaha', UsahaIndex::class)->name('usaha');
+        Route::get('delete', Delete::class)->name('delete');
 
         Route::middleware('permission:participate')->group(function () {
             Route::get('add/kerja', AddKerja::class)->name('add.kerja');
@@ -109,6 +115,10 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('add/mencari_kerja', AddMencariKerja::class)->name('add.mencarikerja');
             Route::get('add/usaha', AddUsaha::class)->name('add.usaha');
             Route::get('edit/kerja/{kerja}', EditKerjaUser::class)->name('edit.kerja');
+            Route::get('edit/kuliah/{kuliah}', EditKuliahUser::class)->name('edit.kuliah');
+            Route::get('edit/kerja-kuliah/{kerjaKuliah}', EditKerjaKuliahUser::class)->name('edit.kerjakuliah');
+            Route::get('edit/mencari-kerja/{mencariKerja}', EditMencariKerjaUser::class)->name('edit.mencarikerja');
+            Route::get('edit/usaha/{usaha}', EditUsahaUser::class)->name('edit.usaha');
         });
     });
 

@@ -51,8 +51,11 @@
                                             <span class="visually-hidden">Toggle Action</span> Action
                                         </button>
                                         <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item" href="#">Request Edit</a></li>
-                                            <li><a class="dropdown-item" href="#">Request Delete</a></li>
+                                            <li><a class="dropdown-item"
+                                                    href="{{ route('user.edit.kuliah', $collage->slug) }}">Request
+                                                    Edit</a></li>
+                                            <li><a class="dropdown-item" href="{{ route('user.delete') }}">Request
+                                                    Delete</a></li>
                                         </ul>
                                     </div>
 

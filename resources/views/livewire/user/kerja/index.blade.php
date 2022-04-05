@@ -56,7 +56,8 @@
                                             <li><a class="dropdown-item"
                                                     href="{{ route('user.edit.kerja', $kerja->slug) }}">Request
                                                     Edit</a></li>
-                                            <li><a class="dropdown-item" href="#">Request Delete</a></li>
+                                            <li><a class="dropdown-item" href="{{ route('user.delete') }}">Request
+                                                    Delete</a></li>
                                         </ul>
                                     </div>
 

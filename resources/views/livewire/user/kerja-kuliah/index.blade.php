@@ -29,8 +29,8 @@
                         <div class="col">
                             <div class="card shadow m-3" style="width: 18rem;">
                                 @if ($data->gambar)
-                                    <img src="{{ asset('storage/kerjakuliah/' . $data->gambar) }}" style="max-height:12rem"
-                                        class="card-img-top" alt="placeholder">
+                                    <img src="{{ asset('storage/kerjakuliah/' . $data->gambar) }}"
+                                        style="max-height:12rem" class="card-img-top" alt="placeholder">
                                 @else
                                     <img src="https://via.placeholder.com/150/000000/FFFFFF/?text=No Image"
                                         style="max-height:12rem" alt="no-image">
@@ -55,8 +55,11 @@
                                             <span class="visually-hidden">Toggle Action</span> Action
                                         </button>
                                         <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item" href="#">Request Edit</a></li>
-                                            <li><a class="dropdown-item" href="#">Request Delete</a></li>
+                                            <li><a class="dropdown-item"
+                                                    href="{{ route('user.edit.kerjakuliah', $data->slug) }}">Request
+                                                    Edit</a></li>
+                                            <li><a class="dropdown-item" href="{{ route('user.delete') }}">Request
+                                                    Delete</a></li>
                                         </ul>
                                     </div>
 

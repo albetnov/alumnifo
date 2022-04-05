@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -104,6 +105,13 @@ class RequestEditIndex extends Component
         $this->emit('openModal', 'detailsPreview');
     }
 
+    private function deleteImage($query, $path)
+    {
+        if ($query->gambar) {
+            Storage::disk('public')->delete($path . '/' .  $query->gambar);
+        }
+    }
+
     private function alterByTables($query)
     {
         $tableType = strtolower($query->table_type);
@@ -123,7 +131,9 @@ class RequestEditIndex extends Component
                 'jabatan'         => $container->jabatan,
                 'tahun_kerja'     => $container->tahun_kerja,
             ];
-            Kerja::find($query->id_table)->update($data);
+            $find = Kerja::find($query->id_table);
+            $this->deleteImage($find, 'kerja');
+            $find->update($data);
         } else if ($tableType == 'kerjakuliah') {
             $data[] = [
                 'nama_perusahaan' => $container->nama_perusahaan,
@@ -132,27 +142,35 @@ class RequestEditIndex extends Component
                 'nama_universitas' => $container->nama_universitas,
                 'jurusan' => $container->jurusan,
             ];
-            KerjaKuliah::find($query->id_table)->update($data);
+            $find = KerjaKuliah::find($query->id_table);
+            $this->deleteImage($find, 'kerjakuliah');
+            $find->update($data);
         } else if ($tableType == 'kuliah') {
             $data[] = [
                 'nama_universitas' => $container->nama_universitas,
                 'jurusan' => $container->jurusan,
             ];
-            Kuliah::find($query->id_table)->update($data);
+            $find = Kuliah::find($query->id_table);
+            $this->deleteImage($find, 'kuliah');
+            $find->update($data);
         } else if ($tableType == 'mencarikerja') {
             $data[] = [
                 'alamat' => $container->alamat,
                 'alasan_mencari_kerja' => $container->alasan_mencari_kerja,
                 'kontak'                => $container->kontak,
             ];
-            MencariKerja::find($query->id_table)->update($data);
+            $find = MencariKerja::find($query->id_table);
+            $this->deleteImage($find, 'mencarikerja');
+            $find->update($data);
         } else {
             $data[] = [
                 'jenis_usaha' => $container->jenis_usaha,
                 'alamat_usaha' => $container->alamat_usaha,
                 'tahun_usaha' => $container->tahun_usaha
             ];
-            Usaha::find($query->id_table)->update($data);
+            $find = Usaha::find($query->id_table);
+            $this->deleteImage($find, 'usaha');
+            $find->update($data);
         }
 
         $query->update([
