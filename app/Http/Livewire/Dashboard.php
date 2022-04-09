@@ -17,13 +17,13 @@ class Dashboard extends Component
     public function render()
     {
         $data = [
-            'user' => User::count(),
-            'kerja' => Kerja::count(),
-            'kerja_kuliah' => KerjaKuliah::count(),
-            'kuliah' => Kuliah::count(),
-            'mencari_kerja' => MencariKerja::count(),
-            'membuka_usaha' => Usaha::count(),
-            'requestCount' => Request::count(),
+            'user'             => User::count(),
+            'kerja'            => Kerja::count(),
+            'kerja_kuliah'     => KerjaKuliah::count(),
+            'kuliah'           => Kuliah::count(),
+            'mencari_kerja'    => MencariKerja::count(),
+            'membuka_usaha'    => Usaha::count(),
+            'requestCount'     => Request::count(),
             'requestEditCount' => RequestEdit::count(),
         ];
 
