@@ -16,7 +16,7 @@ class TeamsSeeder extends Seeder
     {
         Teams::create([
             'name'         => 'Albet Novendo',
-            'desc'         => 'Lead Developer',
+            'desc'         => 'Developer',
             'link_twitter' => 'https://twitter.com/AlbetNv',
             'link_ig'      => 'https://instagram.com/al_nv4',
             'link_fb'      => 'https://www.facebook.com/profile.php?id=100077882502140',
@@ -25,11 +25,11 @@ class TeamsSeeder extends Seeder
         ]);
         Teams::create([
             'name'         => 'Sendy Wahyudi',
-            'desc'         => 'UI/UX',
-            'link_twitter' => 'https://twitter.com/sendy_tampan',
-            'link_ig'      => 'https://instagram.com/sendy_hits',
-            'link_fb'      => 'https://facebook.com/sendy_pro',
-            'link_in'      => 'https://linkedin.com/ZzSendyZz',
+            'desc'         => 'User Experience (UX)',
+            'link_twitter' => 'https://twitter.com/sendy_wahyudi',
+            'link_ig'      => 'https://www.instagram.com/sendy.wahyudi/',
+            'link_fb'      => 'https://www.facebook.com/sendipro78',
+            'link_in'      => 'https://www.linkedin.com/in/sendy-wahyudi-848386223/',
             'photo'        => 'sample2.jpg',
         ]);
         Teams::create([
