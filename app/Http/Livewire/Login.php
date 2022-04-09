@@ -3,14 +3,16 @@
 namespace App\Http\Livewire;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\RateLimiter;
 use Livewire\Component;
 
 class Login extends Component
 {
-    public $email, $password;
+    public $email;
+    public $password;
 
     protected $rules = [
-        'email' => 'required|email',
+        'email'    => 'required|email',
         'password' => 'required|min:3',
     ];
 
@@ -21,15 +23,27 @@ class Login extends Component
 
     public function login()
     {
+        if (RateLimiter::tooManyAttempts('login', 3)) {
+            $seconds = RateLimiter::availableIn('login');
+
+            return session()->flash('message', 'Percobaan terlalu banyak. Akses ditolak selama: '.$seconds.' detik');
+        }
+
         $validateData = $this->validate();
+
         if (Auth::attempt($validateData)) {
             request()->session()->regenerate();
             if (Auth::guard()->user()->hasRole('SuperAdmin')) {
-                return redirect()->route('admin.dashboard');
+                return to_route('admin.dashboard');
+            } elseif (Auth::guard()->user()->hasRole('disabled')) {
+                return to_route('disabled.dashboard');
             } else {
-                return redirect()->route('home');
+                return to_route('home');
             }
         } else {
+            if (RateLimiter::remaining('login', 3)) {
+                RateLimiter::hit('login');
+            }
             session()->flash('message', 'Your Email or Password are Incorrect');
         }
     }

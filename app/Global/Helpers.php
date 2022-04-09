@@ -13,6 +13,7 @@ if (!function_exists('wireModel')) {
             $duration = $getMs ? "ms" : "s";
             preg_match_all('[\d]', $getDebounce, $time);
             $time = implode("", array_shift($time));
+
             return "wire:model.debounce.{$time}{$duration}='{$value}'";
         } else {
             throw new \Exception("Debounce harus di definiskan dalam bentuk ms atau s atau 0. Contoh: 700ms, 5s, 0");

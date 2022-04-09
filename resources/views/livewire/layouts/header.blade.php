@@ -35,6 +35,7 @@
     <!-- CSS Files -->
     <link id="pagestyle" href="{{ asset('assets/admin') }}/css/soft-ui-dashboard.css?v=1.0.3" rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('assets/toastr/toastr.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/fontawesome/css/all.min.css') }}">
     @livewireStyles
     @stack('styles')
 </head>

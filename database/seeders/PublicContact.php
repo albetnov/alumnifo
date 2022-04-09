@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\PublicContact as ModelsPublicContact;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class PublicContact extends Seeder

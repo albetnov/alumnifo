@@ -1,29 +1,4 @@
 <div>
-    <header wire:ignore id="header" class="d-flex align-items-center ">
-        <div class="container-fluid container-xxl d-flex align-items-center">
-
-            <div id="logo" class="me-auto">
-                <!-- Uncomment below if you prefer to use a text logo -->
-                <!-- <h1><a href="index.html">The<span>Event</span></a></h1>-->
-            </div>
-
-            <nav id="navbar" class="navbar order-last order-lg-0">
-                <ul>
-                    <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
-                    <li><a class="nav-link scrollto" href="#about">About</a></li>
-                    <li><a class="nav-link scrollto" href="#speakers">Team</a></li>
-                    <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
-                </ul>
-                <i class="bi bi-list mobile-nav-toggle"></i>
-            </nav>
-            <!-- .navbar -->
-            <a class="buy-tickets scrollto" href="{{ route('register') }}">Sign Up</a>
-            <a class="buy-tickets scrollto" href="{{ route('login') }}">Login</a>
-
-        </div>
-    </header>
-    <!-- End Header -->
-
     <!--Body-->
     <section wire:ignore id="hero">
         <div class="hero-container" data-aos="zoom-in" data-aos-delay="100">
@@ -187,8 +162,7 @@
                             @enderror
                         </div>
                         <div class="form-group mt-3">
-                            <textarea
-                                class="form-control @error('contactMessage') is-invalid @elseif($contactMessage != '') is-valid @enderror"
+                            <textarea class="form-control @error('contactMessage') is-invalid @elseif($contactMessage != '') is-valid @enderror"
                                 name="contactMessage" rows="5" placeholder="Your message" required
                                 {!! wireModel('contactMessage') !!}> {{ old('contactMessage') }}</textarea>
                             @error('contactMessage')
@@ -207,5 +181,4 @@
     </main>
 
     <!--End Body-->
-</div>
 </div>

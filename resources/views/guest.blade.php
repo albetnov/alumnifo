@@ -16,14 +16,15 @@
         rel="stylesheet">
 
     <!-- Vendor CSS Files -->
-    <link href="{{ asset('assets/guest/vendor/aos/aos.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('mix_guest/guest.css') }}">
+    {{-- <link href="{{ asset('assets/guest/vendor/aos/aos.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/guest/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/guest/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/guest/vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/guest/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
 
     <!-- Template Main CSS File -->
-    <link href="{{ asset('assets/guest/css/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/guest/css/style.css') }}" rel="stylesheet"> --}}
     <link rel="stylesheet" href="{{ asset('assets/toastr/toastr.min.css') }}">
 
 
@@ -33,13 +34,109 @@
   * Author: BootstrapMade.com
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
+    @stack('styles')
 </head>
 <!--End Header-->
 
 
 
 <body>
+    <header wire:ignore id="header" class="d-flex align-items-center ">
+        <div class="container-fluid container-xxl d-flex align-items-center">
+
+            <div id="logo" class="me-auto">
+                <!-- Uncomment below if you prefer to use a text logo -->
+                <!-- <h1><a href="index.html">The<span>Event</span></a></h1>-->
+            </div>
+
+            <nav id="navbar" class="navbar order-last order-lg-0">
+                @if (!Auth::check())
+                    <ul>
+                        <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
+                        <li><a class="nav-link scrollto" href="#about">About</a></li>
+                        <li><a class="nav-link scrollto" href="#speakers">Team</a></li>
+                        <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+                    </ul>
+                @else
+                    <ul>
+                        <li><a href="{{ route('home') }}"
+                                class="nav-link {{ str_starts_with('home', Route::currentRouteName()) === true ? 'active' : '' }}">Home</a>
+                        </li>
+                        <li><a href="{{ route('user.kerja') }}"
+                                class="nav-link {{ str_contains('user.kerja', Route::currentRouteName()) === true ? 'active' : '' }}">Kerja</a>
+                        </li>
+                        <li><a href="{{ route('user.kuliah') }}"
+                                class="nav-link {{ str_starts_with('user.kuliah', Route::currentRouteName()) === true ? 'active' : '' }}">Kuliah</a>
+                        </li>
+                        <li><a href="{{ route('user.kerjakuliah') }}"
+                                class="nav-link {{ preg_match('[user.kerjakuliah]', Route::currentRouteName()) === 1 ? 'active' : '' }}">Kerja
+                                Kuliah</a></li>
+                        <li><a href="{{ route('user.mencarikerja') }}"
+                                class="nav-link {{ str_starts_with('user.mencarikerja', Route::currentRouteName()) === true ? 'active' : '' }}">Mencari
+                                Kerja</a></li>
+                        <li><a href="{{ route('user.usaha') }}"
+                                class="nav-link {{ str_starts_with('user.usaha', Route::currentRouteName()) === true ? 'active' : '' }}">Membuka
+                                Usaha</a></li>
+                    </ul>
+                @endif
+                <i class="bi bi-list mobile-nav-toggle"></i>
+            </nav>
+            <!-- .navbar -->
+            @auth
+                <div class="dropdown">
+                    <button class="buy-tickets dropdown-toggle" type="button" id="profileDropdown" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Profile
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="profileDropdown">
+                        <li>
+                            <h6 class="dropdown-header">Manage Profiles</h6>
+                        </li>
+                        <li><a class="dropdown-item" href="{{ route('profile') }}">{{ Auth::user()->name }}</a></li>
+                        <li>
+                            <form action="{{ route('logout') }}" method="post">
+                                @csrf
+                                <button type="submit" class="dropdown-item">Logout</button>
+                            </form>
+                        </li>
+                        @if (Auth::user()->hasPermissionTo('participate'))
+                            <li>
+                                <hr class="dropdown-divider">
+                                <h6 class="dropdown-header">Participate</h6>
+                            </li>
+                            <li><a class="dropdown-item" href="{{ route('user.add.kerja') }}">Kerja</a></li>
+                            <li><a class="dropdown-item" href="{{ route('user.add.kuliah') }}">Kuliah</a></li>
+                            <li><a class="dropdown-item" href="{{ route('user.add.kerjakuliah') }}">Kerja & Kuliah</a>
+                            </li>
+                            <li><a class="dropdown-item" href="{{ route('user.add.mencarikerja') }}">Mencari Kerja</a>
+                            </li>
+                            <li><a class="dropdown-item" href="{{ route('user.add.usaha') }}">Membuka Usaha</a></li>
+                        @else
+                            <li>
+                                <hr class="dropdown-divider">
+                                <h6 class="dropdown-header">Request On Going</h6>
+                            </li>
+                            <li><a href="{{ route('user.request') }}" class="dropdown-item">Your Request</a></li>
+                        @endif
+                        <li>
+                            <hr class="dropdown-divider">
+                            <h6 class="dropdown-header">Meet Alumni</h6>
+                        </li>
+                        <li><a class="dropdown-item" href="{{ route('chatify') }}">Chatting</a></li>
+                    </ul>
+                </div>
+            @else
+                <a class="buy-tickets" href="{{ route('register') }}">Sign Up</a>
+                <a class="buy-tickets" href="{{ route('login') }}">Login</a>
+            @endauth
+
+
+        </div>
+    </header>
+    <!-- End Header -->
     {{ $slot }}
+    </div>
+
     <!-- ======= Footer ======= -->
     <footer id="footer">
 
@@ -55,6 +152,10 @@
         Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=TheEvent
       -->
                 Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+                <p>Created by: <a href="https://github.com/albetnov">Albet Novendo</a>, <a
+                        href="https://github.com/0SeN0">Sendy Wahyudi</a>, <a
+                        href="https://github.com/irwandandka">Irwanda Andika</a></p>
+                <p>Open Source Project: <a href="https://github.com/albetnov/alumnifo">Alumnifo Github</a></p>
             </div>
         </div>
     </footer>
@@ -65,14 +166,15 @@
     @livewireScripts
 
     <!-- Vendor JS Files -->
+    <script src="{{ asset('mix_guest/guest.js') }}"></script>
+    {{-- <script src="{{ asset('assets/guest/vendor/glightbox/js/glightbox.min.js') }}"></script>
+    <script src="{{ asset('assets/guest/vendor/swiper/swiper-bundle.min.js') }}"></script>
     <script src="{{ asset('assets/guest/vendor/aos/aos.js') }}"></script>
     <script src="{{ asset('assets/guest/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('assets/guest/vendor/glightbox/js/glightbox.min.js') }}"></script>
-    <script src="{{ asset('assets/guest/vendor/swiper/swiper-bundle.min.js') }}"></script>
     <!-- Template Main JS File -->
     <script src="{{ asset('assets/guest/js/main.js') }}"></script>
     <script src="{{ asset('assets/toastr/jquery/dist/jquery.min.js') }}"></script>
-    <script src="{{ asset('assets/toastr/toastr.min.js') }}"></script>
+    <script src="{{ asset('assets/toastr/toastr.min.js') }}"></script> --}}
     <script>
         toastr.options = {
             "closeButton": true,
