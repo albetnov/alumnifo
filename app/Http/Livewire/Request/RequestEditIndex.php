@@ -110,8 +110,11 @@ class RequestEditIndex extends Component
         $this->emit('openModal', 'detailsPreview');
     }
 
-    private function deleteImage($query, $path)
+    private function deleteImage($query, $path, $container)
     {
+        if (!$container->gambar) {
+            return;
+        }
         if ($query->gambar) {
             Storage::disk('public')->delete($path . '/' . $query->gambar);
         }
@@ -127,7 +130,7 @@ class RequestEditIndex extends Component
             $data['gambar'] = $container->gambar;
         }
 
-        $data['name'] = $container->nama;
+        $data['name'] = $container->name;
         $data['jenis_kelamin'] = $container->jenis_kelamin;
 
         if ($tableType == 'kerja') {
@@ -137,7 +140,7 @@ class RequestEditIndex extends Component
                 'tahun_kerja'     => $container->tahun_kerja,
             ];
             $find = Kerja::find($query->id_table);
-            $this->deleteImage($find, 'kerja');
+            $this->deleteImage($find, 'kerja', $container);
             $find->update($data);
         } elseif ($tableType == 'kerjakuliah') {
             $data[] = [
@@ -148,7 +151,7 @@ class RequestEditIndex extends Component
                 'jurusan'          => $container->jurusan,
             ];
             $find = KerjaKuliah::find($query->id_table);
-            $this->deleteImage($find, 'kerjakuliah');
+            $this->deleteImage($find, 'kerjakuliah', $container);
             $find->update($data);
         } elseif ($tableType == 'kuliah') {
             $data[] = [
@@ -156,7 +159,7 @@ class RequestEditIndex extends Component
                 'jurusan'          => $container->jurusan,
             ];
             $find = Kuliah::find($query->id_table);
-            $this->deleteImage($find, 'kuliah');
+            $this->deleteImage($find, 'kuliah', $container);
             $find->update($data);
         } elseif ($tableType == 'mencarikerja') {
             $data[] = [
@@ -165,7 +168,7 @@ class RequestEditIndex extends Component
                 'kontak'                => $container->kontak,
             ];
             $find = MencariKerja::find($query->id_table);
-            $this->deleteImage($find, 'mencarikerja');
+            $this->deleteImage($find, 'mencarikerja', $container);
             $find->update($data);
         } else {
             $data[] = [
@@ -174,7 +177,7 @@ class RequestEditIndex extends Component
                 'tahun_usaha'  => $container->tahun_usaha,
             ];
             $find = Usaha::find($query->id_table);
-            $this->deleteImage($find, 'usaha');
+            $this->deleteImage($find, 'usaha', $container);
             $find->update($data);
         }
 

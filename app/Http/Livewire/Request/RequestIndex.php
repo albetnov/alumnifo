@@ -115,7 +115,6 @@ class RequestIndex extends Component
         $this->cleanUp();
 
         $query = $this->findTables($id);
-        dd($query);
 
         $this->detailsOpened = true;
         $this->modelQuery = $query;
@@ -129,6 +128,11 @@ class RequestIndex extends Component
         $user = User::find($query->user_id);
         if (!$user->hasPermissionTo('participate')) {
             $user->givePermissionTo('participate');
+        }
+
+        if ($query->status !== 'pending') {
+            $this->emit('showAlert', 'error', 'Data sudah di proses');
+            return;
         }
 
         $query->update([
@@ -145,6 +149,11 @@ class RequestIndex extends Component
         $user = User::find($query->user_id);
         if (!$user->hasPermissionTo('participate')) {
             $user->givePermissionTo('participate');
+        }
+
+        if ($query->status !== 'pending') {
+            $this->emit('showAlert', 'error', 'Data sudah di proses');
+            return;
         }
 
         $query->update([

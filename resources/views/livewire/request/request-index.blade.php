@@ -44,16 +44,30 @@
                                 <td>{{ $request->handled_by ?? 'Belum Ada' }}</td>
                                 <td>{{ $request->created_at->diffForHumans() }}</td>
                                 <td>{{ $request->updated_at->diffForHumans() }}</td>
-                                <td class="text-center">
-                                    <button class="btn btn-success btn-sm" wire:click="approve({{ $request->id }})"
-                                        wire-key="approve-{{ $request->id }}"><i
-                                            class="fa-solid fa-check"></i></button>
-                                </td>
-                                <td class="text-center">
-                                    <button class="btn btn-secondary btn-sm" wire:click="decline({{ $request->id }})"
-                                        wire-key="decline-{{ $request->id }}"><i
-                                            class="fa-solid fa-times"></i></button>
-                                </td>
+                                @if ($request->status === 'pending')
+                                    <td class="text-center">
+                                        <button class="btn btn-success btn-sm" wire:click="approve({{ $request->id }})"
+                                            wire-key="approve-{{ $request->id }}"><i
+                                                class="fa-solid fa-check"></i></button>
+                                    </td>
+                                    <td class="text-center">
+                                        <button class="btn btn-secondary btn-sm"
+                                            wire:click="decline({{ $request->id }})"
+                                            wire-key="decline-{{ $request->id }}"><i
+                                                class="fa-solid fa-times"></i></button>
+                                    </td>
+                                @else
+                                    <td class="text-center">
+                                        <button class="btn btn-success btn-sm" disabled
+                                            wire-key="approve-{{ $request->id }}"><i
+                                                class="fa-solid fa-check"></i></button>
+                                    </td>
+                                    <td class="text-center">
+                                        <button class="btn btn-secondary btn-sm" disabled
+                                            wire-key="decline-{{ $request->id }}"><i
+                                                class="fa-solid fa-times"></i></button>
+                                    </td>
+                                @endif
                                 <td class="text-center"><button class="btn btn-info btn-sm"
                                         wire:click="openDetails({{ $request->id }})"
                                         wire:key='open-details-modal{{ $request->id }}'><i
