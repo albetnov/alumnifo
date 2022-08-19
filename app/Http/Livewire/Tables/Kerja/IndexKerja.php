@@ -83,7 +83,7 @@ class IndexKerja extends Component
     public function deleteData()
     {
         try {
-            $find = Kerja::find($this->selectedId)->firstOrFail();
+            $find = Kerja::where('id', $this->selectedId)->firstOrFail();
             if ($find->gambar) {
                 Storage::disk('public')->delete('kerja/' . $find->gambar);
             }

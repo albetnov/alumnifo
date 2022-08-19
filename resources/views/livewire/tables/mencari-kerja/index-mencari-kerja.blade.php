@@ -33,15 +33,15 @@
                             <tr>
                                 <form wire:submit.prevent>
                                     <td class="text-center"><input type="checkbox" name="items" wire:model='items'
-                                            value="{{ $mencariKerja->id }}"
-                                            wire:key='select-{{ $mencariKerja->id }}'></td>
+                                            value="{{ $mencariKerja->id }}" wire:key='select-{{ $mencariKerja->id }}'>
+                                    </td>
                                 </form>
                                 <td>{{ ($dataMencariKerja->currentpage() - 1) * $dataMencariKerja->perpage() + $loop->index + 1 }}
                                 </td>
                                 <td>{{ $mencariKerja->name }}</td>
                                 <td>{{ $mencariKerja->jenis_kelamin == 'l' ? 'Pria' : 'Wanita' }}</td>
                                 <td>{{ $mencariKerja->alamat }}</td>
-                                <td>{{ $mencariKerja->alasan_mencari_kerja }}</td>
+                                <td class="text-wrap">{{ $mencariKerja->alasan_mencari_kerja }}</td>
                                 <td>{{ $mencariKerja->kontak }}</td>
                                 <td>{{ $mencariKerja->dibuat }}</td>
                                 <td>{{ $mencariKerja->created_at->diffForHumans() }}</td>
@@ -80,8 +80,7 @@
                                     aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <img src="{{ asset('storage/mencari-kerja/' . $imgPreview) }}"
-                                    class="img-fluid">
+                                <img src="{{ asset('storage/mencarikerja/' . $imgPreview) }}" class="img-fluid">
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
