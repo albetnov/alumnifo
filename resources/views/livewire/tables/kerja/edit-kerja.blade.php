@@ -71,7 +71,11 @@
                         <img src="{{ $gambar->temporaryUrl() }}" alt="preview">
                     @else
                         <p>Current:</p>
-                        <img src="{{ asset('storage/kerja/' . $gambar) }}" alt="current">
+                        @if ($gambar)
+                            <img src="{{ asset('storage/kerja/' . $gambar) }}" alt="current">
+                        @else
+                            <p>Tidak ada gambar</p>
+                        @endif
                     @endif
                 </div>
                 <button class="btn btn-sm btn-primary" type="submit">Edit</button>
