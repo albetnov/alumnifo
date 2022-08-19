@@ -21,6 +21,7 @@ class RoleSeeder extends Seeder
         $role->givePermissionTo('chatting');
         Role::create(['name' => 'disabled']);
         $user = Role::create(['name' => 'user']);
+        $user->givePermissionTo('edit profile');
         $user->givePermissionTo('chatting');
     }
 }

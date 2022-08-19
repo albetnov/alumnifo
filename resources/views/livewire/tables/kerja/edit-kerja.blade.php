@@ -68,11 +68,11 @@
 
                     @if ($gambarUpdated)
                         <p>Preview:</p>
-                        <img src="{{ $gambar->temporaryUrl() }}" alt="preview">
+                        <img src="{{ $gambar->temporaryUrl() }}" alt="preview" width="300">
                     @else
                         <p>Current:</p>
                         @if ($gambar)
-                            <img src="{{ asset('storage/kerja/' . $gambar) }}" alt="current">
+                            <img src="{{ asset('storage/kerja/' . $gambar) }}" alt="current" width="300">
                         @else
                             <p>Tidak ada gambar</p>
                         @endif

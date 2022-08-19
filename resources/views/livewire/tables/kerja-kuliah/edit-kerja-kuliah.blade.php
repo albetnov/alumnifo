@@ -90,7 +90,7 @@
                     @else
                         <p>Current:</p>
                         @if ($gambar)
-                            <img src="{{ asset('storage/kerjakuliah/' . $gambar) }}" alt="current">
+                            <img src="{{ asset('storage/kerjakuliah/' . $gambar) }}" alt="current" width="300">
                         @else
                             <p>Tidak ada gambar</p>
                         @endif

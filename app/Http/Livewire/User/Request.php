@@ -22,6 +22,8 @@ class Request extends Component
     public $selectedId;
     public $action;
     public $tableType;
+    public $allAdd;
+    public $addEdit;
 
     private function findTables($id)
     {
@@ -52,7 +54,7 @@ class Request extends Component
             DB::transaction(function () {
                 $query = $this->findTables($this->selectedId);
                 if ($query->gambar) {
-                    Storage::disk('public')->delete($this->tableType.'/'.$query->gambar);
+                    Storage::disk('public')->delete($this->tableType . '/' . $query->gambar);
                 }
                 $query->delete();
                 ModelsRequest::find($this->selectedId)->delete();
@@ -61,7 +63,7 @@ class Request extends Component
             DB::transaction(function () {
                 $container = Container::where('id', $this->data->id_container)->first();
                 if ($container->gambar) {
-                    Storage::disk('public')->delete($this->data->table_type.'/'.$container->gambar);
+                    Storage::disk('public')->delete($this->data->table_type . '/' . $container->gambar);
                 }
                 $container->delete();
                 $this->data->delete();
@@ -93,6 +95,11 @@ class Request extends Component
         } else {
             $this->data = null;
         }
+
+        $allAdd = ModelsRequest::where('user_id', Auth::user()->id)->where('status', '!=', 'pending')->get();
+        $allEdit = RequestEdit::with('container')->where('id_user', Auth::user()->id)->where('status', '!=', 'pending')->get();
+        $this->allAdd = $allAdd->isEmpty() ? null : $allAdd;
+        $this->allEdit = $allEdit->isEmpty() ? null : $allEdit;
     }
 
     public function render()

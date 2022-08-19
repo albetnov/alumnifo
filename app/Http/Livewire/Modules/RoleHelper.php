@@ -23,10 +23,11 @@ class RoleHelper
                 'user_id'    => Auth::user()->id,
                 'status'     => 'pending',
             ]);
+        } else {
         }
 
         if (Auth::user()->hasRole('user')) {
-            $data['id_request'] = $request->id;
+            $data['id_request'] = Auth::user()->id;
         }
 
         return $data;

@@ -92,10 +92,17 @@
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
 
-                                    @if ($gambar)
+                                    @if ($gambarUpdated)
                                         <p>Preview:</p>
-                                        <img src="{{ $gambar->temporaryUrl() }}"
-                                            style="max-width:300px;max-height:300px" alt="preview">
+                                        <img src="{{ $gambar->temporaryUrl() }}" width="300" alt="preview">
+                                    @else
+                                        <p>Current:</p>
+                                        @if ($gambar)
+                                            <img src="{{ asset('storage/kerjakuliah/' . $gambar) }}" alt="preview"
+                                                width="300">
+                                        @else
+                                            <p>Tidak ada gambar</p>
+                                        @endif
                                     @endif
                                 </div>
                             </div>
