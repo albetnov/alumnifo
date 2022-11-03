@@ -73,15 +73,15 @@ class RequestIndex extends Component
             $find = Request::find($this->selectedId);
             $query = $this->findTables($find->id);
             if ($query->gambar) {
-                Storage::disk('public')->delete($this->tableType.'/'.$query->gambar);
+                Storage::disk('public')->delete($this->tableType . '/' . $query->gambar);
             }
             $find->delete();
         } catch (QueryException $q) {
-            $this->emit('showAlert', 'error', 'Gagal menghapus data. '.$q->getMessage());
+            $this->emit('showAlert', 'error', 'Gagal menghapus data. ' . $q->getMessage());
 
             return;
         } catch (\Exception $e) {
-            $this->emit('showAlert', 'error', 'Gagal menghapus data: '.$e->getMessage());
+            $this->emit('showAlert', 'error', 'Gagal menghapus data: ' . $e->getMessage());
 
             return;
         }
@@ -130,6 +130,11 @@ class RequestIndex extends Component
             $user->givePermissionTo('participate');
         }
 
+        if ($query->status !== 'pending') {
+            $this->emit('showAlert', 'error', 'Data sudah di proses');
+            return;
+        }
+
         $query->update([
             'status'     => 'accepted',
             'handled_by' => Auth::user()->name,
@@ -144,6 +149,11 @@ class RequestIndex extends Component
         $user = User::find($query->user_id);
         if (!$user->hasPermissionTo('participate')) {
             $user->givePermissionTo('participate');
+        }
+
+        if ($query->status !== 'pending') {
+            $this->emit('showAlert', 'error', 'Data sudah di proses');
+            return;
         }
 
         $query->update([

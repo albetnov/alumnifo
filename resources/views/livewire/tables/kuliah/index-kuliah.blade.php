@@ -23,6 +23,7 @@
                             <th>Nama Universitas</th>
                             <th>Jurusan</th>
                             <th>Dibuat oleh</th>
+                            <th>Terdaftar</th>
                             <th colspan="3">Action</th>
                         </tr>
                     </thead>
@@ -39,7 +40,7 @@
                                 <td>{{ $kuliah->nama_universitas }}</td>
                                 <td>{{ $kuliah->jurusan }}</td>
                                 <td>{{ $kuliah->dibuat }}</td>
-                                <td>{{ $kuliah->created_at }}</td>
+                                <td>{{ $kuliah->created_at->diffForHumans() }}</td>
                                 @if ($kuliah->gambar)
                                     <td class="text-center"><button class="btn btn-sm btn-info"
                                             wire:click='openImg({{ $kuliah->id }})'

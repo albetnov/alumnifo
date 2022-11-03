@@ -13,23 +13,23 @@
                 </ol>
                 <h6 class="font-weight-bolder mb-0">{{ $name ?? '' }}</h6>
             </nav>
-            <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
-                <div class="ms-md-auto pe-md-3 d-flex align-items-center">
-                    <div class="input-group">
-                        <span class="input-group-text text-body"><i class="fas fa-search"
-                                aria-hidden="true"></i></span>
-                        <input type="text" class="form-control" placeholder="Type here...">
-                    </div>
-                </div>
-                <ul class="navbar-nav  justify-content-end">
+            <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4 d-flex justify-content-around"
+                id="navbar">
+                {{-- Anyone with better approach please. --}}
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                {{-- This is what happen when u give backend to align an elements. --}}
+                <ul class="navbar-nav justify-content-center">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
                             {{ Auth::user()->name }}
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="{{ route('profile') }}"><i
-                                        class="fas fa-user me-2"></i> Profile</a></li>
+                            <li><a class="dropdown-item" href="{{ route('profile') }}"><i class="fas fa-user me-2"></i>
+                                    Profile</a></li>
                             <li>
                                 <form action="{{ route('logout') }}" method="POST">
                                     @csrf

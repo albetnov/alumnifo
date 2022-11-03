@@ -17,7 +17,7 @@ class Kerja extends Model
     use HasSlug;
     protected $fillable = ['name', 'jenis_kelamin', 'nama_perusahaan', 'jabatan', 'tahun_kerja', 'gambar', 'dibuat', 'id_request'];
 
-    #[SearchUsingFullText(['name', 'nama_perusahaan', 'jabatan'])]
+    #[SearchUsingFullText(['name', 'nama_perusahaan', 'jabatan', 'tahun_kerja', 'dibuat'])]
     public function toSearchableArray()
     {
         return [

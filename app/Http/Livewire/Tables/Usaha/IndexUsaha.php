@@ -23,6 +23,12 @@ class IndexUsaha extends Component
     public $deleteOpened = false;
     public $selectedId;
 
+    public function mount()
+    {
+        $this->setModel(Usaha::class);
+        $this->hasPhoto(true, "usaha");
+    }
+
     public function updated($fields)
     {
         $this->updatedBulk($fields);
@@ -77,17 +83,17 @@ class IndexUsaha extends Component
     public function deleteData()
     {
         try {
-            $find = Usaha::find($this->selectedId)->firstOrFail();
+            $find = Usaha::where('id', $this->selectedId)->firstOrFail();
             if ($find->gambar) {
-                Storage::disk('public')->delete('usaha/'.$find->gambar);
+                Storage::disk('public')->delete('usaha/' . $find->gambar);
             }
             $find->delete();
         } catch (QueryException $q) {
-            $this->emit('showAlert', 'error', 'Gagal menghapus data. '.$q->getMessage());
+            $this->emit('showAlert', 'error', 'Gagal menghapus data. ' . $q->getMessage());
 
             return;
         } catch (\Exception $e) {
-            $this->emit('showAlert', 'error', 'Gagal menghapus data: '.$e->getMessage());
+            $this->emit('showAlert', 'error', 'Gagal menghapus data: ' . $e->getMessage());
 
             return;
         }

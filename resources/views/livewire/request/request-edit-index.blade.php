@@ -48,8 +48,7 @@
                                 <td>{{ $request->updated_at->diffForHumans() }}</td>
                                 @if ($request->status == 'pending')
                                     <td class="text-center">
-                                        <button class="btn btn-success btn-sm"
-                                            wire:click="approve({{ $request->id }})"
+                                        <button class="btn btn-success btn-sm" wire:click="approve({{ $request->id }})"
                                             wire-key="approve-{{ $request->id }}"><i
                                                 class="fa-solid fa-check"></i></button>
                                     </td>
@@ -182,7 +181,7 @@
                                     </div>
                                     @if ($modelQuery->gambar)
                                         <div class="form-group">
-                                            <img src="{{ asset('storage/kerja/' . $modelQuery->gambar) }}"
+                                            <img src="{{ asset('storage/kuliah/' . $modelQuery->gambar) }}"
                                                 style="max-width:300px;max-height:300px">
                                         </div>
                                     @endif
@@ -219,7 +218,7 @@
                                     </div>
                                     @if ($modelQuery->gambar)
                                         <div class="form-group">
-                                            <img src="{{ asset('storage/kerja/' . $modelQuery->gambar) }}"
+                                            <img src="{{ asset('storage/kerjakuliah/' . $modelQuery->gambar) }}"
                                                 style="max-width:300px;max-height:300px">
                                         </div>
                                     @endif
@@ -245,7 +244,7 @@
                                     </div>
                                     @if ($modelQuery->gambar)
                                         <div class="form-group">
-                                            <img src="{{ asset('storage/kerja/' . $modelQuery->gambar) }}"
+                                            <img src="{{ asset('storage/mencarikerja/' . $modelQuery->gambar) }}"
                                                 style="max-width:300px;max-height:300px">
                                         </div>
                                     @endif
@@ -272,7 +271,7 @@
                                     </div>
                                     @if ($modelQuery->gambar)
                                         <div class="form-group">
-                                            <img src="{{ asset('storage/kerja/' . $modelQuery->gambar) }}"
+                                            <img src="{{ asset('storage/usaha/' . $modelQuery->gambar) }}"
                                                 style="max-width:300px;max-height:300px">
                                         </div>
                                     @endif
@@ -280,7 +279,8 @@
                                 Didaftarkan saat: {{ $modelQuery->created_at->diffForHumans() }}
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-secondary"
+                                    data-bs-dismiss="modal">Close</button>
                             </div>
                         </div>
                     </div>

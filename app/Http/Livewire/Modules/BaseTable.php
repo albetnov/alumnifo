@@ -78,10 +78,15 @@ trait BaseTable
     {
         header('referrer-policy:same-origin');
 
-        $models = $this->search ? $model::search($this->search) : $model::latest();
+        if ($this->search) {
+            $this->emit('showAlert', 'error', 'Search feature is not available at the moment.');
+        }
+
+        // $models = $this->search ? $model::search($this->search) : $model::latest();
+        $models = $model::latest();
         if ($this->filter_date) {
             if ($this->byYear) {
-                $models->where($this->byYear, '<=', $this->to)->where('tahun_kerja', '>=', $this->from);
+                $models->where($this->byYear, '<=', $this->to)->where($this->byYear, '>=', $this->from);
             } else {
                 $models->whereDate('created_at', '<=', $this->to)->whereDate('created_at', '>=', $this->from);
             }

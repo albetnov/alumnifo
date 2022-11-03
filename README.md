@@ -1,3 +1,5 @@
+> Projek ini di buat dengan buru-buru. Karena itu tak ada waktu untuk kami buat mengetesnya kemarin. Sekarang saat saya mengetesnya saya sudah menemukan rumayan banyak bug dan berhasil memperbaikinya. Akan tetapi sepertinya masih jauh dari kata selesai. Maka dari itu saya akan menghentikan projek ini.
+
 ## Alumnifo
 
 Alumnifo adalah Sistem Informasi Alumni yang dibuat dengan menggunakan Laravel dan Livewire

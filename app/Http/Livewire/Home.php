@@ -36,6 +36,8 @@ class Home extends Component
     public function sendContact()
     {
         $validated = $this->validate();
+        $validated['message'] = $validated['contactMessage'];
+        unset($validated['contactMessage']);
         PublicContact::create($validated);
         $this->emptyField();
         $this->emit('showAlert', 'success', 'Pesan berhasil dikirim!');
