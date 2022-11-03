@@ -33,11 +33,11 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/profile', ProfileManager::class)->name('profile');
     });
 
-    require_once __DIR__ . '/admin.php';
+    require_once __DIR__.'/admin.php';
 
-    require_once __DIR__ . '/table.php';
+    require_once __DIR__.'/table.php';
 
-    require_once __DIR__ . '/user.php';
+    require_once __DIR__.'/user.php';
 
     Route::group(['middleware' => ['role:disabled']], function () {
         Route::view('/disabled/dashboard', 'disabled')->name('disabled.dashboard');

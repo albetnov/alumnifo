@@ -50,7 +50,7 @@ class AddKerja extends Component
             if (!$this->gambar) {
                 unset($data['gambar']);
             } else {
-                $name = time() . hash("sha256", $this->gambar->getClientOriginalName()) . $this->gambar->getClientOriginalName();
+                $name = time().hash("sha256", $this->gambar->getClientOriginalName()).$this->gambar->getClientOriginalName();
                 $this->gambar->storeAs('public/kerja', $name);
                 $data['gambar'] = $name;
             }

@@ -54,7 +54,7 @@ class Request extends Component
             DB::transaction(function () {
                 $query = $this->findTables($this->selectedId);
                 if ($query->gambar) {
-                    Storage::disk('public')->delete($this->tableType . '/' . $query->gambar);
+                    Storage::disk('public')->delete($this->tableType.'/'.$query->gambar);
                 }
                 $query->delete();
                 ModelsRequest::find($this->selectedId)->delete();
@@ -63,7 +63,7 @@ class Request extends Component
             DB::transaction(function () {
                 $container = Container::where('id', $this->data->id_container)->first();
                 if ($container->gambar) {
-                    Storage::disk('public')->delete($this->data->table_type . '/' . $container->gambar);
+                    Storage::disk('public')->delete($this->data->table_type.'/'.$container->gambar);
                 }
                 $container->delete();
                 $this->data->delete();

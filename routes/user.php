@@ -7,7 +7,6 @@ use App\Http\Livewire\Tables\MencariKerja\AddMencariKerja;
 use App\Http\Livewire\Tables\Usaha\AddUsaha;
 use App\Http\Livewire\User\Delete;
 use App\Http\Livewire\User\Kerja\EditKerjaUser;
-use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\User\Kerja\Index as KerjaIndex;
 use App\Http\Livewire\User\KerjaKuliah\EditKerjaKuliahUser;
 use App\Http\Livewire\User\KerjaKuliah\Index as KerjaKuliahIndex;
@@ -18,6 +17,7 @@ use App\Http\Livewire\User\MencariKerja\Index as MencariKerjaIndex;
 use App\Http\Livewire\User\Request;
 use App\Http\Livewire\User\Usaha\EditUsahaUser;
 use App\Http\Livewire\User\Usaha\Index as UsahaIndex;
+use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => ['role:user'], 'prefix' => 'user', 'as' => 'user.'], function () {
     Route::get('kerja', KerjaIndex::class)->name('kerja');
