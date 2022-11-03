@@ -77,18 +77,18 @@ class RequestEditIndex extends Component
                 if ($find->id_container) {
                     $container = Container::find($find->id_container);
                     if ($container->gambar) {
-                        Storage::disk('public')->delete($find->table_type . '/' . $container->gambar);
+                        Storage::disk('public')->delete($find->table_type.'/'.$container->gambar);
                     }
                     $container->delete();
                 }
                 $find->delete();
             });
         } catch (QueryException $q) {
-            $this->emit('showAlert', 'error', 'Gagal menghapus data. ' . $q->getMessage());
+            $this->emit('showAlert', 'error', 'Gagal menghapus data. '.$q->getMessage());
 
             return;
         } catch (\Exception $e) {
-            $this->emit('showAlert', 'error', 'Gagal menghapus data: ' . $e->getMessage());
+            $this->emit('showAlert', 'error', 'Gagal menghapus data: '.$e->getMessage());
 
             return;
         }
@@ -116,7 +116,7 @@ class RequestEditIndex extends Component
             return;
         }
         if ($query->gambar) {
-            Storage::disk('public')->delete($path . '/' . $query->gambar);
+            Storage::disk('public')->delete($path.'/'.$query->gambar);
         }
     }
 
@@ -228,7 +228,7 @@ class RequestEditIndex extends Component
             ]);
 
             if ($container->gambar) {
-                Storage::disk('public')->delete($query->table_type . '/' . $container->gambar);
+                Storage::disk('public')->delete($query->table_type.'/'.$container->gambar);
             }
             $container->delete();
         });

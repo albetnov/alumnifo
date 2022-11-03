@@ -85,15 +85,15 @@ class IndexKerjaKuliah extends Component
         try {
             $find = KerjaKuliah::where('id', $this->selectedId)->firstOrFail();
             if ($find->gambar) {
-                Storage::disk('public')->delete('kerjakuliah/' . $find->gambar);
+                Storage::disk('public')->delete('kerjakuliah/'.$find->gambar);
             }
             $find->delete();
         } catch (QueryException $q) {
-            $this->emit('showAlert', 'error', 'Gagal menghapus data. ' . $q->getMessage());
+            $this->emit('showAlert', 'error', 'Gagal menghapus data. '.$q->getMessage());
 
             return;
         } catch (\Exception $e) {
-            $this->emit('showAlert', 'error', 'Gagal menghapus data: ' . $e->getMessage());
+            $this->emit('showAlert', 'error', 'Gagal menghapus data: '.$e->getMessage());
 
             return;
         }
